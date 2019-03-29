@@ -1,0 +1,6 @@
+0,Thực phẩm
+1,Nội thất
+2,Gia dụng
+3,Vật liệu
+4,Linh kiện
+5,Đồ dùng

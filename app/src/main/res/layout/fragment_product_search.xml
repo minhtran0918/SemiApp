@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.ProductSearchFragment">
+
+    <HorizontalScrollView
+        style="@style/NearbyStoreLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bg"
+                android:padding="5dp"
+                android:popupBackground="@drawable/popup_spinner_bg" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/citySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/spinner_bg"
+                android:padding="5dp"
+                android:popupBackground="@drawable/popup_spinner_bg" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/districtSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/spinner_bg"
+                android:padding="5dp"
+                android:popupBackground="@drawable/popup_spinner_bg" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/townSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/spinner_bg"
+                android:padding="5dp"
+                android:popupBackground="@drawable/popup_spinner_bg" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

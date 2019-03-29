@@ -1,0 +1,4 @@
+﻿0,Tạp hóa
+1,Linh kiện
+2,Ăn uống
+3,Nội thất

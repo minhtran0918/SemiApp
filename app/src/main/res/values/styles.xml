@@ -1,0 +1,100 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar"> <!--Theme.AppCompat.NoActionBar-->
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--Splash theme-->
+    <style name="SplashTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <!--Store RecyclerView-->
+    <style name="StoreRVTheme" parent="AppTheme" >
+        <item name="android:background">@drawable/rv_item_click_selector</item>
+    </style>
+    <style name="StoreRVTheme.Rating">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="StoreRVTheme.Title">
+        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="StoreRVTheme.Address">
+        <item name="android:textColor">@color/colorAddress</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="StoreRVTheme.Cost">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <!--Nearby Store Label-->
+    <style name="NearbyStoreLabel" parent="AppTheme">
+        <item name="android:textColor">@color/colorTextDefault</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:background">#ffffff</item>
+        <item name="android:elevation">1dp</item>
+    </style>
+    <!--Error Label-->
+    <style name="ErrorLabel" parent="AppTheme">
+        <item name="android:textColor">@color/colorTextError</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="InfoDialogMessage" parent="AppTheme">
+        <item name="android:textColor">@color/colorInfoDialogMessage</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="SearchTabTheme" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+    <style name="DefaultBackground" parent="AppTheme">
+        <item name="android:background">@color/colorDefaultBackground</item>
+    </style>
+    <style name="NoneBackground" parent="AppTheme">
+        <item name="android:background">#00000000</item>
+    </style>
+    <style name="TextLoadingTheme">
+        <item name="android:background">@color/colorLoadingBackground</item>
+        <item name="android:textColor">@color/colorLoadingText</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/loadingText</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="SignInLabel" parent="AppTheme">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorSignInLabel</item>
+    </style>
+    <style name="DialogTitleLabel" parent="SignInLabel">
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+    <style name="PrimaryButton" parent="AppTheme">
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryButton</item>
+    </style>
+    <style name="CommentEditText" parent="AppTheme">
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:background">@color/colorDefaultEditText</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:textColorHint">@color/colorDefaultEditTextHint</item>
+        <item name="android:textColor">@color/colorTextDefault</item>
+    </style>
+    <style name="DirectButton" parent="AppTheme">
+        <item name="android:backgroundTint">@color/colorDirectButton</item>
+        <item name="android:textColor">@color/colorTextDefault</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:elevation="1dp"
+    android:theme="@style/StoreRVTheme">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/storeRVLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_store"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentStart="true"
+        />
+    <TextView
+        android:id="@+id/storeRVTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/storeRVLogo"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/StoreRVTheme.Title" />
+    <TextView
+        android:id="@+id/storeRVAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/storeRVTitle"
+        android:layout_alignStart="@+id/storeRVTitle"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/StoreRVTheme.Address" />
+    <TextView
+        android:id="@+id/storeRVRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignStart="@id/storeRVAddress"
+        android:layout_below="@id/storeRVAddress"
+        android:textAppearance="@style/StoreRVTheme.Rating" />
+    <TextView
+        android:id="@+id/storeRVDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/storeRVAddress"
+        android:textAppearance="@style/StoreRVTheme.Address" />
+
+</RelativeLayout>

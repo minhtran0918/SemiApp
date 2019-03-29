@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#9c27b0</color>
+    <color name="colorPrimaryDark">#6d1b7b</color>
+    <color name="colorAccent">#e2aaee</color> <!--#af52bf-->
+    <color name="colorSplashBackground">#ffffff</color>
+    <color name="colorDefaultBackground">#EEEEEE</color>
+    <color name="colorTextDefault">#000000</color>
+    <color name="colorTextError">#999999</color>
+    <color name="colorInfoDialogMessage">#333333</color>
+    <color name="colorLowRating">#dd0000</color>
+    <color name="colorMediumRating">#ff8800</color>
+    <color name="colorHighRating">#00aa00</color>
+    <color name="colorRVItemClickBackground">#cccccc</color>
+    <color name="colorDefaultTabText">#e2aaee</color>
+    <color name="colorSelectedTabText">#ffffff</color>
+    <!--Store RecyclerView-->
+    <color name="colorStoreRVBackground">#ffffff</color>
+    <color name="colorTitle">#000000</color>
+    <color name="colorAddress">#555555</color>
+    <color name="colorLoadingBackground">#82000000</color>
+    <color name="colorLoadingText">#ffffff</color>
+    <color name="colorPrimaryButton">#ffffff</color>
+    <color name="colorSignInLabel">#ffffff</color>
+    <color name="colorDefaultEditTextHint">#777777</color>
+    <color name="colorDefaultEditText">#ffffff</color>
+    <color name="colorDirectButton">#aaffffff</color>
+</resources>

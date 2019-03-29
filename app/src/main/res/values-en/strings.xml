@@ -1,0 +1,56 @@
+<resources>
+    <string name="privacy_policy_url">https://www.freeprivacypolicy.com/privacy/view/5706ad05bef74fb690e276fa455f1bcc</string>
+    <string name="app_name">Semi</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="adg_position_button">Đóng</string>
+
+    <!--Data for HomeActivity mode spinner-->
+    <string-array name="searchTypeSpinner">
+        <item>Cửa hàng</item>
+        <item>Hàng hóa</item>
+    </string-array>
+
+    <string name="nearbyStoreLabel">Cửa hàng gần bạn</string>
+    <string name="nearbyProductLabel">Hàng hóa gần bạn</string>
+    <string name="modeTypeLabel">Bạn muốn tìm gì?</string>
+    <!--Store RecyclerView-->
+    <string name="storeRVLogoDescription">Logo</string>
+    <string name="errorImgDescription">Error</string>
+    <string name="mapFlagDescription">Map flag</string>
+    <!-- Error Label-->
+    <string name="networkErrorMessage">Không thể kết nối! Hãy thử kiểm tra Internet, Wifi!</string>
+    <string name="emptyResultMessage">Không có kết quả!</string>
+    <string name="locationErrorMessage">Không thể lấy vị trí! Hãy chắc chắn là bạn đã cho phép và bật vị trí!</string>
+    <string name="loadMessage">Đang tải...</string>
+    <string name="actionSearchTitle">Tìm kiếm</string>
+    <string name="defaultSearchHint">Cửa hàng, Hàng hóa</string>
+    <string name="storeSearchHint">Cửa hàng</string>
+    <string name="productSearchHint">Hàng hóa</string>
+    <string name="searchTabText">Tìm kiếm</string>
+    <string name="nearbyTabText">Xung quanh</string>
+    <string name="countryLabel">Quốc gia</string>
+    <string name="cityLabel">Thành phố</string>
+    <string name="districtLabel">Quận/huyện</string>
+    <string name="townLabel">Xã/phường</string>
+    <string name="signInLabel">Sign In</string>
+    <string name="closeDialogButtonLabel">Close</string>
+    <string name="helloLabel">Hello\u0020</string>
+    <string name="failToSignInLabel">Sign in failed!</string>
+    <string name="commentEditTextHint">What is your comment?</string>
+    <string name="commentButtonLabel"> Post comment</string>
+    <string name="commentActivityLabel">Your comment</string>
+    <string name="storeMapActivityLabel">Store location on Map</string>
+    <string name="comment_title_label">Title</string>
+    <string name="comment_content_label">Write the comment content for the store</string>
+    <string name="comment_rating_label">Rating</string>
+    <string name="comment_toolbar_label">Comment</string>
+    <string name="comment_action_rating_label">Rating</string>
+    <string name="comment_action_cancel_label">Cancel</string>
+    <string name="bookmark_toolbar_label">Bookmark</string>
+    <string name="store_detail_hide_product_label">Hide all product</string>
+    <string name="comment_no_save_mess">Sorry, nothing store here</string>
+    <string name="dialog_utility_label">Utilities</string>
+    <string name="directButtonLabel">Direct to store</string>
+    <string name="infoDialogTitle">Info</string>
+
+</resources>

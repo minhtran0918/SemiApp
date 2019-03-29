@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MyMapFragment">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:cameraZoom="15"
+        map:mapType="terrain"
+        map:uiCompass="true"
+        map:uiTiltGestures="false"
+        map:uiZoomControls="false" />
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/flagImageView"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/mapFlagDescription" />
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/upButton"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/map_up_button_selector" />
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/downButton"
+        android:layout_alignEnd="@+id/upButton"
+        android:layout_below="@+id/upButton"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/map_down_button_selector" />
+</RelativeLayout>

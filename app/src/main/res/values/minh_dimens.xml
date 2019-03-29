@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="toolbar_store_detail_name_text_size">17sp</dimen>
+    <dimen name="toolbar_store_detail_btn_fast_tool_padding">3dp</dimen>
+    <dimen name="toolbar_store_detail_btn_fast_tool_text_size">11sp</dimen>
+
+    <dimen name="store_detail_infor_margin_left">12dp</dimen>
+    <dimen name="store_detail_error_list_text_size">12sp</dimen>
+
+    <dimen name="store_detail_infor_name_text_size">16sp</dimen>
+    <dimen name="store_detail_infor_address_text_size">15sp</dimen>
+    <dimen name="store_detail_infor_total_padding">3dp</dimen>
+</resources>

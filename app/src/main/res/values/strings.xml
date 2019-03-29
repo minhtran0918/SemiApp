@@ -1,0 +1,48 @@
+<resources>
+    <string name="privacy_policy_url">https://www.freeprivacypolicy.com/privacy/view/5706ad05bef74fb690e276fa455f1bcc</string>
+    <string name="app_name">Semi</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="adg_position_button">Đóng</string>
+
+    <!--Data for HomeActivity mode spinner-->
+    <string-array name="searchTypeSpinner">
+        <item>Cửa hàng</item>
+        <item>Hàng hóa</item>
+    </string-array>
+
+    <string name="nearbyStoreLabel">Cửa hàng gần bạn</string>
+    <string name="nearbyProductLabel">Hàng hóa gần bạn</string>
+    <string name="modeTypeLabel">Bạn muốn tìm gì?</string>
+    <!--Store RecyclerView-->
+    <string name="storeRVLogoDescription">Logo</string>
+    <string name="errorImgDescription">Error</string>
+    <string name="mapFlagDescription">Map flag</string>
+    <!-- Error Label-->
+    <string name="networkErrorMessage">Không thể kết nối! Hãy thử kiểm tra Internet, Wifi!</string>
+    <string name="emptyResultMessage">Không có kết quả!</string>
+    <string name="locationErrorMessage">Không thể lấy vị trí! Hãy chắc chắn là bạn đã cho phép và bật vị trí!</string>
+    <string name="loadMessage">Đang tải&#8230;</string>
+    <string name="actionSearchTitle">Tìm kiếm</string>
+    <string name="defaultSearchHint">Cửa hàng, Hàng hóa</string>
+    <string name="storeSearchHint">Cửa hàng</string>
+    <string name="productSearchHint">Hàng hóa</string>
+    <string name="searchTabText">Tìm kiếm</string>
+    <string name="nearbyTabText">Xung quanh</string>
+    <string name="countryLabel">Quốc gia</string>
+    <string name="cityLabel">Thành phố</string>
+    <string name="districtLabel">Quận/huyện</string>
+    <string name="townLabel">Xã/phường</string>
+    <string name="signInLabel">Đăng nhập</string>
+    <string name="closeDialogButtonLabel">Đóng</string>
+    <string name="helloLabel">Xin chào\u0020</string>
+    <string name="failToSignInLabel">Đăng nhập thất bại!</string>
+    <string name="commentEditTextHint">Bạn muốn bình luận gì?</string>
+    <string name="commentButtonLabel"> Đăng bình luận</string>
+    <string name="commentActivityLabel">Bình luận - Đánh giá</string>
+    <string name="storeMapActivityLabel">Vị trí trên bản đồ</string>
+    <string name="comment_action_rating_label">Đánh giá</string>
+    <string name="comment_action_cancel_label">Huỷ</string>
+    <string name="bookmark_toolbar_label">Lưu lại</string>
+    <string name="directButtonLabel">Chỉ đường</string>
+    <string name="infoDialogTitle">Thông báo</string>
+</resources>
