@@ -32,7 +32,7 @@ public final class Contract {
     public static final int MODE_LOAD_STORE_TYPE_ORTHER = 7;
 
 
-    public static final int MODE_LOAD_PRODUCT = 1;
+    public static final int MODE_HOME_LOAD_PRODUCT = 1;
     //TODO: LOAD PRODUCT - SETUP TYPE VARIABLE
     public static final int MODE_LOAD_PRODUCT_TYPE_ = 0;
 
@@ -41,7 +41,9 @@ public final class Contract {
     public static final int MODE_LOAD_RANGE_AROUND = 50;
     public static final int MODE_LOAD_RANGE_ALL = 51;
     //Sort
-    public static final int MODE_LOAD_SORT_POPULAR = 132;
+    public static final int MODE_LOAD_SORT = 131;
+    public static final int MODE_LOAD_SORT_RANGE = 132;
+    public static final int MODE_LOAD_SORT_POPULAR = 133;
 
 
     public static final float[] RATING_LEVELS = {0, 2.5f, 5};

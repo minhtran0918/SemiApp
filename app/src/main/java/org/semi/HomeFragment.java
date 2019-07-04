@@ -325,7 +325,7 @@ public class HomeFragment extends Fragment {
                 int mode_load = mHomeViewModel.modeLoadDataInHome.getValue();
                 if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
                     loadAllNewStores();
-                } else if (mode_load == Contract.MODE_LOAD_PRODUCT) { //it's Product
+                } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
                     //loadAllNewProducts();
                 }
             }

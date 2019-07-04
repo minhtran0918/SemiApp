@@ -230,7 +230,7 @@
         app:ssb_sign_arrow_width="20dp"
         app:ssb_sign_color="@color/material_purple_300"
         app:ssb_track_color="@color/blackTransparent20"
-        app:ssb_track_size="5dp" />
+        app:ssb_track_size="5dp"/>
 
     <TextView
         android:id="@+id/lbl_home_option_sort"
@@ -257,7 +257,19 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/lbl_home_option_sort"
         tools:layout_editor_absoluteX="63dp">
-
+        <RadioButton
+            android:id="@+id/radbtn_home_option_sort_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawableLeft="@drawable/all_ic_store_color_30"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Tất cả"
+            android:textSize="18sp" />
         <RadioButton
             android:id="@+id/radbtn_home_option_sort_popular"
             android:layout_width="match_parent"
@@ -273,5 +285,14 @@
             android:textSize="18sp" />
 
     </RadioGroup>
+
+    <Button
+        android:id="@+id/home_option_test_func"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="133dp"
+        tools:layout_editor_absoluteY="643dp"
+        android:onClick="testFunc"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

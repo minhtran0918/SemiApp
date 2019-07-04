@@ -14,7 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.semi.ViewModel.AddStoreViewModel;
+import com.zhouyou.view.seekbar.SignSeekBar;
+
 import org.semi.ViewModel.HomeSelectOptionViewModel;
 import org.semi.databases.model.AddressCity;
 import org.semi.databases.model.AddressDistrict;
@@ -29,13 +30,14 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
 
     private HomeSelectOptionViewModel mHomeOptionViewModel;
     private TextView txt_select_city, txt_select_district, txt_select_ward;
+    SignSeekBar seek_range;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_select_option);
-        initView();
         initViewModel();
+        initView();
     }
 
     private void initViewModel() {
@@ -48,10 +50,12 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
         mHomeOptionViewModel.districtId.setValue(762);
         mHomeOptionViewModel.wardId.setValue(0);
         //Around
-        mHomeOptionViewModel.modeStoreOrProduct.setValue(Contract.MODE_LOAD_RANGE_AROUND);
+        mHomeOptionViewModel.modeRange.setValue(Contract.MODE_LOAD_RANGE_AROUND);
 
         //Sort
-        mHomeOptionViewModel.modeStoreOrProduct.setValue(Contract.MODE_LOAD_SORT_POPULAR);
+        mHomeOptionViewModel.modeSort.setValue(Contract.MODE_LOAD_SORT_RANGE);
+
+        //Observer
 
         mHomeOptionViewModel.cityId.observe(this, new Observer<Integer>() {
             @Override
@@ -72,12 +76,25 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
                 }
             }
         });
+
         mHomeOptionViewModel.wardId.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 AddressWard addressWard = mHomeOptionViewModel.getWardByID(integer);
                 if (addressWard != null) {
                     txt_select_ward.setText(addressWard.toLiteName());
+                }
+            }
+        });
+
+        seek_range = findViewById(R.id.seekbar_home_option_range_around);
+        mHomeOptionViewModel.modeRange.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer == Contract.MODE_LOAD_RANGE_ALL){
+                    seek_range.setVisibility(View.GONE);
+                }else{
+                    seek_range.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -102,6 +119,11 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
         radbtn_mode_product = findViewById(R.id.radbtn_home_option_mode_product);
         radgrp_mode.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
+        if (mHomeOptionViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
+            radbtn_mode_store.setChecked(true);
+        } else {
+            radbtn_mode_product.setChecked(true);
+        }
 
         RadioGroup radgrp_range;
         RadioButton radbtn_range_around, radbtn_range_all;
@@ -110,13 +132,25 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
         radbtn_range_all = findViewById(R.id.radbtn_home_option_range_all);
         radgrp_range.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
+        if (mHomeOptionViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+            radbtn_range_around.setChecked(true);
+        } else {
+            radbtn_range_all.setChecked(true);
+        }
+
 
         RadioGroup radgrp_sort;
-        RadioButton radbtn_sort_popular;
         radgrp_sort = findViewById(R.id.radgrp_home_option_sort);
-        radbtn_sort_popular = findViewById(R.id.radbtn_home_option_sort_popular);
         radgrp_sort.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
+        RadioButton radbtn_sort_popular, radbtn_sort_range;
+        radbtn_sort_range = findViewById(R.id.radbtn_home_option_sort_range);
+        radbtn_sort_popular = findViewById(R.id.radbtn_home_option_sort_popular);
+        if (mHomeOptionViewModel.modeSort.getValue() == Contract.MODE_LOAD_SORT_RANGE) {
+            radbtn_sort_range.setChecked(true);
+        } else {
+            radbtn_sort_popular.setChecked(true);
+        }
     }
 
     private View.OnClickListener mOnClickSelectAddress = new View.OnClickListener() {
@@ -156,12 +190,29 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (group.getId()) {
                 case R.id.radgrp_home_option_mode:
-                    Toast.makeText(HomeSelectOptionActivity.this, "change Mode", Toast.LENGTH_SHORT).show();
+                    if (checkedId == Contract.MODE_HOME_LOAD_STORE) {
+                        mHomeOptionViewModel.modeStoreOrProduct.setValue(Contract.MODE_HOME_LOAD_STORE);
+                    } else {
+                        mHomeOptionViewModel.modeStoreOrProduct.setValue(Contract.MODE_HOME_LOAD_PRODUCT);
+                    }
                     break;
                 case R.id.radgrp_home_option_range:
+                    if (checkedId == Contract.MODE_LOAD_RANGE_ALL) {
+                        mHomeOptionViewModel.modeRange.setValue(Contract.MODE_LOAD_RANGE_ALL);
+                    } else {
+                        mHomeOptionViewModel.modeRange.setValue(Contract.MODE_LOAD_RANGE_AROUND);
+                    }
                     Toast.makeText(HomeSelectOptionActivity.this, "change range", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.radgrp_home_option_sort:
+                    switch (checkedId) {
+                        case R.id.radbtn_home_option_sort_range:
+                            mHomeOptionViewModel.modeRange.setValue(Contract.MODE_LOAD_RANGE_ALL);
+                            break;
+                        case R.id.radbtn_home_option_sort_popular:
+                            mHomeOptionViewModel.modeRange.setValue(Contract.MODE_LOAD_RANGE_AROUND);
+                            break;
+                    }
                     Toast.makeText(HomeSelectOptionActivity.this, "change sort", Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -186,5 +237,11 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    public void testFunc(View view) {
+        Log.d("Semi", "mode store or product: " + mHomeOptionViewModel.modeStoreOrProduct.getValue());
+        Log.d("Semi", "mode range: " + mHomeOptionViewModel.modeRange.getValue());
+        Log.d("Semi", "mode sort: " + mHomeOptionViewModel.modeSort.getValue());
     }
 }
