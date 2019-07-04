@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeSelectCategoryActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_home_select_category"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Text_Style_Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:text="Chọn phân loại"
+            android:textAlignment="center" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/lbl_home_select_store_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="3dp"
+        android:padding="6dp"
+        android:text="Tìm:"
+        android:textColor="@color/blackTransparent80"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_home_select_category" />
+
+    <RadioGroup
+        android:id="@+id/radgrp_home_option_range"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_home_select_store_product">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawableLeft="@drawable/all_ic_store_color_30"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Cửa hàng"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawableLeft="@drawable/all_ic_product_color_30"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Hàng hóa"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <View
+        android:layout_marginTop="4dp"
+        android:id="@+id/view_home_select_category_0"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/blackTransparent20"
+        app:layout_constraintTop_toBottomOf="@id/radgrp_home_option_range" />
+
+    <TextView
+        android:id="@+id/lbl_home_select_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="3dp"
+        android:padding="6dp"
+        android:text="Chọn một phân loại cần tìm:"
+        android:textColor="@color/blackTransparent80"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/view_home_select_category_0" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_home_select_category">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_all"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_more_40"
+                android:text="@string/home_select_category_title_all" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_store"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_store_40"
+                android:text="@string/home_ic_direct_title_store" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_convenience"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_convenience_40"
+                android:text="@string/home_select_category_title_convenience" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_super_market"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_super_market_40"
+                android:text="@string/home_select_category_title_super_market" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_mall"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_mall_40"
+                android:text="@string/home_select_category_title_mall" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_market"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_market_40"
+                android:text="@string/home_select_category_title_market" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_atm"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_atm_40"
+                android:text="@string/home_select_category_title_atm" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_pharmacy"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_pharmacy_40"
+                android:text="@string/home_select_category_title_pharmacy" />
+
+        </RadioGroup>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

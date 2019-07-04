@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_bot_item_home"
+        android:icon="@drawable/ic_nav_bot_home_24dp"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_bot_item_discover"
+        android:icon="@drawable/ic_nav_bot_discover_24dp"
+        android:title="Discover" />
+    <item
+        android:id="@+id/nav_bot_item_bookmark"
+        android:icon="@drawable/ic_nav_bot_bookmark_24dp"
+        android:title="Bookmark" />
+    <item
+        android:id="@+id/nav_bot_item_me"
+        android:icon="@drawable/ic_nav_bot_me_24dp"
+        android:title="Me" />
+</menu>

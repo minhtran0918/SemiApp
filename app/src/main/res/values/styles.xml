@@ -1,36 +1,40 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar"> <!--Theme.AppCompat.NoActionBar-->
+    <!--    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar"> &lt;!&ndash;Theme.AppCompat.NoActionBar&ndash;&gt;
+            &lt;!&ndash; Customize your theme here. &ndash;&gt;
+            <item name="colorPrimary">@color/colorPrimary</item>
+            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+            <item name="colorAccent">@color/colorAccent</item>
+        </style>-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!--Splash theme-->
-    <style name="SplashTheme" parent="AppTheme">
-        <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
-
     <!--Store RecyclerView-->
-    <style name="StoreRVTheme" parent="AppTheme" >
+    <style name="StoreRVTheme" parent="AppTheme">
         <item name="android:background">@drawable/rv_item_click_selector</item>
     </style>
+
     <style name="StoreRVTheme.Rating">
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="StoreRVTheme.Title">
         <item name="android:textColor">@color/colorTitle</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="StoreRVTheme.Address">
         <item name="android:textColor">@color/colorAddress</item>
         <item name="android:textSize">13sp</item>
     </style>
+
     <style name="StoreRVTheme.Cost">
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
@@ -49,19 +53,24 @@
         <item name="android:textColor">@color/colorTextError</item>
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="InfoDialogMessage" parent="AppTheme">
         <item name="android:textColor">@color/colorInfoDialogMessage</item>
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="SearchTabTheme" parent="Widget.MaterialComponents.TabLayout">
         <item name="android:background">@color/colorPrimary</item>
     </style>
+
     <style name="DefaultBackground" parent="AppTheme">
         <item name="android:background">@color/colorDefaultBackground</item>
     </style>
+
     <style name="NoneBackground" parent="AppTheme">
         <item name="android:background">#00000000</item>
     </style>
+
     <style name="TextLoadingTheme">
         <item name="android:background">@color/colorLoadingBackground</item>
         <item name="android:textColor">@color/colorLoadingText</item>
@@ -72,17 +81,21 @@
         <item name="android:text">@string/loadingText</item>
         <item name="android:clickable">true</item>
     </style>
+
     <style name="SignInLabel" parent="AppTheme">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorSignInLabel</item>
     </style>
+
     <style name="DialogTitleLabel" parent="SignInLabel">
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
+
     <style name="PrimaryButton" parent="AppTheme">
         <item name="android:backgroundTint">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorPrimaryButton</item>
     </style>
+
     <style name="CommentEditText" parent="AppTheme">
         <item name="android:textSize">18sp</item>
         <item name="android:paddingTop">10dp</item>
@@ -92,9 +105,88 @@
         <item name="android:textColorHint">@color/colorDefaultEditTextHint</item>
         <item name="android:textColor">@color/colorTextDefault</item>
     </style>
+
     <style name="DirectButton" parent="AppTheme">
         <item name="android:backgroundTint">@color/colorDirectButton</item>
         <item name="android:textColor">@color/colorTextDefault</item>
         <item name="android:elevation">2dp</item>
     </style>
+    <!-- Minh Dev -->
+    <!-- Base application theme. --><!--
+    <style name="minh_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">@color/colorPrimary</item>
+        &lt;!&ndash;Action bar color&ndash;&gt;
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>-->
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="RatingBar" parent="android:style/Widget.Material.RatingBar.Small"></style>
+    <!-- new -->
+    <style name="Larger_Drawable">
+        <item name="android:textSize">10sp</item>
+        <item name="android:scaleX">1.6</item>
+        <item name="android:scaleY">1.6</item>
+    </style>
+
+    <style name="Normal_Drawable">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Smaller_Drawable">
+        <item name="android:textSize">20sp</item>
+        <item name="android:scaleX">0.8</item>
+        <item name="android:scaleY">0.8</item>
+    </style>
+
+    <style name="Btn_Radio_Select_Category">
+        <item name="android:buttonTint">@color/material_purple_400</item>
+        <item name="android:background">@drawable/btn_radio_select_category</item>
+        <item name="android:drawablePadding">@dimen/drawable_padding_item_list_category_store</item>
+        <item name="android:textSize">@dimen/textsize_item_list_category_store</item>
+        <item name="android:padding">@dimen/padding_item_list_category_store</item>
+        <item name="android:layoutDirection">rtl</item>
+    </style>
+
+    <style name="Text_Style_Toolbar">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+
+    <style name="LoginTheme" parent="FirebaseUI">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_screen_gradient</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
+
+    <style name="FirebaseUI.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="BookmarkTabLayoutItem" >
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
 </resources>

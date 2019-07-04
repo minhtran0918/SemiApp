@@ -14,7 +14,7 @@
         style="@style/DialogTitleLabel"
         android:gravity="center"/>
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/messageTextView"
         android:layout_below="@+id/signInTextView"
         android:layout_centerHorizontal="true"
@@ -24,7 +24,7 @@
         android:textAppearance="@style/InfoDialogMessage"
         android:layout_margin="20dp"  />
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/closeButton"
         android:layout_below="@id/messageTextView"
         android:layout_marginStart="20dp"

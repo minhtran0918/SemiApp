@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp" />
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/closeButton"
         android:layout_below="@id/signInButton"
         android:layout_marginStart="20dp"

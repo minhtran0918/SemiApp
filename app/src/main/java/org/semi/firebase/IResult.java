@@ -1,6 +1,6 @@
 package org.semi.firebase;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public interface IResult<T> {
     public void onResult(T result);

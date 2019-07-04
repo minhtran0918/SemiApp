@@ -1,6 +1,6 @@
 package org.semi.firebase;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -13,7 +13,7 @@ import org.semi.object.Address;
 import org.semi.object.DBContract;
 import org.semi.object.Location;
 import org.semi.object.Store;
-import org.semi.util.ObjectUtils;
+import org.semi.utils.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

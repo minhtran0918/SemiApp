@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="snack_bar_text_size">15sp</dimen>
     <dimen name="mapUpDownButtonSize">40dp</dimen>
     <dimen name="markerImageSize">64dp</dimen>
+
+    <dimen name="toolbar_store_detail_name_text_size">17sp</dimen>
+    <dimen name="toolbar_store_detail_btn_fast_tool_padding">3dp</dimen>
+    <dimen name="toolbar_store_detail_btn_fast_tool_text_size">11sp</dimen>
+
+    <dimen name="store_detail_infor_margin_left">12dp</dimen>
+    <dimen name="store_detail_error_list_text_size">12sp</dimen>
+
+    <dimen name="store_detail_infor_name_text_size">16sp</dimen>
+    <dimen name="store_detail_infor_address_text_size">15sp</dimen>
+    <dimen name="store_detail_infor_total_padding">3dp</dimen>
+
+    <!-- new -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="home_ic_direct_card_corner_radius">0dp</dimen>
+    <dimen name="home_ic_direct_margin_parent">4dp</dimen>
+    <dimen name="home_ic_direct_text_size">12sp</dimen>
+    <dimen name="home_ic_direct_img_size">45dp</dimen>
+
+
+    <dimen name="textsize_item_list_category_store">18sp</dimen>
+    <dimen name="drawable_padding_item_list_category_store">10dp</dimen>
+    <dimen name="padding_item_list_category_store">4dp</dimen>
+    <dimen name="select_address_search_text_marginTop">12dp</dimen>
+    <dimen name="select_address_drawable_padding">12dp</dimen>
+    <dimen name="select_address_search_text_padding">8dp</dimen>
+    <dimen name="select_address_search_text_textSize">18sp</dimen>
+    <dimen name="select_address_recyclerview_margin">2dp</dimen>
+    <dimen name="select_address_text_padding">12dp</dimen>
 </resources>

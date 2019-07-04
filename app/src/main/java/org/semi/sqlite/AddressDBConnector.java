@@ -2,7 +2,7 @@ package org.semi.sqlite;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.semi.object.City;
 import org.semi.object.Country;

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blackTransparent60"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingBottom="6dp"
+        android:text="Lựa chọn phân loại cửa hàng"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="27dp"
+        android:scrollbars="vertical">
+
+        <RadioGroup
+            android:id="@+id/btn_dialog_group_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="?android:attr/selectableItemBackground">
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_store"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_store_40"
+                android:text="@string/dialog_select_category_title_store" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_convenience"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_convenience_40"
+                android:text="@string/dialog_select_category_title_convenience" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_super_market"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_super_market_40"
+                android:text="@string/dialog_select_category_title_super_market" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_mall"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_mall_40"
+                android:text="@string/dialog_select_category_title_mall" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_market"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_market_40"
+                android:text="@string/dialog_select_category_title_market" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_atm"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_atm_40"
+                android:text="@string/dialog_select_category_title_atm" />
+
+            <RadioButton
+                android:id="@+id/btn_dialog_item_pharmacy"
+                style="@style/Btn_Radio_Select_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/all_ic_menu_pharmacy_40"
+                android:text="@string/dialog_select_category_title_pharmacy" />
+
+        </RadioGroup>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

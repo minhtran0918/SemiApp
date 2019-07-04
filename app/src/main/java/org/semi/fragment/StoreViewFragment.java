@@ -2,11 +2,9 @@ package org.semi.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,65 +13,57 @@ import org.semi.R;
 import org.semi.object.IHaveIdAndName;
 import org.semi.object.Location;
 import org.semi.object.Store;
-import org.semi.custom.OnBottomReachedListener;
-import org.semi.custom.OnItemClickListener;
-import org.semi.custom.StoreAdapter;
+import org.semi.adapter.OnBottomReachedListener;
+import org.semi.adapter.OnItemClickListener;
+import org.semi.adapter.StoreAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoreViewFragment extends Fragment {
 
-    private StoreAdapter recyclerViewAdapter;
+    private View mRootView;
+    private RecyclerView mRecyclerView;
+    private StoreAdapter mRcvAdapter;
     private IInteractionWithList<IHaveIdAndName<String>> listener;
 
     public StoreViewFragment() {
-        recyclerViewAdapter = new StoreAdapter(new ArrayList<Store>());
+        mRcvAdapter = new StoreAdapter(new ArrayList<Store>());
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_store_view, container, false);
-        RecyclerView storeRecyclerView = view.findViewById(R.id.storeRecyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        storeRecyclerView.setHasFixedSize(true);
-        storeRecyclerView.setNestedScrollingEnabled(false);
-        storeRecyclerView.setLayoutManager(layoutManager);
-        storeRecyclerView.setAdapter(recyclerViewAdapter);
-        if(listener != null) {
-            recyclerViewAdapter.setOnBottomReachedListener(new OnBottomReachedListener<Store>() {
+        mRootView = inflater.inflate(R.layout.fragment_home, container, false);
+        mRecyclerView = mRootView.findViewById(R.id.recycler_view_fragment_home_list);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mRootView.getContext());
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mRcvAdapter);
+
+        if (listener != null) {
+            mRcvAdapter.setOnBottomReachedListener(new OnBottomReachedListener<Store>() {
                 @Override
                 public void onBottomReached(Store obj, int position) {
                     listener.onScrollToLimit(obj, position);
                 }
             });
-            recyclerViewAdapter.setOnItemClickListener(new OnItemClickListener<Store>() {
+            mRcvAdapter.setOnItemClickListener(new OnItemClickListener<Store>() {
                 @Override
                 public void onItemClick(Store obj) {
                     listener.onItemClick(obj);
                 }
-            });;
+            });
         }
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        return mRootView;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof IInteractionWithList) {
+        if (context instanceof IInteractionWithList) {
             listener = (IInteractionWithList<IHaveIdAndName<String>>) context;
         }
     }
@@ -85,18 +75,18 @@ public class StoreViewFragment extends Fragment {
     }
 
     public void updateDataSet(List<Store> stores, Location location) {
-        recyclerViewAdapter.setDataSet(stores, location);
+        mRcvAdapter.setDataSet(stores, location);
     }
 
     public void addDataSet(List<Store> stores, Location location) {
-        recyclerViewAdapter.addDataSet(stores, location);
+        mRcvAdapter.addDataSet(stores, location);
     }
 
     public void updateLocation(Location location) {
-        recyclerViewAdapter.setLocation(location);
+        mRcvAdapter.setLocation(location);
     }
 
     public int getItemCount() {
-        return recyclerViewAdapter.getItemCount();
+        return mRcvAdapter.getItemCount();
     }
 }

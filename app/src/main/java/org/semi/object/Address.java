@@ -1,6 +1,10 @@
 package org.semi.object;
 
+import android.util.Log;
+
 import java.io.Serializable;
+
+import static org.semi.utils.StringUtils.convertStandardAddress;
 
 public class Address implements Serializable {
     private Country country;
@@ -51,8 +55,8 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        String addressString = String.format("%s, %s, %s, %s, %s", street,
-                town.getName(), district.getName(), city.getName(), country.getName());
-        return addressString;
+        return convertStandardAddress(street, town.getName(), district.getName(), city.getName());
     }
+
+
 }

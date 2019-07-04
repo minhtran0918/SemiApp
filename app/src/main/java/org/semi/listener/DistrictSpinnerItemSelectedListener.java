@@ -7,9 +7,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import org.semi.MyApp;
+import org.semi.utils.Contract;
+import org.semi.utils.MyApp;
 import org.semi.R;
-import org.semi.contract.Contract;
 import org.semi.object.District;
 import org.semi.object.Town;
 import org.semi.sqlite.AddressDBConnector;

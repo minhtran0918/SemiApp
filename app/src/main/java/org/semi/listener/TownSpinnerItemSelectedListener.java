@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.AdapterView;
 
-import org.semi.MyApp;
-import org.semi.contract.Contract;
+import org.semi.utils.Contract;
+import org.semi.utils.MyApp;
 
 public class TownSpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener {
     private IUseAddressSpinner user;

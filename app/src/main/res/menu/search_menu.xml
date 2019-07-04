@@ -4,6 +4,6 @@
     <item android:id="@+id/actionSearchItem"
         android:title="@string/actionSearchTitle"
         android:icon="@drawable/ic_search_white"
-        app:actionViewClass="org.semi.custom.EmptySubmitSearchView"
+        app:actionViewClass="org.semi.adapter.EmptySubmitSearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 </menu>

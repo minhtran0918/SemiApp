@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    <item android:drawable="@color/white" />
+    <item>
+        <shape>
+            <gradient
+                android:startColor="#F6DBD9"
+                android:centerColor="#F2F2F2"
+                android:endColor="#9DD7E0"
+                android:angle="225"/>/>
+        </shape>
+    </item>
+
+    <item
+        android:drawable="@drawable/background_semi_logo"
+        android:height="150dp"
+        android:width="269dp"
+        android:gravity="center_vertical|center_horizontal"
+        />
+</layer-list>

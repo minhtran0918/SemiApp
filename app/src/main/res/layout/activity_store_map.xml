@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StoreMapActivity">
+    tools:context=".views.StoreMapActivity">
 
     <include
-        android:id="@+id/my_toolbar"
+        android:id="@+id/toolbar_home_old"
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,13 +21,13 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/my_toolbar"
+        android:layout_below="@id/toolbar_home_old"
         app:cameraZoom="15"
         app:mapType="terrain"
         app:uiCompass="true"
         app:uiTiltGestures="false"
         app:uiZoomControls="false" />
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"

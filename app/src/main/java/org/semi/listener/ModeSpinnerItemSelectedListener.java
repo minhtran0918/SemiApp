@@ -4,19 +4,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import org.semi.HomeActivity;
+import org.semi.utils.Contract;
+import org.semi.views.HomeOldActivity;
 import org.semi.R;
-import org.semi.contract.Contract;
 import org.semi.object.IHaveIdAndName;
 import org.semi.object.Product;
 import org.semi.object.Store;
-import org.semi.util.ObjectUtils;
+import org.semi.utils.ObjectUtils;
 
 import java.util.List;
 
 public class ModeSpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener {
-    private HomeActivity activity;
-    public ModeSpinnerItemSelectedListener(HomeActivity activity) {
+    private HomeOldActivity activity;
+    public ModeSpinnerItemSelectedListener(HomeOldActivity activity) {
         this.activity = activity;
     }
 

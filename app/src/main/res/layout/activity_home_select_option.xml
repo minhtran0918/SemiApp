@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeSelectOptionActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_home_option"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Text_Style_Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:text="Lọc"
+            android:textAlignment="center" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/lbl_home_option_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="3dp"
+        android:padding="6dp"
+        android:text="Chọn chế độ:"
+        android:textColor="@color/blackTransparent80"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_home_option" />
+    <RadioGroup
+        android:id="@+id/radgrp_home_option_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_home_option_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_home_option_mode"
+        app:layout_constraintTop_toTopOf="@+id/lbl_home_option_mode">
+
+        <RadioButton
+            android:id="@+id/radbtn_home_option_mode_store"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Cửa hàng"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/radbtn_home_option_mode_product"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Hàng hóa"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lbl_home_option_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="3dp"
+        android:padding="6dp"
+        android:text="Tìm:"
+        android:textColor="@color/blackTransparent80"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_home_option_mode" />
+
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent20"
+        app:layout_constraintTop_toBottomOf="@id/lbl_home_option_address" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_home_option_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp"
+        android:weightSum="10"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3">
+
+        <TextView
+            android:id="@+id/txt_home_option_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="3"
+            android:background="@drawable/text_view_rounded_corner"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_home_option_district"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="3"
+            android:background="@drawable/text_view_rounded_corner"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_home_option_ward"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="4"
+            android:background="@drawable/text_view_rounded_corner"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lbl_home_option_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="6dp"
+        android:text="Khu vực tìm: "
+        android:textColor="@color/blackTransparent80"
+
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_home_option_address" />
+
+    <RadioGroup
+        android:id="@+id/radgrp_home_option_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_home_option_range"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_home_option_range"
+        app:layout_constraintTop_toTopOf="@+id/lbl_home_option_range">
+
+        <RadioButton
+            android:id="@+id/radbtn_home_option_range_around"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Quanh đây"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/radbtn_home_option_range_all"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Tất cả"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <com.zhouyou.view.seekbar.SignSeekBar
+        android:id="@+id/seekbar_home_option_range_around"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_home_option_range"
+        app:ssb_max="10"
+        app:ssb_min="0.5"
+        app:ssb_progress="3"
+        app:ssb_second_track_color="@color/material_purple_300"
+        app:ssb_second_track_size="5dp"
+        app:ssb_section_text_color="@color/black"
+        app:ssb_section_text_position="sides"
+        app:ssb_show_progress_in_float="false"
+        app:ssb_show_section_mark="false"
+        app:ssb_show_sign="true"
+        app:ssb_sign_arrow_height="7dp"
+        app:ssb_sign_arrow_width="20dp"
+        app:ssb_sign_color="@color/material_purple_300"
+        app:ssb_track_color="@color/blackTransparent20"
+        app:ssb_track_size="5dp" />
+
+    <TextView
+        android:id="@+id/lbl_home_option_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        android:padding="6dp"
+
+        android:text="Sắp xếp"
+        android:textColor="@color/blackTransparent80"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar_home_option_range_around" />
+
+    <RadioGroup
+        android:id="@+id/radgrp_home_option_sort"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_home_option_sort"
+        tools:layout_editor_absoluteX="63dp">
+
+        <RadioButton
+            android:id="@+id/radbtn_home_option_sort_popular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/btn_radio_select_category"
+            android:buttonTint="@color/material_purple_400"
+            android:drawableLeft="@drawable/all_ic_store_color_30"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:padding="5dp"
+            android:text="Phổ biến"
+            android:textSize="18sp" />
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

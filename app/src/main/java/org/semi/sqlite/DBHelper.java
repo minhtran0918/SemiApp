@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import static org.semi.sqlite.SQLiteDBContract.*;
 
-import org.semi.MyApp;
+import org.semi.utils.MyApp;
 import org.semi.R;
 
 import java.io.BufferedReader;

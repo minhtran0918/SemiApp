@@ -4,17 +4,17 @@ package org.semi.fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import org.semi.MyApp;
+import org.semi.utils.Contract;
+import org.semi.utils.MyApp;
 import org.semi.R;
-import org.semi.contract.Contract;
 import org.semi.firebase.IResult;
 import org.semi.firebase.ProductConnector;
 import org.semi.listener.CitySpinnerItemSelectedListener;
@@ -27,8 +27,8 @@ import org.semi.object.IHaveIdAndName;
 import org.semi.object.Location;
 import org.semi.object.Product;
 import org.semi.sqlite.AddressDBConnector;
-import org.semi.util.LocationUtils;
-import org.semi.util.ObjectUtils;
+import org.semi.utils.LocationUtils;
+import org.semi.utils.ObjectUtils;
 
 import java.util.List;
 
@@ -141,9 +141,9 @@ public class ProductSearchFragment extends Fragment implements ISearch,
         final Bundle emptyError = new Bundle();
         final Bundle loading = new Bundle();
         networkError.putInt(ErrorFragment.IMAGE_RESOURCE, R.drawable.ic_trees);
-        networkError.putString(ErrorFragment.MESSAGE, getString(R.string.networkErrorMessage));
+        networkError.putString(ErrorFragment.MESSAGE, getString(R.string.errorNetworkMessage));
         emptyError.putInt(ErrorFragment.IMAGE_RESOURCE, R.drawable.ic_blank);
-        emptyError.putString(ErrorFragment.MESSAGE, getString(R.string.emptyResultMessage));
+        emptyError.putString(ErrorFragment.MESSAGE, getString(R.string.errorEmptyResultMessage));
         loading.putInt(ErrorFragment.IMAGE_RESOURCE, R.drawable.ic_beach);
         loading.putString(ErrorFragment.MESSAGE, getString(R.string.loadMessage));
         fragmentCreator = new FragmentCreator(R.id.fragmentContainer,

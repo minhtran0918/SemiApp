@@ -1,10 +1,16 @@
 <resources>
-    <string name="privacy_policy_url">https://www.freeprivacypolicy.com/privacy/view/5706ad05bef74fb690e276fa455f1bcc</string>
+    <string name="privacy_policy_url">https://www.freeprivacypolicy.com/privacy/view/32213e0e09fd4cd0ec79a3700faeb77a</string>
+    <string name="temrs_and_conditions_url" translatable="false">https://www.freeprivacypolicy.com/terms/view/874032497c5e75250ec56532b2da7d48</string>
+    <!-- Auth-->
+    <string name="facebook_application_id" translatable="false">603698796783323</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb603698796783323</string>
+    <!-- Place API -->
+    <string name="place_api_key" translatable="false">AIzaSyAMCbC1vPL5YLg5BwvkL-QQUzOvom80uYc</string>
     <string name="app_name">Semi</string>
     <string name="title_activity_maps">Map</string>
     <string name="adg_position_button">Đóng</string>
 
-    <!--Data for HomeActivity mode spinner-->
+    <!--Data for HomeOldActivity mode spinner-->
     <string-array name="searchTypeSpinner">
         <item>Cửa hàng</item>
         <item>Hàng hóa</item>
@@ -18,9 +24,9 @@
     <string name="errorImgDescription">Error</string>
     <string name="mapFlagDescription">Map flag</string>
     <!-- Error Label-->
-    <string name="networkErrorMessage">Không thể kết nối! Hãy thử kiểm tra Internet, Wifi!</string>
-    <string name="emptyResultMessage">Không có kết quả!</string>
-    <string name="locationErrorMessage">Không thể lấy vị trí! Hãy chắc chắn là bạn đã cho phép và bật vị trí!</string>
+    <string name="errorNetworkMessage">Không thể kết nối! Hãy thử kiểm tra Internet, Wifi!</string>
+    <string name="errorEmptyResultMessage">Không có kết quả!</string>
+    <string name="errorLocationMessage">Không thể lấy vị trí! Hãy chắc chắn là bạn đã cho phép và bật vị trí!</string>
     <string name="loadMessage">Đang tải&#8230;</string>
     <string name="actionSearchTitle">Tìm kiếm</string>
     <string name="defaultSearchHint">Cửa hàng, Hàng hóa</string>
@@ -45,4 +51,98 @@
     <string name="bookmark_toolbar_label">Lưu lại</string>
     <string name="directButtonLabel">Chỉ đường</string>
     <string name="infoDialogTitle">Thông báo</string>
+
+    <!--Minh Dev-->
+
+    <!--<string name="app_name">DesignSemi</string>-->
+    <string name="toolbar_store_label">Cửa hàng</string>
+    <string name="toolbar_product_label">Sản phẩm</string>
+    <string name="store_detail_total_product_label">Sản phẩm</string>
+    <string name="store_detail_total_comment_label">Bình luận</string>
+    <string name="store_detail_total_rating_label">Điểm</string>
+    <string name="store_detail_list_produce_label">Sản phẩm</string>
+    <string name="store_detail_more_product_label">Xem thêm sản phẩm</string>
+    <string name="store_detail_hide_product_label">Ẩn tất cả sản phẩm</string>
+    <string name="store_detail_more_comments_label">Xem thêm bình luận</string>
+    <string name="store_detail_product_dialog_price_label">\u0020-\u0020Giá:\u0020</string>
+    <string name="store_detail_product_dialog_close_label">Đóng</string>
+
+    <string name="store_detail_state_open">Mở cửa</string>
+    <string name="store_detail_state_close">Đóng cửa</string>
+    <string name="store_detail_state_contact_title">\u0020\u0020LIÊN HỆ</string>
+    <string name="store_detail_distance_mess">\u0020-\u0020(Từ vị trí hiện tại)</string>
+    <string name="store_detail_error_list_mess">Xin lỗi, không có sản phẩm nào.</string>
+    <string name="store_detail_error_comment_mess">Xin lỗi, không có bình luận nào.</string>
+    <string name="store_detail_product_share_mess">Chia sẻ</string>
+
+    <string name="loadingText">Đang tải&#8230;</string>
+    <string name="directLabel">Chỉ đường</string>
+    <string name="saveLabel">Lưu</string>
+    <string name="commentLabel">Bình luận</string>
+    <string name="shareLabel">Chia sẻ</string>
+
+    <string name="comment_title_label">Tiêu đề</string>
+    <string name="comment_content_label">Viết nội dung bình luận</string>
+    <string name="comment_rating_label">Đánh giá</string>
+    <string name="comment_toolbar_label">Bình luận</string>
+    <string name="comment_no_save_mess">Hiện tại bạn chưa lưu gì cả</string>
+    <string name="dialog_utility_label">Tiện ích</string>
+
+    <!-- new -->
+    <string name="all_title_store">Tạp hóa</string>
+    <string name="all_title_convenience">Tiện lợi 24/7</string>
+    <string name="all_title_super_market">Siêu thị</string>
+    <string name="all_title_mall">Trung tâm thương mại</string>
+    <string name="all_title_market">Chợ</string>
+    <string name="all_title_atm">Trạm ATM</string>
+    <string name="all_title_pharmacy">Y Tế</string>
+    <string name="all_title_more">Tất cả</string>
+
+    <string name="home_ic_direct_title_store">Tạp hóa</string>
+    <string name="home_ic_direct_title_convenience">Tiện lợi 24/7</string>
+    <string name="home_ic_direct_title_super_market">Siêu thị</string>
+    <string name="home_ic_direct_title_mall">"Trung tâm\nthương mại"</string>
+    <string name="home_ic_direct_title_market">Chợ</string>
+    <string name="home_ic_direct_title_atm">Trạm ATM</string>
+    <string name="home_ic_direct_title_pharmacy">Y tế</string>
+    <string name="home_ic_direct_title_more">Tất cả</string>
+
+    <string name="dialog_select_category_title_store">Tạp hóa</string>
+    <string name="dialog_select_category_title_convenience">Tiện lợi 24/7</string>
+    <string name="dialog_select_category_title_super_market">Siêu thị</string>
+    <string name="dialog_select_category_title_mall">Trung tâm thương mại</string>
+    <string name="dialog_select_category_title_market">Chợ</string>
+    <string name="dialog_select_category_title_atm">Trạm ATM</string>
+    <string name="dialog_select_category_title_pharmacy">Y tế</string>
+
+    <string name="home_select_category_title_store">Tạp hóa</string>
+    <string name="home_select_category_title_convenience">Tiện lợi 24/7</string>
+    <string name="home_select_category_title_super_market">Siêu thị</string>
+    <string name="home_select_category_title_mall">Trung tâm thương mại</string>
+    <string name="home_select_category_title_market">Chợ</string>
+    <string name="home_select_category_title_atm">Trạm ATM</string>
+    <string name="home_select_category_title_pharmacy">Y tế</string>
+    <string name="home_select_category_title_all">Tất cả</string>
+
+
+    <string name="select_address_non_ward_message">*Nếu bạn rõ Phường, hãy chọn \'Không rõ\' nhé</string>
+    <string name="select_address_text_search_hint">Tìm nhanh</string>
+    <string name="select_address_toolbar_label">Chọn địa chỉ cửa hàng</string>
+    <string name="title_activity_add_store_choose_location">Map</string>
+    <string name="select_address_choose_location_label">Chọn vị trí cửa hàng</string>
+
+    <string name="add_store_backpress_dialog_title">Xác nhận thoát</string>
+    <string name="add_store_backpress_dialog_message">Thông tin nhập của bạn sẽ không được lưu lại</string>
+    <string name="add_store_backpress_dialog_positive_btn">OK</string>
+    <string name="add_store_backpress_dialog_negative_btn">Xem lại</string>
+
+    <string name="add_store_send_data_dialog_title">Xác nhận thêm địa điểm mới</string>
+    <string name="add_store_send_data_dialog_message">Chân thành cảm ơn đóng góp của bạn.\nThông tin địa điểm của bạn sẽ góp phần xây dựng ứng dụng lớn mạnh.</string>
+    <string name="add_store_send_data_dialog_positive_btn">OK</string>
+    <string name="add_store_send_data_dialog_negative_btn">Xem lại</string>
+    <string name="add_store_select_image_toolbar_title">Chọn hình ảnh</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

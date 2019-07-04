@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:width="33dp"
+        android:height="33dp"
+        android:drawable="@drawable/all_ic_store_color_512" />
+</layer-list>

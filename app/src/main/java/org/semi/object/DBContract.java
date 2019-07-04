@@ -55,4 +55,27 @@ public class DBContract {
         public static final String USER_PHOTO_URL = "userPhotoURL";
         public static final String USER_RATING = "userRating";
     }
+    public static class VerifyStore {
+        private VerifyStore(){ }
+        public static final String COLLECTION = "verify_store";
+        public static final String FULL_NAME = "fullName";
+        public static final String TYPE = "type";
+        public static final String ADDRESS = "address";
+
+        public static final String ADDRESS_STREET = "street";
+        public static final String ADDRESS_TOWN = "town";
+        public static final String ADDRESS_DISTRICT = "district";
+        public static final String ADDRESS_CITY = "city";
+
+        public static final String GEO = "geo";
+        public static final String GEO_LATITUDE = "_latitude";
+        public static final String GEO_LONGITUDE = "_longitude";
+
+        public static final String CONTACT = "contact";
+
+        public static final String START_END = "startEnd";
+
+        public static final String DESCRIPTION = "description";
+        public static final String IMAGE_URL = "imageURL";
+    }
 }

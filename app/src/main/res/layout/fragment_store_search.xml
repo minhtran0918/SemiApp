@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <android.support.v7.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/countrySpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
                 android:background="@drawable/spinner_bg"
                 android:padding="5dp"
                 android:popupBackground="@drawable/popup_spinner_bg" />
-            <android.support.v7.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/citySpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:background="@drawable/spinner_bg"
                 android:padding="5dp"
                 android:popupBackground="@drawable/popup_spinner_bg" />
-            <android.support.v7.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/districtSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:background="@drawable/spinner_bg"
                 android:padding="5dp"
                 android:popupBackground="@drawable/popup_spinner_bg" />
-            <android.support.v7.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/townSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,7 +1,7 @@
 <resources>
-    <!--
+    <!--AIzaSyAhV4-A77-edYPHfAXsj9RIXdF7vkvjQVY
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=72:26:2D:2F:CF:A1:C1:7D:E6:9E:2F:A1:1C:3B:0F:00:D2:B1:C3:67%3Borg.semi
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=9D:C0:9F:52:6C:49:EC:EC:90:F0:B7:BF:C6:63:36:6A:56:74:E0:C6%3Borg.semi
     -->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDCvaXM-Xk2eiOC1gu_Cwvh2aqRUa56Kw8</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAMCbC1vPL5YLg5BwvkL-QQUzOvom80uYc</string>
 </resources>

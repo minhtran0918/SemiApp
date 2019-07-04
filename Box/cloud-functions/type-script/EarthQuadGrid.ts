@@ -6,7 +6,7 @@ export class EarthQuadGrid {
     public static readonly TOP_LEFT: LatLng = new LatLng(180, -180);
     public static readonly BOTTOM_RIGHT: LatLng = new LatLng(-180, 180);
     public static readonly DIMEN: number = EarthQuadGrid.TOP_LEFT.latitude - EarthQuadGrid.BOTTOM_RIGHT.latitude;
-    public static readonly MAX_GRID_NUMBER: number = 68719476735;
+    public static readonly MAX_GRID_NUMBER: number = 68719476735; //4^18:
 
     constructor() {
         return EarthQuadGrid.instance;
@@ -58,11 +58,11 @@ export class EarthQuadGrid {
 
     public getCollisionLevel(dimen): number {
         const tmpLevel: number = Math.floor(Math.log2(EarthQuadGrid.DIMEN / dimen) - 1);
-        return (tmpLevel > EarthQuadGrid.MAX_LEVELS) ? EarthQuadGrid.MAX_LEVELS : tmpLevel; 
+        return (tmpLevel > EarthQuadGrid.MAX_LEVELS) ? EarthQuadGrid.MAX_LEVELS : tmpLevel;
     }
 
     public searchCollisionBoxes(center: LatLng, dimen: number): Set<number> {
-        const level: number = this.getCollisionLevel(dimen); 
+        const level: number = this.getCollisionLevel(dimen);
         const halfDimen: number = dimen / 2;
         const pointSet: Set<number> = new Set();
         //anti-clockwise
@@ -75,5 +75,5 @@ export class EarthQuadGrid {
         .add(this.searchPath(new LatLng(center.latitude + halfDimen, center.longitude + halfDimen),
                 level));
         return pointSet;
-    } 
+    }
 }

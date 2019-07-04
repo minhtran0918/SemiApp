@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="org.semi.views.UserAddStoreActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_add_store"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Text_Style_Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:text="Thêm cửa hàng"
+            android:textAlignment="center" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/lbl_title_add_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blackTransparent10"
+        android:padding="8dp"
+        android:text="Thông tin cửa hàng *"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_add_store" />
+
+    <EditText
+        android:id="@+id/txt_add_name_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableLeft="@drawable/all_ic_store_24"
+        android:drawablePadding="12dp"
+        android:hint="Tên cửa hàng"
+        android:imeOptions="actionNext"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_title_add_store" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_add_name_store" />
+
+    <TextView
+        android:id="@+id/txt_select_store_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@drawable/all_ic_option_menu"
+        android:drawableRight="@drawable/all_ic_arrow_down_24"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="Phân loại cửa hàng"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_select_store_category" />
+
+    <EditText
+        android:id="@+id/txt_add_store_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableLeft="@drawable/all_ic_menu_locate_24"
+        android:drawablePadding="12dp"
+        android:hint="Địa chỉ"
+        android:imeOptions="actionDone"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_add_store_address" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_home_option_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp"
+        android:weightSum="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3">
+
+        <TextView
+            android:id="@+id/txt_home_option_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="3"
+            android:background="@drawable/text_view_rounded_corner"
+            android:onClick="onClickSelectAddress"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_home_option_district"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="3"
+            android:background="@drawable/text_view_rounded_corner"
+            android:onClick="onClickSelectAddress"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_home_option_ward"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="4"
+            android:background="@drawable/text_view_rounded_corner"
+            android:onClick="onClickSelectAddress"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_home_option_address" />
+
+    <TextView
+        android:id="@+id/txt_select_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@drawable/all_ic_location_24"
+        android:drawableRight="@drawable/all_ic_arrow_right_24"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:onClick="onClickSelectLocationOnMap"
+        android:padding="8dp"
+        android:text="@string/select_address_choose_location_label"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view4" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent10"
+        app:layout_constraintTop_toBottomOf="@id/txt_select_location" />
+
+    <TextView
+        android:id="@+id/lbl_title_add_store_more"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/blackTransparent10"
+        android:padding="6dp"
+        android:text="Thông tin khác"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view5" />
+
+    <EditText
+        android:id="@+id/txt_add_store_phone_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableLeft="@drawable/all_ic_phone_24"
+        android:drawablePadding="12dp"
+        android:hint="Số điện thoại"
+        android:imeOptions="actionDone"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_title_add_store_more" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent10"
+        app:layout_constraintTop_toBottomOf="@id/txt_add_store_phone_number" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_select_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view6">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5.3"
+            android:drawableLeft="@drawable/all_ic_time_24"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="Giờ mở cửa"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txt_add_store_select_time_open"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
+            android:background="@drawable/text_view_rounded_corner_blue"
+            android:onClick="onClickSelectTimeOpen"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:text="00:00"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_add_store_select_time_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="0.7"
+            android:text="đến"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txt_add_store_select_time_close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="2"
+            android:background="@drawable/text_view_rounded_corner_blue"
+            android:onClick="onClickSelectTimeClose"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:text="24:00"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blackTransparent10"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_select_time" />
+
+    <!-- <EditText
+         android:id="@+id/txt_add_address_description"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:background="@null"
+         android:drawableStart="@drawable/all_ic_description_24"
+         android:drawablePadding="12dp"
+         android:gravity="start"
+         android:hint="Mô tả"
+         android:imeOptions="actionDone"
+         android:padding="8dp"
+         android:textSize="17sp"
+         app:layout_constraintBottom_toTopOf="@id/btn_test_function"
+         app:layout_constraintTop_toBottomOf="@id/view7" />-->
+
+    <RelativeLayout
+        android:id="@+id/layout_add_store_description"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_select_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view7">
+
+        <ImageView
+            android:id="@+id/img_add_store_ic_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/all_ic_description_24" />
+
+        <EditText
+            android:id="@+id/txt_add_store_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_add_store_ic_description"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="Mô tả"
+            android:imeOptions="actionDone"
+            android:minLines="3"
+            android:padding="8dp"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_select_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:onClick="onClickSelectImage"
+        android:text="Chọn hình ảnh"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_add_store_select_image_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/material_green_500"
+        android:minWidth="20dp"
+        android:padding="2dp"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/btn_select_image"
+        app:layout_constraintTop_toTopOf="@+id/btn_select_image" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,16 +3,18 @@ package org.semi.listener;
 import android.view.View;
 import android.widget.AdapterView;
 
-import org.semi.HomeActivity;
+import org.semi.views.HomeActivity;
+import org.semi.views.HomeOldActivity;
 
 public class TypeSpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener {
-    private HomeActivity activity;
+    private HomeOldActivity old_activity;
+    private HomeActivity mActivity;
     public TypeSpinnerItemSelectedListener(HomeActivity activity) {
-        this.activity = activity;
+        mActivity = activity;
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        activity.loadAllNewStoresOrProducts();
+        //mActivity.loadAllNewStoresOrProducts();
     }
 
     @Override

@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            app:cardCornerRadius="@dimen/home_ic_direct_card_corner_radius"
+            app:layout_scrollFlags="scroll|snap">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/home_ic_direct_margin_parent">
+
+                <LinearLayout
+                    android:id="@+id/comp_home_cardview_direct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_store_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_store"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_convenience"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_convenience_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_convenience"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_super_market"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_super_market_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_super_market"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_mall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_mall_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_mall"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/comp_home_cardview_direct">
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_market"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_market_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_market"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_atm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_atm_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_atm"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_pharmacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_pharmacy_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_pharmacy"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_ic_direct_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/home_ic_direct_img_size"
+                            android:layout_height="@dimen/home_ic_direct_img_size"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/all_ic_menu_more_256" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/home_ic_direct_title_more"
+                            android:textAlignment="center"
+                            android:textColor="@color/home_ic_direct_text_color"
+                            android:textSize="@dimen/home_ic_direct_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="6dp"
+                android:weightSum="3">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/home_ic_option_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:id="@+id/txt_home_option_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Danh mục :"
+                        android:textAlignment="center"
+                        android:textColor="@color/home_ic_direct_text_color"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txt_home_category_state"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="Tất cả"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/home_ic_direct_text_color"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ic_home_option_more"
+                        app:layout_constraintStart_toStartOf="@+id/txt_home_option_category"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_home_option_category"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/ic_home_option_more"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/all_ic_option_menu"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.92"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="3dp"
+                    android:background="@color/black" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/home_ic_option_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:id="@+id/txt_home_option_locate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Khu vực :"
+                        android:textAlignment="center"
+                        android:textColor="@color/home_ic_direct_text_color"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:singleLine="true"
+                        android:text="TP. Hồ Chí Minh"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/home_ic_direct_text_color"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ic_home_option_more_2"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/txt_home_option_locate"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_home_option_locate"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/ic_home_option_more_2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/all_ic_menu_locate_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.92"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="3dp"
+                    android:background="@color/black" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/home_ic_option_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:id="@+id/txt_home_option_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Lọc :"
+                        android:textAlignment="center"
+                        android:textColor="@color/home_ic_direct_text_color"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="Quanh đây"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/home_ic_direct_text_color"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ic_home_option_more_3"
+                        app:layout_constraintStart_toStartOf="@+id/txt_home_option_sort"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_home_option_sort"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/ic_home_option_more_3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="8dp"
+
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/all_ic_option_sort"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.92"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_home_state_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:paddingStart="8dp"
+                android:text="Trạng thái chọn ??"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/recycler_view_fragment_home_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_fragment_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_fragment_home_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clipToPadding="false" />
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
