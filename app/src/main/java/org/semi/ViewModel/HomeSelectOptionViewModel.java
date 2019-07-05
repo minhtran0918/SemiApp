@@ -25,6 +25,9 @@ public class HomeSelectOptionViewModel extends AndroidViewModel {
     //Range
     public MutableLiveData<Integer> modeRange = new MutableLiveData<>();
 
+    //500-10000
+    public MutableLiveData<Float> modeRangeValue = new MutableLiveData<>();
+
     //Sort
     public MutableLiveData<Integer> modeSort = new MutableLiveData<>();
 

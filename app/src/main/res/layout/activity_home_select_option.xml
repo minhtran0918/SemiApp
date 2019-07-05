@@ -35,10 +35,11 @@
         android:padding="6dp"
         android:text="Chọn chế độ:"
         android:textColor="@color/blackTransparent80"
-        android:textSize="19sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_home_option" />
+
     <RadioGroup
         android:id="@+id/radgrp_home_option_mode"
         android:layout_width="wrap_content"
@@ -82,14 +83,13 @@
         android:id="@+id/lbl_home_option_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
         android:layout_marginTop="3dp"
         android:padding="6dp"
         android:text="Tìm:"
         android:textColor="@color/blackTransparent80"
-        android:textSize="19sp"
+        android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/lbl_home_option_mode"
         app:layout_constraintTop_toBottomOf="@id/lbl_home_option_mode" />
 
 
@@ -104,10 +104,10 @@
         android:id="@+id/linearLayout_home_option_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingVertical="8dp"
         android:weightSum="10"
-        android:background="?attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3">
@@ -159,11 +159,11 @@
         android:layout_marginTop="8dp"
         android:padding="6dp"
         android:text="Khu vực tìm: "
-        android:textColor="@color/blackTransparent80"
 
-        android:textSize="19sp"
+        android:textColor="@color/blackTransparent80"
+        android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/lbl_home_option_address"
         app:layout_constraintTop_toBottomOf="@id/linearLayout_home_option_address" />
 
     <RadioGroup
@@ -212,6 +212,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -230,7 +231,7 @@
         app:ssb_sign_arrow_width="20dp"
         app:ssb_sign_color="@color/material_purple_300"
         app:ssb_track_color="@color/blackTransparent20"
-        app:ssb_track_size="5dp"/>
+        app:ssb_track_size="5dp" />
 
     <TextView
         android:id="@+id/lbl_home_option_sort"
@@ -238,11 +239,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="8dp"
-        android:padding="6dp"
 
+        android:padding="6dp"
         android:text="Sắp xếp"
         android:textColor="@color/blackTransparent80"
-        android:textSize="19sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekbar_home_option_range_around" />
@@ -257,6 +258,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/lbl_home_option_sort"
         tools:layout_editor_absoluteX="63dp">
+
         <RadioButton
             android:id="@+id/radbtn_home_option_sort_range"
             android:layout_width="match_parent"
@@ -270,6 +272,7 @@
             android:padding="5dp"
             android:text="Tất cả"
             android:textSize="18sp" />
+
         <RadioButton
             android:id="@+id/radbtn_home_option_sort_popular"
             android:layout_width="match_parent"
@@ -290,9 +293,9 @@
         android:id="@+id/home_option_test_func"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="testFunc"
         android:text="Button"
         tools:layout_editor_absoluteX="133dp"
-        tools:layout_editor_absoluteY="643dp"
-        android:onClick="testFunc"/>
+        tools:layout_editor_absoluteY="643dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

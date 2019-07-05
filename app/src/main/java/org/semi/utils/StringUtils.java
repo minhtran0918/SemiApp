@@ -37,9 +37,9 @@ public final class StringUtils {
     public static String toDistanceFormat(double distance) {
         double inMeter = distance * 1000;
         if (inMeter < 1000) {
-            return String.format("%.1fm", inMeter);
+            return String.format("%.1f m", inMeter);
         } else {
-            return String.format("%.1fkm", distance);
+            return String.format("%.1f km", distance);
         }
     }
 
