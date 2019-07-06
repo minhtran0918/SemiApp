@@ -13,6 +13,11 @@ public final class Contract {
     //LocationToAddress Handler Bundle key
     public static final String LOCATION_TO_ADDRESS_KEY = "location_to_address";
 
+    //ALL ADDRESS
+    public static final int ALL_ADDRESS_CITY_DEFAULT = 79;
+    public static final int ALL_ADDRESS_DISTRICT_DEFAULT = 762;
+    public static final int ALL_ADDRESS_WARD_DEFAULT = 0;
+
     //
     public static final int MODE_MENU_HOME = 1111;
     public static final int MODE_MENU_DISCOVER = 2222;
@@ -38,12 +43,12 @@ public final class Contract {
 
     //Menu home -> option select
     //Range
-    public static final int MODE_LOAD_RANGE_AROUND = 50;
-    public static final int MODE_LOAD_RANGE_ALL = 51;
+    public static final int MODE_LOAD_RANGE_AROUND = 0;
+    public static final float MODE_LOAD_RANGE_AROUND_VALUE_DEFAULT = 0.5f;
+    public static final int MODE_LOAD_RANGE_ALL = 1;
     //Sort
-    public static final int MODE_LOAD_SORT = 131;
-    public static final int MODE_LOAD_SORT_RANGE = 132;
-    public static final int MODE_LOAD_SORT_POPULAR = 133;
+    public static final int MODE_LOAD_SORT_RANGE = 0;
+    public static final int MODE_LOAD_SORT_POPULAR = 1;
 
 
     public static final float[] RATING_LEVELS = {0, 2.5f, 5};

@@ -15,8 +15,17 @@ public class SharedPrefs {
     private static SharedPrefs mInstance;
     private SharedPreferences mSharedPreferences;
 
-    private static final String STORE_ID_KEY = "store_id_key";
-    private static final String LIST_STORE_SAVE = "list_store_save_key";
+    private static final String STORE_ID_KEY = "store_id";
+    private static final String LIST_STORE_SAVE = "list_store_save";
+
+    public static final String KEY_ALL_ADDRESS_CITY = "all_address_city";
+    public static final String KEY_ALL_ADDRESS_DISTRICT = "all_address_district";
+    public static final String KEY_ALL_ADDRESS_WARD = "store_or_product";
+
+    public static final String KEY_OPTION_LOAD_STORE_OR_PRODUCT = "option_store_or_product";
+    public static final String KEY_OPTION_RANGE = "option_range";
+    public static final String KEY_OPTION_RANGE_VALUE = "option_range_value";
+    public static final String KEY_OPTION_SORT = "option_sort";
 
     private SharedPrefs() {
         mSharedPreferences = MyApp.getContext()

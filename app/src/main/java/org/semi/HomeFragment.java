@@ -40,6 +40,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.semi.ViewModel.HomeViewModel;
 import org.semi.adapter.HomeListAdapter;
+import org.semi.databases.SharedPrefs;
 import org.semi.firebase.IResult;
 import org.semi.firebase.ProductConnector;
 import org.semi.firebase.StoreConnector;
@@ -51,6 +52,8 @@ import org.semi.utils.ObjectUtils;
 import org.semi.views.StoreDetailActivity;
 
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment {
 
@@ -64,7 +67,6 @@ public class HomeFragment extends Fragment {
     private static HomeFragment sHomeFragment;
     private HomeViewModel mHomeViewModel;
     private View mRootView;
-    private View.OnClickListener mOnClickListenerRcv;
     private TextView mTxtState, mTxtCategoryState;
 
     private NestedScrollView mNestedScrollView;
@@ -77,7 +79,7 @@ public class HomeFragment extends Fragment {
     //private IInteractionWithList<IHaveIdAndName<String>> listener;
 
     private boolean loading = true;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    private int pastVisiblesItems, visibleItemCount, totalItemCount;
     private int RC_SELECT_CATEGORY = 11;
     private int RC_SELECT_OPTION = 22;
 
@@ -161,28 +163,22 @@ public class HomeFragment extends Fragment {
         //ViewModel
         mHomeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
 
-        mHomeViewModel.listStore.observe(this, new Observer<List<Store>>() {
-            @Override
-            public void onChanged(@Nullable List<Store> stores) {
-                mHomeRcvAdapter.setDataSet(stores, mHomeViewModel.currentLocation.getValue());
-            }
+        mHomeViewModel.cityId.observe(this, integer -> {
+            Log.d("Semi", "a");
         });
-        mHomeViewModel.categoryStore.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                mSwipeRefreshLayout.setRefreshing(true);
-                loadAllNewStoresOrProducts();
-            }
+
+        mHomeViewModel.listStore.observe(this, stores ->
+                mHomeRcvAdapter.setDataSet(stores, mHomeViewModel.currentLocation.getValue()));
+        mHomeViewModel.categoryStore.observe(this, integer -> {
+            mSwipeRefreshLayout.setRefreshing(true);
+            loadAllNewStoresOrProducts();
         });
         //Listener
-        mOnClickListenerRcv = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
-                int position = viewHolder.getAdapterPosition();
-                Toast.makeText(getActivity(), "position: " + position, Toast.LENGTH_SHORT).show();
-                showStoreDetail(mHomeViewModel.listStore.getValue().get(position));
-            }
+        View.OnClickListener mOnClickListenerRcv = v -> {
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+            int position = viewHolder.getAdapterPosition();
+            Toast.makeText(getActivity(), "position: " + position, Toast.LENGTH_SHORT).show();
+            showStoreDetail(mHomeViewModel.listStore.getValue().get(position));
         };
         mHomeRcvAdapter.setOnItemClickListener(mOnClickListenerRcv);
         mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -197,7 +193,7 @@ public class HomeFragment extends Fragment {
                         if (mShouldLoadMoreData && !mSwipeRefreshLayout.isRefreshing()) {
                             if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                                 Log.d("Semi", "last");
-                                if (mHomeViewModel.modeLoadDataInHome.getValue() == Contract.MODE_HOME_LOAD_STORE) {
+                                if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
                                     int size = mHomeRcvAdapter.getItemCount();
                                     if (size != 0) {
                                         loadStoresAt(mHomeRcvAdapter.getItemCount());
@@ -215,39 +211,30 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadAllNewStoresOrProducts();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> loadAllNewStoresOrProducts());
     }
 
-    public View.OnClickListener mOnClickOption = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent callActivity;
-            switch (v.getId()) {
-                case R.id.home_ic_option_category:
-                    callActivity = new Intent(getActivity(), HomeSelectCategoryActivity.class);
-                    startActivityForResult(callActivity, RC_SELECT_CATEGORY);
-                    break;
+    private View.OnClickListener mOnClickOption = v -> {
+        Intent callActivity;
+        switch (v.getId()) {
+            case R.id.home_ic_option_category:
+                callActivity = new Intent(getActivity(), HomeSelectCategoryActivity.class);
+                startActivityForResult(callActivity, RC_SELECT_CATEGORY);
+                break;
 
-                case R.id.home_ic_option_address:
-                    callActivity = new Intent(getActivity(), HomeSelectOptionActivity.class);
-                    startActivityForResult(callActivity, RC_SELECT_OPTION);
-                    break;
+            case R.id.home_ic_option_address:
+                callActivity = new Intent(getActivity(), HomeSelectOptionActivity.class);
+                startActivityForResult(callActivity, RC_SELECT_OPTION);
+                break;
 
-                case R.id.home_ic_option_filter:
-                    callActivity = new Intent(getActivity(), HomeSelectOptionActivity.class);
-                    startActivityForResult(callActivity, RC_SELECT_OPTION);
-                    break;
-
-            }
+            case R.id.home_ic_option_filter:
+                callActivity = new Intent(getActivity(), HomeSelectOptionActivity.class);
+                startActivityForResult(callActivity, RC_SELECT_OPTION);
+                break;
         }
     };
 
-    public View.OnClickListener mOnClickListenerDirect = new View.OnClickListener() {
+    private View.OnClickListener mOnClickListenerDirect = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int selectCategory;
@@ -317,12 +304,12 @@ public class HomeFragment extends Fragment {
         LocationUtils.checkAndRequestLocationSettings(getActivity(), null);
     }
 
-    public void loadAllNewStoresOrProducts() {
+    private void loadAllNewStoresOrProducts() {
         mShouldLoadMoreData = true;
         getLastLocation(new IResult<android.location.Location>() {
             @Override
             public void onResult(@NonNull android.location.Location location) {
-                int mode_load = mHomeViewModel.modeLoadDataInHome.getValue();
+                int mode_load = mHomeViewModel.modeStoreOrProduct.getValue();
                 if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
                     loadAllNewStores();
                 } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
@@ -342,7 +329,7 @@ public class HomeFragment extends Fragment {
 
 
     //load from offset 0,discard old data in RecyclerView and load new data to it.
-    public void loadAllNewStores() {
+    private void loadAllNewStores() {
         if (currentLocation == null) {
             //Location error
             DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorLocationMessage));
@@ -350,7 +337,7 @@ public class HomeFragment extends Fragment {
             return;
         }
         int type = mHomeViewModel.categoryStore.getValue(); //
-        storeConnector.getNearbyStores(currentLocation, 0, Contract.NUM_STORES_PER_REQUEST, type,
+        storeConnector.getNearbyStores(currentLocation, 0, 2f, Contract.NUM_STORES_PER_REQUEST, type,
                 new IResult<List<Store>>() {
                     @Override
                     public void onResult(List<Store> result) {
@@ -383,7 +370,7 @@ public class HomeFragment extends Fragment {
             return;
         }
         int store_type = mHomeViewModel.categoryStore.getValue();
-        storeConnector.getNearbyStores(currentLocation, position, Contract.NUM_STORES_PER_REQUEST, store_type,
+        storeConnector.getNearbyStores(currentLocation, position, 0.5f, Contract.NUM_STORES_PER_REQUEST, store_type,
                 new IResult<List<Store>>() {
                     @Override
                     public void onResult(List<Store> result) {
@@ -410,7 +397,7 @@ public class HomeFragment extends Fragment {
     }
 
     @SuppressLint("MissingPermission")
-    public void getLastLocation(final IResult<android.location.Location> result) {
+    private void getLastLocation(final IResult<android.location.Location> result) {
         final Task<android.location.Location> task = LocationUtils.getLastLocation();
         task.addOnSuccessListener(getActivity(), new OnSuccessListener<android.location.Location>() {
             @Override
@@ -450,7 +437,7 @@ public class HomeFragment extends Fragment {
                     currentLocation = ObjectUtils.toMyLocation(result);
                     //Fix
                     //final int modePosition = searchModeSpinner.getSelectedItemPosition();
-                    int modePosition = mHomeViewModel.modeLoadDataInHome.getValue();
+                    int modePosition = mHomeViewModel.modeStoreOrProduct.getValue();
                     if (modePosition == Contract.STORE_MODE) {
                         loadAllNewStores();
                     } else if (modePosition == Contract.PRODUCT_MODE) {
@@ -465,15 +452,24 @@ public class HomeFragment extends Fragment {
         });
     }*/
 
-    /*@Override
+    @Override
     public void onActivityResult(int requestCode, int result, Intent data) {
-        if (result == RESULT_OK) {
-            if (requestCode == LocationUtils.RESOLUTION_CODE) {
-                //Settings OK, load stores
-                loadFirst();
-            }
+        if (requestCode == RC_SELECT_OPTION && result == RESULT_OK) {
+            mHomeViewModel.cityId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class));
+            Toast.makeText(getActivity(), mHomeViewModel.cityId.getValue().toString(), Toast.LENGTH_SHORT).show();
         }
-    }*/
+    }
+
+    private void loadDataConfig() {
+        //
+       /* SharedPrefs.getInstance().put(SharedPrefs.KEY_ALL_ADDRESS_CITY, mHomeOptionViewModel.cityId.getValue());
+        SharedPrefs.getInstance().put(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, mHomeOptionViewModel.districtId.getValue());
+        SharedPrefs.getInstance().put(SharedPrefs.KEY_ALL_ADDRESS_WARD, mHomeOptionViewModel.wardId.getValue());
+        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, mHomeOptionViewModel.modeStoreOrProduct.getValue());
+        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_RANGE, mHomeOptionViewModel.modeRange.getValue());
+        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_RANGE_VALUE, mHomeOptionViewModel.modeRangeValue.getValue());
+        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_SORT, mHomeOptionViewModel.modeSort.getValue());*/
+    }
 
 
 }

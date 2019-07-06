@@ -5,13 +5,17 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -234,7 +238,7 @@ public class HomeOldActivity extends AppCompatActivity implements IInteractionWi
             return;
         }
         fragmentCreator.setCurrentFragment(LOAD_VIEW);
-        storeConnector.getNearbyStores(currentLocation, 0, Contract.NUM_STORES_PER_REQUEST, selectedItem.getId(),
+        storeConnector.getNearbyStores(currentLocation, 0, 0.5f, Contract.NUM_STORES_PER_REQUEST, selectedItem.getId(),
                 new IResult<List<Store>>() {
                     @Override
                     public void onResult(List<Store> result) {
@@ -353,7 +357,7 @@ public class HomeOldActivity extends AppCompatActivity implements IInteractionWi
         if (selectedItem == null) {
             return;
         }
-        storeConnector.getNearbyStores(currentLocation, position, Contract.NUM_STORES_PER_REQUEST, selectedItem.getId(),
+        storeConnector.getNearbyStores(currentLocation, position, 0.5f, Contract.NUM_STORES_PER_REQUEST, selectedItem.getId(),
                 new IResult<List<Store>>() {
                     @Override
                     public void onResult(List<Store> result) {

@@ -1,6 +1,7 @@
 package org.semi.firebase;
 
 import androidx.annotation.NonNull;
+
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,10 +26,12 @@ import static org.semi.firebase.CFContract.*;
 
 public class StoreConnector {
     private static StoreConnector instance;
-    private StoreConnector() { }
 
-    public void getNearbyStores(Location location, int from, int numResults, int storeType,
-                               final IResult<List<Store>> IResult) {
+    private StoreConnector() {
+    }
+
+    public void getNearbyStores(Location location, int from, float distance, int numResults, int storeType,
+                                final IResult<List<Store>> IResult) {
         String[] selectedFields = {
                 DBContract.Store.TITLE, DBContract.Store.IMAGE_URL, DBContract.Store.ADDRESS,
                 DBContract.Store.GEO, DBContract.Store.RATING
@@ -38,6 +41,8 @@ public class StoreConnector {
         data.put(NearbyStores.CENTER_LATITUDE, location.getLatitude());
         data.put(NearbyStores.CENTER_LONGITUDE, location.getLongitude());
         data.put(NearbyStores.FROM, from);
+        //Hình vuông 1km
+        data.put(NearbyStores.DISTANCE, distance * 2);
         data.put(NearbyStores.STORE_TYPE, storeType);
         data.put(NearbyStores.SELECTED_FIELDS, Arrays.asList(selectedFields));
         data.put(NearbyStores.NUM_RESULTS, numResults);
@@ -66,12 +71,12 @@ public class StoreConnector {
                         IResult.onResult(stores);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("my_error", e.getMessage());
-                        IResult.onFailure(e);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("my_error", e.getMessage());
+                IResult.onFailure(e);
+            }
+        });
     }
 
     public void getNearbyStoresByKeywords(Location location,
@@ -117,12 +122,12 @@ public class StoreConnector {
                         IResult.onResult(stores);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("my_error", e.getMessage());
-                        IResult.onFailure(e);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("my_error", e.getMessage());
+                IResult.onFailure(e);
+            }
+        });
     }
 
     //get stores containing desired products
@@ -219,12 +224,12 @@ public class StoreConnector {
                         IResult.onResult(stores);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("my_error", e.getMessage());
-                        IResult.onFailure(e);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("my_error", e.getMessage());
+                IResult.onFailure(e);
+            }
+        });
     }
 
     public void getStoreById(String storeId, final IResult<Store> IResult) {
@@ -237,7 +242,7 @@ public class StoreConnector {
                     @Override
                     public void onSuccess(HttpsCallableResult httpsCallableResult) {
                         Map<String, Object> map = (Map<String, Object>) httpsCallableResult.getData();
-                        if(map != null) {
+                        if (map != null) {
                             //Easy to get those data
                             Store store = new Store();
                             store.setId((String) map.get(DBContract.ID));
@@ -246,51 +251,51 @@ public class StoreConnector {
                             store.setImageURL((String) map.get(DBContract.Store.IMAGE_URL));
                             store.setDescription((String) map.get(DBContract.Store.DESCRIPTION));
                             store.setContact((String) map.get(DBContract.Store.CONTACT));
-                            store.setRating(((Number)map.get(DBContract.Store.RATING)).floatValue());
-                            store.setStartEnd((String)map.get(DBContract.Store.START_END));
+                            store.setRating(((Number) map.get(DBContract.Store.RATING)).floatValue());
+                            store.setStartEnd((String) map.get(DBContract.Store.START_END));
                             store.setAddress(getAddress(map));
                             store.setType(
                                     ObjectUtils.getStoreType(
-                                            ((Number)map.get(DBContract.Store.TYPE)).intValue()
-                                            ));
+                                            ((Number) map.get(DBContract.Store.TYPE)).intValue()
+                                    ));
                             store.setUtilities(getStoreUtilities(map));
                             store.setGeo(getGeo(map));
-                            store.setNumProducts(((Number)map.get(DBContract.Store.NUM_PRODUCTS)).intValue());
-                            store.setNumComments(((Number)map.get(DBContract.Store.NUM_COMMENTS)).intValue());
-                            store.setNumPoints(((Number)map.get(DBContract.Store.NUM_POINTS)).intValue());
+                            store.setNumProducts(((Number) map.get(DBContract.Store.NUM_PRODUCTS)).intValue());
+                            store.setNumComments(((Number) map.get(DBContract.Store.NUM_COMMENTS)).intValue());
+                            store.setNumPoints(((Number) map.get(DBContract.Store.NUM_POINTS)).intValue());
                             IResult.onResult(store);
                         } else {
                             IResult.onResult(null);
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("my_error", e.getMessage());
-                        IResult.onFailure(e);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("my_error", e.getMessage());
+                IResult.onFailure(e);
+            }
+        });
     }
 
     private List<Store.Utility> getStoreUtilities(Map<String, Object> map) {
-        List<Integer> ids = (List<Integer>)map.get(DBContract.Store.UTILITIES);
+        List<Integer> ids = (List<Integer>) map.get(DBContract.Store.UTILITIES);
         List<Store.Utility> utilities = new ArrayList<>();
-        for(int id : ids) {
+        for (int id : ids) {
             utilities.add(ObjectUtils.getStoreUtility(id));
         }
         return utilities;
     }
 
     private Address getAddress(Map<String, Object> map) {
-        Map<String, Object> addressMap = (Map<String, Object>)map.get(DBContract.Store.ADDRESS);
-        if(addressMap == null) {
+        Map<String, Object> addressMap = (Map<String, Object>) map.get(DBContract.Store.ADDRESS);
+        if (addressMap == null) {
             return null;
         }
-        int countryId = (int)addressMap.get(DBContract.Store.ADDRESS_COUNTRY);
-        int cityId = (int)addressMap.get(DBContract.Store.ADDRESS_CITY);
-        int districtId = (int)addressMap.get(DBContract.Store.ADDRESS_DISTRICT);
-        int townId = (int)addressMap.get(DBContract.Store.ADDRESS_TOWN);
-        String street = (String)addressMap.get(DBContract.Store.ADDRESS_STREET);
+        int countryId = (int) addressMap.get(DBContract.Store.ADDRESS_COUNTRY);
+        int cityId = (int) addressMap.get(DBContract.Store.ADDRESS_CITY);
+        int districtId = (int) addressMap.get(DBContract.Store.ADDRESS_DISTRICT);
+        int townId = (int) addressMap.get(DBContract.Store.ADDRESS_TOWN);
+        String street = (String) addressMap.get(DBContract.Store.ADDRESS_STREET);
         AddressDBConnector connector = AddressDBConnector.getInstance();
         Address address = new Address();
         address.setCountry(connector.getCountry(countryId));
@@ -302,8 +307,8 @@ public class StoreConnector {
     }
 
     private Location getGeo(Map<String, Object> map) {
-        Map<String, Double> geoMap = (Map<String, Double>)map.get(DBContract.Store.GEO);
-        if(geoMap == null) {
+        Map<String, Double> geoMap = (Map<String, Double>) map.get(DBContract.Store.GEO);
+        if (geoMap == null) {
             return null;
         }
         double latitude = geoMap.get(DBContract.Store.GEO_LATITUDE);
@@ -312,7 +317,7 @@ public class StoreConnector {
     }
 
     public static StoreConnector getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new StoreConnector();
         }
         return instance;

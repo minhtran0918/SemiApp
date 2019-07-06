@@ -617,8 +617,8 @@ public class UserAddStoreActivity extends AppCompatActivity implements SelectCat
 
             store.setUser_id(user_id);
             store.setStore_id(newStoreRef.getId());
-            store.setName(add_store_name.getText().toString().trim());
-            store.setCategory(mAddStoreViewModel.typeStoreID.getValue().toString());
+            store.setTitle(add_store_name.getText().toString().trim());
+            store.setType(mAddStoreViewModel.typeStoreID.getValue());
 
             //Address
             VerifyStoreAddress address = new VerifyStoreAddress();
@@ -631,7 +631,7 @@ public class UserAddStoreActivity extends AppCompatActivity implements SelectCat
 
             //Location
             GeoPoint location = new GeoPoint(mAddStoreViewModel.latStore.getValue(), mAddStoreViewModel.lngStore.getValue());
-            store.setLocation(location);
+            store.setGeo(location);
             store.setContact(add_store_phone_number.getText().toString().trim());
             //Time Store: 00:00-00:00
             StringBuilder sb_time = new StringBuilder();
@@ -653,8 +653,9 @@ public class UserAddStoreActivity extends AppCompatActivity implements SelectCat
                 StringBuilder sb = new StringBuilder();
 
                 for (String storage_location : convertPathFileToStorage(imageArrayList, newStoreRef.getId(), user_id)) {
-                    sb.append(storage_location).append("##");
+                    sb.append(storage_location).append("??");
                 }
+                sb.setLength(sb.length() - 2);
                 store.setImageURL(sb.toString());
 
             } else {

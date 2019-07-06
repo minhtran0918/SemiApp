@@ -1,7 +1,0 @@
-﻿0,Wifi
-1,Vận chuyển
-2,Bãi gửi xe
-3,Máy lạnh
-4,Thành viên
-5,Thanh toán thẻ
-6,24/7 

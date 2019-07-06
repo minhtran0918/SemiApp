@@ -7,6 +7,7 @@ public final class CFContract {
         public static final String CENTER_LATITUDE = "centerLat";
         public static final String CENTER_LONGITUDE = "centerLng";
         public static final String FROM = "from";
+        public static final String DISTANCE = "distance";
         public static final String STORE_TYPE = "storeType";
         public static final String SELECTED_FIELDS = "selectedFields";
         public static final String NUM_RESULTS = "numResults";

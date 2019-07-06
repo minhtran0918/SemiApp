@@ -129,7 +129,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void launchSearchActivity() {
         //final int mode = searchModeSpinner.getSelectedItemPosition();
-        int mode = mHomeViewModel.modeLoadDataInHome.getValue();
+        int mode = mHomeViewModel.modeStoreOrProduct.getValue();
         final Intent intent = new Intent(this, SearchActivity.class);
 
         if (mode == Contract.STORE_MODE) {

@@ -9,10 +9,10 @@ public class VerifyStore {
 
     private String user_id;
     private String store_id;
-    private String name;
-    private String category;
+    private String title;
+    private int type;
     private VerifyStoreAddress address;
-    private GeoPoint location;
+    private GeoPoint geo;
     private String contact;
     private String startEnd;   //07:00-20:00
     private String description;
@@ -22,13 +22,13 @@ public class VerifyStore {
     public VerifyStore() {
     }
 
-    public VerifyStore(String user_id, String store_id, String name, String category, VerifyStoreAddress address, GeoPoint location, String contact, String startEnd, String description, String imageURL, Date timeStamp) {
+    public VerifyStore(String user_id, String store_id, String title, int type, VerifyStoreAddress address, GeoPoint geo, String contact, String startEnd, String description, String imageURL, Date timeStamp) {
         this.user_id = user_id;
         this.store_id = store_id;
-        this.name = name;
-        this.category = category;
+        this.title = title;
+        this.type = type;
         this.address = address;
-        this.location = location;
+        this.geo = geo;
         this.contact = contact;
         this.startEnd = startEnd;
         this.description = description;
@@ -52,20 +52,20 @@ public class VerifyStore {
         this.store_id = store_id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getCategory() {
-        return category;
+    public int getType() {
+        return type;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public VerifyStoreAddress getAddress() {
@@ -76,12 +76,12 @@ public class VerifyStore {
         this.address = address;
     }
 
-    public GeoPoint getLocation() {
-        return location;
+    public GeoPoint getGeo() {
+        return geo;
     }
 
-    public void setLocation(GeoPoint location) {
-        this.location = location;
+    public void setGeo(GeoPoint geo) {
+        this.geo = geo;
     }
 
     public String getContact() {

@@ -1,7 +1,0 @@
-﻿0,Tạp hóa
-1,Tiện lợi
-2,Siêu thị
-3,Trung tâm thương mại
-4,Chợ
-5,Trạm ATM
-6,Y tế
