@@ -17,7 +17,6 @@ import java.util.List;
 public class HomeViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Store>> listStore = new MutableLiveData<>();
-    //public MutableLiveData<List<Store>> listStoreAddMore = new MutableLiveData<>();
     public MutableLiveData<List<Product>> listProduct = new MutableLiveData<>();
     public MutableLiveData<Location> currentLocation = new MutableLiveData<>();
 
@@ -37,7 +36,6 @@ public class HomeViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> modeRange;
     //500-10000
     public MutableLiveData<Float> modeRangeValue;
-
     //Sort
     public MutableLiveData<Integer> modeSort;
 
@@ -60,6 +58,7 @@ public class HomeViewModel extends AndroidViewModel {
         loadAddressFromShared();
         //First data store type all
         categoryStore.setValue(Contract.MODE_HOME_LOAD_STORE_TYPE_ALL);
+        categoryProduct.setValue(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL);
         //
         modeRange.setValue(
                 SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE, Integer.class, Contract.MODE_LOAD_RANGE_AROUND)
@@ -76,6 +75,11 @@ public class HomeViewModel extends AndroidViewModel {
         List<Store> temp = listStore.getValue();
         temp.addAll(stores);
         listStore.setValue(temp);
+    }
+    public void updateListProduct(List<Product> products) {
+        List<Product> temp = listProduct.getValue();
+        temp.addAll(products);
+        listProduct.setValue(temp);
     }
 
     public void loadAddressFromShared() {

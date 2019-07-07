@@ -323,14 +323,14 @@ public class UserAddStoreActivity extends AppCompatActivity implements SelectCat
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_store_menu, menu);
+        menuInflater.inflate(R.menu.all_menu_done, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_add_store_done:
+            case R.id.menu_item_done:
                 if (!checkDataCorrect()) return false;
                 //Hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

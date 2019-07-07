@@ -106,4 +106,5 @@
     <string name="dialog_select_category_title_super_market">Super market</string>
     <string name="select_address_non_ward_message">If you know Ward, select \'Unknown\'</string>
     <string name="select_address_toolbar_label">Choose a store address</string>
+    <string name="all_title_product">Product</string>
 </resources>

@@ -34,10 +34,11 @@ public final class Contract {
     public static final int MODE_LOAD_STORE_TYPE_MARKET = 4;
     public static final int MODE_LOAD_STORE_TYPE_ATM = 5;
     public static final int MODE_LOAD_STORE_TYPE_PHARMACY = 6;
-    public static final int MODE_LOAD_STORE_TYPE_ORTHER = 7;
+    //public static final int MODE_LOAD_STORE_TYPE_ORTHER = 7;
 
 
     public static final int MODE_HOME_LOAD_PRODUCT = 1;
+    public static final int MODE_HOME_LOAD_PRODUCT_TYPE_ALL = -11;
     //TODO: LOAD PRODUCT - SETUP TYPE VARIABLE
     public static final int MODE_LOAD_PRODUCT_TYPE_ = 0;
 

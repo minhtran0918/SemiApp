@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_home_select_category" />
 
     <RadioGroup
-        android:id="@+id/radgrp_home_option_range"
+        android:id="@+id/radgrp_home_option_store_or_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -49,6 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl_home_select_store_product">
 
         <RadioButton
+            android:id="@+id/radbtn_home_option_store"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -62,6 +63,7 @@
             android:textSize="18sp" />
 
         <RadioButton
+            android:id="@+id/radbtn_home_option_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -76,12 +78,12 @@
     </RadioGroup>
 
     <View
-        android:layout_marginTop="4dp"
         android:id="@+id/view_home_select_category_0"
         android:layout_width="match_parent"
         android:layout_height="3dp"
+        android:layout_marginTop="4dp"
         android:background="@color/blackTransparent20"
-        app:layout_constraintTop_toBottomOf="@id/radgrp_home_option_range" />
+        app:layout_constraintTop_toBottomOf="@id/radgrp_home_option_store_or_product" />
 
     <TextView
         android:id="@+id/lbl_home_select_category"
@@ -97,6 +99,7 @@
         app:layout_constraintTop_toBottomOf="@id/view_home_select_category_0" />
 
     <ScrollView
+        android:id="@+id/linearLayout_home_option_category_store"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -104,77 +107,100 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_home_select_category">
 
-        <RadioGroup
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/btn_dialog_item_all"
-                style="@style/Btn_Radio_Select_Category"
+            <RadioGroup
+                android:id="@+id/radgrp_home_option_category_store"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_more_40"
-                android:text="@string/home_select_category_title_all" />
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/btn_dialog_item_store"
-                style="@style/Btn_Radio_Select_Category"
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_all"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_more_40"
+                    android:text="@string/home_select_category_title_all" />
+
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_store"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_store_40"
+                    android:text="@string/home_ic_direct_title_store" />
+
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_convenience"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_convenience_40"
+                    android:text="@string/home_select_category_title_convenience" />
+
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_super_market"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_super_market_40"
+                    android:text="@string/home_select_category_title_super_market" />
+
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_mall"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_mall_40"
+                    android:text="@string/home_select_category_title_mall" />
+
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_market"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_market_40"
+                    android:text="@string/home_select_category_title_market" />
+
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_atm"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_atm_40"
+                    android:text="@string/home_select_category_title_atm" />
+
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_pharmacy"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_pharmacy_40"
+                    android:text="@string/home_select_category_title_pharmacy" />
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/radgrp_home_option_category_product"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_store_40"
-                android:text="@string/home_ic_direct_title_store" />
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/btn_dialog_item_convenience"
-                style="@style/Btn_Radio_Select_Category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_convenience_40"
-                android:text="@string/home_select_category_title_convenience" />
-
-            <RadioButton
-                android:id="@+id/btn_dialog_item_super_market"
-                style="@style/Btn_Radio_Select_Category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_super_market_40"
-                android:text="@string/home_select_category_title_super_market" />
-
-            <RadioButton
-                android:id="@+id/btn_dialog_item_mall"
-                style="@style/Btn_Radio_Select_Category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_mall_40"
-                android:text="@string/home_select_category_title_mall" />
-
-            <RadioButton
-                android:id="@+id/btn_dialog_item_market"
-                style="@style/Btn_Radio_Select_Category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_market_40"
-                android:text="@string/home_select_category_title_market" />
-
-            <RadioButton
-                android:id="@+id/btn_dialog_item_atm"
-                style="@style/Btn_Radio_Select_Category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_atm_40"
-                android:text="@string/home_select_category_title_atm" />
-
-            <RadioButton
-                android:id="@+id/btn_dialog_item_pharmacy"
-                style="@style/Btn_Radio_Select_Category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/all_ic_menu_pharmacy_40"
-                android:text="@string/home_select_category_title_pharmacy" />
-
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radbtn_home_option_category_product_all"
+                    style="@style/Btn_Radio_Select_Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/all_ic_menu_more_40"
+                    android:text="@string/home_select_category_title_all" />
+            </RadioGroup>
+        </LinearLayout>
     </ScrollView>
 
 

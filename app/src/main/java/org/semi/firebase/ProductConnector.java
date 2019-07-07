@@ -30,7 +30,7 @@ public class ProductConnector {
 
     }
 
-    public void getNearbyProducts(Location location, int from, int numResults, int productType,
+    public void getNearbyProducts(Location location, int from, float distance, int numResults, int productType,
                                 final IResult<List<Product>> IResult) {
         String[] selectedFields = {
                 DBContract.Product.TITLE, DBContract.Product.IMAGE_URL, DBContract.Store.ADDRESS,
@@ -41,6 +41,8 @@ public class ProductConnector {
         data.put(NearbyProducts.CENTER_LATITUDE, location.getLatitude());
         data.put(NearbyProducts.CENTER_LONGITUDE, location.getLongitude());
         data.put(NearbyProducts.FROM, from);
+        //Hình vuông 1km
+        data.put(NearbyStores.DISTANCE, distance * 2);
         data.put(NearbyProducts.PRODUCT_TYPE, productType);
         data.put(NearbyProducts.SELECTED_FIELDS, Arrays.asList(selectedFields));
         data.put(NearbyProducts.NUM_RESULTS, numResults);

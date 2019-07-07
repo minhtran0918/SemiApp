@@ -21,6 +21,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,15 +42,19 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.semi.ViewModel.HomeViewModel;
 import org.semi.adapter.HomeListAdapter;
+import org.semi.adapter.LocationToAddress;
 import org.semi.databases.SharedPrefs;
 import org.semi.firebase.IResult;
 import org.semi.firebase.ProductConnector;
 import org.semi.firebase.StoreConnector;
+import org.semi.object.Product;
 import org.semi.object.Store;
 import org.semi.utils.Contract;
 import org.semi.utils.DialogUtils;
 import org.semi.utils.LocationUtils;
 import org.semi.utils.ObjectUtils;
+import org.semi.utils.StringUtils;
+import org.semi.views.AddStoreChooseLocationActivity;
 import org.semi.views.StoreDetailActivity;
 
 import java.util.List;
@@ -163,49 +169,106 @@ public class HomeFragment extends Fragment {
         //ViewModel
         mHomeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
 
-        mHomeViewModel.cityId.observe(this, integer -> {
-            Log.d("Semi", "a");
-        });
+        /*mHomeViewModel.modeStoreOrProduct.observe(this, integer ->
+                loadAllNewStoresOrProducts());*/
 
         mHomeViewModel.listStore.observe(this, stores ->
                 mHomeRcvAdapter.setDataSet(stores, mHomeViewModel.currentLocation.getValue()));
+        mHomeViewModel.listProduct.observe(this, products ->
+                mHomeRcvAdapter.setDataSet(null, mHomeViewModel.currentLocation.getValue()));
+
         mHomeViewModel.categoryStore.observe(this, integer -> {
-            mSwipeRefreshLayout.setRefreshing(true);
-            loadAllNewStoresOrProducts();
+            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
+                switch (integer) {
+                    case Contract.MODE_LOAD_STORE_TYPE_STORE:
+                        mTxtCategoryState.setText(getString(R.string.all_title_store));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_CONVENIENCE:
+                        mTxtCategoryState.setText(getString(R.string.all_title_convenience));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_SUPER_MARKET:
+                        mTxtCategoryState.setText(getString(R.string.all_title_super_market));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_MALL:
+                        mTxtCategoryState.setText(getString(R.string.all_title_mall));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_MARKET:
+                        mTxtCategoryState.setText(getString(R.string.all_title_market));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_ATM:
+                        mTxtCategoryState.setText(getString(R.string.all_title_atm));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_PHARMACY:
+                        mTxtCategoryState.setText(getString(R.string.all_title_pharmacy));
+                        break;
+                    case Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL:
+                        mTxtCategoryState.setText(getString(R.string.all_title_product));
+                        break;
+                    default:
+                        mTxtCategoryState.setText(getString(R.string.all_title_more));
+                        break;
+                }
+                loadAllNewStoresOrProducts();
+            }
+        });
+
+        mHomeViewModel.categoryProduct.observe(this, integer -> {
+            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_PRODUCT) {
+                switch (integer) {
+                    case Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL:
+                        mTxtCategoryState.setText(getString(R.string.all_title_product));
+                        break;
+                }
+                loadAllNewStoresOrProducts();
+            }
+        });
+        mHomeViewModel.modeRangeValue.observe(this, aFloat -> {
+            if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+                if (currentLocation != null) {
+                    double latitude = currentLocation.getLatitude();
+                    double longitude = currentLocation.getLongitude();
+                    LocationToAddress.getAddressFromLocation(latitude, longitude, getContext(), new GeocoderHandler());
+                }
+
+            } else {
+                mTxtState.setText("Tất cả");
+            }
         });
         //Listener
         View.OnClickListener mOnClickListenerRcv = v -> {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
             int position = viewHolder.getAdapterPosition();
             Toast.makeText(getActivity(), "position: " + position, Toast.LENGTH_SHORT).show();
-            showStoreDetail(mHomeViewModel.listStore.getValue().get(position));
+            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
+                Toast.makeText(getActivity(), "load sTore", Toast.LENGTH_SHORT).show();
+                showStoreDetail(mHomeViewModel.listStore.getValue().get(position));
+            } else {
+                showProductDetail(mHomeViewModel.listProduct.getValue().get(position));
+            }
         };
         mHomeRcvAdapter.setOnItemClickListener(mOnClickListenerRcv);
-        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (v.getChildAt(v.getChildCount() - 1) != null) {
-                    int my_value = v.getMeasuredHeight() / 20; // Để chưa xuống cuối recyclerview 1 khoảng đã load tiếp
-                    if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) - my_value) && scrollY > oldScrollY) {
-                        visibleItemCount = mLayoutManager.getChildCount();
-                        totalItemCount = mLayoutManager.getItemCount();
-                        pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-                        if (mShouldLoadMoreData && !mSwipeRefreshLayout.isRefreshing()) {
-                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                                Log.d("Semi", "last");
-                                if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
-                                    int size = mHomeRcvAdapter.getItemCount();
-                                    if (size != 0) {
-                                        loadStoresAt(mHomeRcvAdapter.getItemCount());
-                                    }
-                                } else {
-                                    int size = mHomeRcvAdapter.getItemCount();
-                                    if (size != 0) {
-                                        //TODO Load More Products
-                                    }
+        mNestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (v.getChildAt(v.getChildCount() - 1) != null) {
+                int my_value = v.getMeasuredHeight() / 20; // Để chưa xuống cuối recyclerview 1 khoảng đã load tiếp
+                if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) - my_value) && scrollY > oldScrollY) {
+                    visibleItemCount = mLayoutManager.getChildCount();
+                    totalItemCount = mLayoutManager.getItemCount();
+                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                    if (mShouldLoadMoreData && !mSwipeRefreshLayout.isRefreshing()) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            Log.d("Semi", "last of list -> load more");
+                            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
+                                int size = mHomeRcvAdapter.getItemCount();
+                                if (size != 0) {
+                                    loadStoresAt(mHomeRcvAdapter.getItemCount());
                                 }
-
+                            } else {
+                                int size = mHomeRcvAdapter.getItemCount();
+                                if (size != 0) {
+                                    loadProductsAt(mHomeRcvAdapter.getItemCount());
+                                }
                             }
+
                         }
                     }
                 }
@@ -218,6 +281,12 @@ public class HomeFragment extends Fragment {
         Intent callActivity;
         switch (v.getId()) {
             case R.id.home_ic_option_category:
+                SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, mHomeViewModel.modeStoreOrProduct.getValue());
+                SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY,
+                        mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE ?
+                                mHomeViewModel.categoryStore.getValue() :
+                                mHomeViewModel.categoryProduct.getValue()
+                );
                 callActivity = new Intent(getActivity(), HomeSelectCategoryActivity.class);
                 startActivityForResult(callActivity, RC_SELECT_CATEGORY);
                 break;
@@ -241,7 +310,7 @@ public class HomeFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.home_ic_direct_store:
                     mTxtCategoryState.setText(getString(R.string.all_title_store));
-                    selectCategory = Contract.MODE_HOME_LOAD_STORE;
+                    selectCategory = Contract.MODE_LOAD_STORE_TYPE_STORE;
                     break;
                 case R.id.home_ic_direct_convenience:
                     mTxtCategoryState.setText(getString(R.string.all_title_convenience));
@@ -276,7 +345,6 @@ public class HomeFragment extends Fragment {
                     break;
             }
             mHomeViewModel.categoryStore.setValue(selectCategory);
-
         }
     };
 
@@ -305,6 +373,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadAllNewStoresOrProducts() {
+        mSwipeRefreshLayout.setRefreshing(true);
         mShouldLoadMoreData = true;
         getLastLocation(new IResult<android.location.Location>() {
             @Override
@@ -313,7 +382,7 @@ public class HomeFragment extends Fragment {
                 if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
                     loadAllNewStores();
                 } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
-                    //loadAllNewProducts();
+                    loadAllNewProducts();
                 }
             }
 
@@ -337,7 +406,8 @@ public class HomeFragment extends Fragment {
             return;
         }
         int type = mHomeViewModel.categoryStore.getValue(); //
-        storeConnector.getNearbyStores(currentLocation, 0, 2f, Contract.NUM_STORES_PER_REQUEST, type,
+        float distance = mHomeViewModel.modeRangeValue.getValue();
+        storeConnector.getNearbyStores(currentLocation, 0, distance, Contract.NUM_STORES_PER_REQUEST, type,
                 new IResult<List<Store>>() {
                     @Override
                     public void onResult(List<Store> result) {
@@ -370,7 +440,8 @@ public class HomeFragment extends Fragment {
             return;
         }
         int store_type = mHomeViewModel.categoryStore.getValue();
-        storeConnector.getNearbyStores(currentLocation, position, 0.5f, Contract.NUM_STORES_PER_REQUEST, store_type,
+        float distance = mHomeViewModel.modeRangeValue.getValue();
+        storeConnector.getNearbyStores(currentLocation, position, distance, Contract.NUM_STORES_PER_REQUEST, store_type,
                 new IResult<List<Store>>() {
                     @Override
                     public void onResult(List<Store> result) {
@@ -396,27 +467,93 @@ public class HomeFragment extends Fragment {
                 });
     }
 
+    private void loadAllNewProducts() {
+        if (currentLocation == null) {
+            //Location error
+            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorLocationMessage));
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+        int product_type = mHomeViewModel.categoryProduct.getValue();
+        float distance = mHomeViewModel.modeRangeValue.getValue();
+
+        productConnector.getNearbyProducts(currentLocation, 0, distance, Contract.NUM_PRODUCTS_PER_REQUEST, product_type,
+                new IResult<List<Product>>() {
+                    @Override
+                    public void onResult(List<Product> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0) {
+                            mHomeViewModel.listProduct.setValue(null);
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        mHomeViewModel.listProduct.setValue(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mHomeViewModel.listProduct.setValue(null);
+                        //Network Error
+                        DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorNetworkMessage));
+                    }
+                });
+    }
+
+    private void loadProductsAt(int index) {
+        mSwipeRefreshLayout.setRefreshing(true);
+        if (currentLocation == null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+        int product_type = mHomeViewModel.categoryProduct.getValue();
+        float distance = mHomeViewModel.modeRangeValue.getValue();
+        productConnector.getNearbyProducts(currentLocation, index, distance, Contract.NUM_PRODUCTS_PER_REQUEST, product_type,
+                new IResult<List<Product>>() {
+                    @Override
+                    public void onResult(List<Product> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0 && mHomeViewModel.listProduct.getValue().size() == 0) {
+                            mShouldLoadMoreData = false;
+                            //Error Empty
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        if (result.isEmpty()) {
+                            mShouldLoadMoreData = false;
+                            return;
+                        }
+                        mHomeViewModel.updateListProduct(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        mShouldLoadMoreData = true;
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+    }
+
+    private void showProductDetail(Product product) {
+        Intent storeIntent = new Intent(getContext(), StoreDetailActivity.class);
+        storeIntent.putExtra(Contract.BUNDLE_STORE_KEY, product.getStore().getId());
+        storeIntent.putExtra(Contract.BUNDLE_PRODUCT_KEY, product.getId());
+        startActivity(storeIntent);
+    }
+
     @SuppressLint("MissingPermission")
     private void getLastLocation(final IResult<android.location.Location> result) {
         final Task<android.location.Location> task = LocationUtils.getLastLocation();
-        task.addOnSuccessListener(getActivity(), new OnSuccessListener<android.location.Location>() {
-            @Override
-            public void onSuccess(android.location.Location location) {
-                if (location == null) {
-                    //TODO - Error location
-                    Snackbar.make(mRootView, getString(R.string.errorLocationMessage), Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
-                currentLocation = ObjectUtils.toMyLocation(location);
-                mHomeViewModel.currentLocation.setValue(currentLocation);
-                result.onResult(location);
-            }
-        }).addOnFailureListener(getActivity(), new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                //TODO - Error location
+        task.addOnSuccessListener(getActivity(), location -> {
+            if (location == null) {
                 Snackbar.make(mRootView, getString(R.string.errorLocationMessage), Snackbar.LENGTH_SHORT).show();
+                return;
             }
+            currentLocation = ObjectUtils.toMyLocation(location);
+            mHomeViewModel.currentLocation.setValue(currentLocation);
+            result.onResult(location);
+        }).addOnFailureListener(getActivity(), e -> {
+            Snackbar.make(mRootView, getString(R.string.errorLocationMessage), Snackbar.LENGTH_SHORT).show();
         });
     }
 
@@ -426,50 +563,76 @@ public class HomeFragment extends Fragment {
         startActivity(storeIntent);
     }
 
-
-    /*@SuppressLint("MissingPermission")
-    private void loadFirst() {
-        locationUtils.requestLocationUpdates(new IResult<android.location.Location>() {
-            @Override
-            public void onResult(android.location.Location result) {
-                if (result != null) {
-                    locationUtils.removeLocationUpdates();
-                    currentLocation = ObjectUtils.toMyLocation(result);
-                    //Fix
-                    //final int modePosition = searchModeSpinner.getSelectedItemPosition();
-                    int modePosition = mHomeViewModel.modeStoreOrProduct.getValue();
-                    if (modePosition == Contract.STORE_MODE) {
-                        loadAllNewStores();
-                    } else if (modePosition == Contract.PRODUCT_MODE) {
-                        loadAllNewProducts();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Exception exp) {
-            }
-        });
-    }*/
-
     @Override
     public void onActivityResult(int requestCode, int result, Intent data) {
+        if (requestCode == RC_SELECT_CATEGORY && result == RESULT_OK) {
+            if (mHomeViewModel.modeStoreOrProduct.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, Integer.class, Contract.MODE_HOME_LOAD_STORE))) {
+                if (mHomeViewModel.modeStoreOrProduct.getValue().equals(Contract.MODE_HOME_LOAD_STORE)) {
+                    if (!mHomeViewModel.categoryStore.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL))) {
+                        mHomeViewModel.categoryStore.setValue(
+                                SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL));
+                    }
+                } else {
+                    if (!mHomeViewModel.categoryProduct.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL))) {
+                        mHomeViewModel.categoryProduct.setValue(
+                                SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL));
+                    }
+                }
+            } else {
+                mHomeViewModel.modeStoreOrProduct.setValue(
+                        SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, Integer.class, Contract.MODE_HOME_LOAD_STORE)
+                );
+            }
+        }
         if (requestCode == RC_SELECT_OPTION && result == RESULT_OK) {
-            mHomeViewModel.cityId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class));
-            Toast.makeText(getActivity(), mHomeViewModel.cityId.getValue().toString(), Toast.LENGTH_SHORT).show();
+
+            if (SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE, Integer.class).equals(mHomeViewModel.modeRange.getValue())) {
+                if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+                    if (!mHomeViewModel.modeRangeValue.getValue()
+                            .equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE_VALUE, Float.class))) {
+
+                        mHomeViewModel.modeRangeValue.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE_VALUE, Float.class));
+                        Log.d("Semi", "Change range Value, range around");
+                        loadAllNewStoresOrProducts();
+
+                    }
+                }
+            } else {
+                Log.d("Semi", "Change option range");
+                Log.d("Semi", "old value: " + mHomeViewModel.modeRange.getValue());
+                mHomeViewModel.modeRange.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE, Integer.class));
+                Log.d("Semi", "new value: " + mHomeViewModel.modeRange.getValue());
+                Log.d("Semi", "Reload all");
+                loadAllNewStoresOrProducts();
+            }
+            if (!SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class).equals(mHomeViewModel.cityId.getValue()) ||
+                    !SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class).equals(mHomeViewModel.districtId.getValue()) ||
+                    !SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class).equals(mHomeViewModel.wardId.getValue())
+            ) {
+                mHomeViewModel.cityId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class));
+                mHomeViewModel.districtId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class));
+                mHomeViewModel.wardId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class));
+                Log.d("Semi", "Change address, range all");
+                //TODO LOAD
+            }
+            mHomeViewModel.modeSort.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_SORT, Integer.class));
         }
     }
 
-    private void loadDataConfig() {
-        //
-       /* SharedPrefs.getInstance().put(SharedPrefs.KEY_ALL_ADDRESS_CITY, mHomeOptionViewModel.cityId.getValue());
-        SharedPrefs.getInstance().put(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, mHomeOptionViewModel.districtId.getValue());
-        SharedPrefs.getInstance().put(SharedPrefs.KEY_ALL_ADDRESS_WARD, mHomeOptionViewModel.wardId.getValue());
-        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, mHomeOptionViewModel.modeStoreOrProduct.getValue());
-        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_RANGE, mHomeOptionViewModel.modeRange.getValue());
-        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_RANGE_VALUE, mHomeOptionViewModel.modeRangeValue.getValue());
-        SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_SORT, mHomeOptionViewModel.modeSort.getValue());*/
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    mTxtState.setText("Quanh " + StringUtils.toDistanceFormat(mHomeViewModel.modeRangeValue.getValue()));
+                    break;
+                case 1:
+                    Bundle bundle = msg.getData();
+                    String locationAddress = bundle.getString(Contract.LOCATION_TO_ADDRESS_KEY);
+                    mTxtState.setText(StringUtils.toDistanceFormat(mHomeViewModel.modeRangeValue.getValue()) + " quanh " + locationAddress);
+                    break;
+            }
+
+        }
     }
-
-
 }

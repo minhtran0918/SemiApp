@@ -97,6 +97,7 @@
     <string name="all_title_atm">Trạm ATM</string>
     <string name="all_title_pharmacy">Y Tế</string>
     <string name="all_title_more">Tất cả</string>
+    <string name="all_title_product">Hàng hóa</string>
 
     <string name="home_ic_direct_title_store">Tạp hóa</string>
     <string name="home_ic_direct_title_convenience">Tiện lợi 24/7</string>

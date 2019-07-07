@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_add_store_done"
+        android:id="@+id/menu_item_done"
         android:title="Xong"
         app:showAsAction="ifRoom"
         />

@@ -279,7 +279,7 @@ public class HomeOldActivity extends AppCompatActivity implements IInteractionWi
             return;
         }
         fragmentCreator.setCurrentFragment(LOAD_VIEW);
-        productConnector.getNearbyProducts(currentLocation, 0, Contract.NUM_PRODUCTS_PER_REQUEST, selectedItem.getId(),
+        productConnector.getNearbyProducts(currentLocation, 0,0.5f, Contract.NUM_PRODUCTS_PER_REQUEST, selectedItem.getId(),
                 new IResult<List<Product>>() {
                     @Override
                     public void onResult(List<Product> result) {
@@ -317,7 +317,7 @@ public class HomeOldActivity extends AppCompatActivity implements IInteractionWi
         if (selectedItem == null) {
             return;
         }
-        productConnector.getNearbyProducts(currentLocation, index, Contract.NUM_PRODUCTS_PER_REQUEST, selectedItem.getId(),
+        productConnector.getNearbyProducts(currentLocation, index,0.5f, Contract.NUM_PRODUCTS_PER_REQUEST, selectedItem.getId(),
                 new IResult<List<Product>>() {
                     @Override
                     public void onResult(List<Product> result) {

@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_home_option" />
 
     <RadioGroup
-        android:id="@+id/radgrp_home_option_range"
+        android:id="@+id/radgrp_home_option_store_or_product"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

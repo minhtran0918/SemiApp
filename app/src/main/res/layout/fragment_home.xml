@@ -256,7 +256,7 @@
                     android:background="?attr/selectableItemBackground">
 
                     <TextView
-                        android:id="@+id/txt_home_option_category"
+                        android:id="@+id/lbl_home_option_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -284,8 +284,8 @@
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/ic_home_option_more"
-                        app:layout_constraintStart_toStartOf="@+id/txt_home_option_category"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_home_option_category"
+                        app:layout_constraintStart_toStartOf="@+id/lbl_home_option_category"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_home_option_category"
                         app:layout_constraintVertical_bias="0.0" />
 
                     <ImageView
@@ -316,7 +316,7 @@
                     android:background="?attr/selectableItemBackground">
 
                     <TextView
-                        android:id="@+id/txt_home_option_locate"
+                        android:id="@+id/lbl_home_option_locate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -330,7 +330,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/txt_home_option_locate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
@@ -344,8 +344,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/ic_home_option_more_2"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/txt_home_option_locate"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_home_option_locate"
+                        app:layout_constraintStart_toStartOf="@+id/lbl_home_option_locate"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_home_option_locate"
                         app:layout_constraintVertical_bias="0.0" />
 
                     <ImageView
@@ -376,7 +376,7 @@
                     android:background="?attr/selectableItemBackground">
 
                     <TextView
-                        android:id="@+id/txt_home_option_sort"
+                        android:id="@+id/lbl_home_option_sort"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -390,6 +390,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/txt_home_option_sort"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
@@ -403,8 +404,8 @@
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/ic_home_option_more_3"
-                        app:layout_constraintStart_toStartOf="@+id/txt_home_option_sort"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_home_option_sort"
+                        app:layout_constraintStart_toStartOf="@+id/lbl_home_option_sort"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_home_option_sort"
                         app:layout_constraintVertical_bias="0.0" />
 
                     <ImageView

@@ -1,28 +1,19 @@
 package org.semi;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.room.util.StringUtil;
-import androidx.transition.Fade;
-import androidx.transition.Transition;
-import androidx.transition.TransitionManager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zhouyou.view.seekbar.SignSeekBar;
 
@@ -72,7 +63,7 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
 
         //Group button
 
-        RadioGroup radgrp_range = findViewById(R.id.radgrp_home_option_range);
+        RadioGroup radgrp_range = findViewById(R.id.radgrp_home_option_store_or_product);
         radbtn_range_around = findViewById(R.id.radbtn_home_option_range_around);
         radbtn_range_all = findViewById(R.id.radbtn_home_option_range_all);
         radgrp_range.setOnCheckedChangeListener(mOnCheckedChangeListener);
@@ -223,11 +214,11 @@ public class HomeSelectOptionActivity extends AppCompatActivity {
         }
     };
 
-    private RadioGroup.OnCheckedChangeListener mOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
+    private RadioGroup.OnCheckedChangeListener  mOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (group.getId()) {
-                case R.id.radgrp_home_option_range:
+                case R.id.radgrp_home_option_store_or_product:
                     mHomeOptionViewModel.modeRange.setValue(
                             checkedId == R.id.radbtn_home_option_range_around ?
                                     Contract.MODE_LOAD_RANGE_AROUND : Contract.MODE_LOAD_RANGE_ALL);

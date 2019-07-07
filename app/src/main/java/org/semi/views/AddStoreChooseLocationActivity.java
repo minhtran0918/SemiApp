@@ -123,39 +123,33 @@ public class AddStoreChooseLocationActivity extends AppCompatActivity implements
         } else {
             getDeviceLocation();
         }
-        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-            @Override
-            public void onCameraIdle() {
-                if (mCenterMarker != null) {
-                    getAddressToLocation(new LatLng(mCenterMarker.getPosition().latitude, mCenterMarker.getPosition().longitude));
-                }
+        mMap.setOnCameraIdleListener(() -> {
+            if (mCenterMarker != null) {
+                getAddressToLocation(new LatLng(mCenterMarker.getPosition().latitude, mCenterMarker.getPosition().longitude));
             }
         });
 
-        mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
-            @Override
-            public void onCameraMove() {
-                CameraPosition currentPos = mMap.getCameraPosition();
-                double latCurrentPos = currentPos.target.latitude % 0.00000001;
-                double lngCurrentPos = currentPos.target.longitude % 0.00000001;
-                if (mCenterMarker == null) {
-                    mCenterMarker = mMap.addMarker(
-                            new MarkerOptions()
-                                    .position(currentPos.target)
-                                    .icon(BitmapDescriptorFactory.fromBitmap(mBitmapMarker)));
-                    return;
+        mMap.setOnCameraMoveListener(() -> {
+            CameraPosition currentPos = mMap.getCameraPosition();
+            double latCurrentPos = currentPos.target.latitude % 0.00000001;
+            double lngCurrentPos = currentPos.target.longitude % 0.00000001;
+            if (mCenterMarker == null) {
+                mCenterMarker = mMap.addMarker(
+                        new MarkerOptions()
+                                .position(currentPos.target)
+                                .icon(BitmapDescriptorFactory.fromBitmap(mBitmapMarker)));
+                return;
+            }
+            double latMarkerPos = mCenterMarker.getPosition().latitude % 0.00000001;
+            double lngMarkerPos = mCenterMarker.getPosition().longitude % 0.00000001;
+            if (latCurrentPos != latMarkerPos && lngCurrentPos != lngMarkerPos) {
+                if (mCenterMarker != null) {
+                    mCenterMarker.remove();
                 }
-                double latMarkerPos = mCenterMarker.getPosition().latitude % 0.00000001;
-                double lngMarkerPos = mCenterMarker.getPosition().longitude % 0.00000001;
-                if (latCurrentPos != latMarkerPos && lngCurrentPos != lngMarkerPos) {
-                    if (mCenterMarker != null) {
-                        mCenterMarker.remove();
-                    }
-                    mCenterMarker = mMap.addMarker(
-                            new MarkerOptions()
-                                    .position(currentPos.target)
-                                    .icon(BitmapDescriptorFactory.fromBitmap(mBitmapMarker)));
-                }
+                mCenterMarker = mMap.addMarker(
+                        new MarkerOptions()
+                                .position(currentPos.target)
+                                .icon(BitmapDescriptorFactory.fromBitmap(mBitmapMarker)));
             }
         });
     }
@@ -285,6 +279,7 @@ public class AddStoreChooseLocationActivity extends AppCompatActivity implements
                 case 0:
                     mCenterMarker.setTitle("");
                     mCenterMarker.hideInfoWindow();
+                    break;
                 case 1:
                     Bundle bundle = msg.getData();
                     String locationAddress = bundle.getString(Contract.LOCATION_TO_ADDRESS_KEY);
