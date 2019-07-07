@@ -7,6 +7,8 @@ import org.semi.R;
 
 public final class Contract {
 
+    public static final int ALL_NOT_AVAILABLE = -9999;
+
     public static final String FIREBASE_STORAGE_ROOT_BUCKET = "gs://semiapp-6d5bb.appspot.com/";
     //Get Location Key
     public static final String PERMISSION_LOCATION_GRANTED_KEY = "LocationPermissionGranted";

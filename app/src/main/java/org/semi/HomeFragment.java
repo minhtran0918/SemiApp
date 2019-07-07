@@ -3,7 +3,6 @@ package org.semi;
 import android.Manifest;
 import android.annotation.SuppressLint;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -23,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -47,6 +46,8 @@ import org.semi.databases.SharedPrefs;
 import org.semi.firebase.IResult;
 import org.semi.firebase.ProductConnector;
 import org.semi.firebase.StoreConnector;
+import org.semi.fragment.StoreViewFragment;
+import org.semi.object.Location;
 import org.semi.object.Product;
 import org.semi.object.Store;
 import org.semi.utils.Contract;
@@ -54,7 +55,6 @@ import org.semi.utils.DialogUtils;
 import org.semi.utils.LocationUtils;
 import org.semi.utils.ObjectUtils;
 import org.semi.utils.StringUtils;
-import org.semi.views.AddStoreChooseLocationActivity;
 import org.semi.views.StoreDetailActivity;
 
 import java.util.List;
@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
     private static HomeFragment sHomeFragment;
     private HomeViewModel mHomeViewModel;
     private View mRootView;
-    private TextView mTxtState, mTxtCategoryState;
+    private TextView mTxtState, mTxtCategoryState, mTxtLocateState, mTxtSortState;
 
     private NestedScrollView mNestedScrollView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -145,6 +145,8 @@ public class HomeFragment extends Fragment {
         mTxtCategoryState = mRootView.findViewById(R.id.txt_home_category_state);
         mTxtCategoryState.setText(getString(R.string.all_title_more));
         mTxtState = mRootView.findViewById(R.id.txt_home_state_select);
+        mTxtLocateState = mRootView.findViewById(R.id.txt_home_option_locate);
+        mTxtSortState = mRootView.findViewById(R.id.txt_home_option_sort);
 
         //Data
         storeConnector = StoreConnector.getInstance();
@@ -169,71 +171,30 @@ public class HomeFragment extends Fragment {
         //ViewModel
         mHomeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
 
-        /*mHomeViewModel.modeStoreOrProduct.observe(this, integer ->
-                loadAllNewStoresOrProducts());*/
+        mHomeViewModel.modeStoreOrProduct.observe(this, integer -> {
+            SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, integer);
+            updateUI(mHomeViewModel.categoryStore.getValue(), mHomeViewModel.categoryProduct.getValue());
+        });
 
         mHomeViewModel.listStore.observe(this, stores ->
                 mHomeRcvAdapter.setDataSet(stores, mHomeViewModel.currentLocation.getValue()));
+
         mHomeViewModel.listProduct.observe(this, products ->
                 mHomeRcvAdapter.setDataSet(null, mHomeViewModel.currentLocation.getValue()));
 
         mHomeViewModel.categoryStore.observe(this, integer -> {
-            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
-                switch (integer) {
-                    case Contract.MODE_LOAD_STORE_TYPE_STORE:
-                        mTxtCategoryState.setText(getString(R.string.all_title_store));
-                        break;
-                    case Contract.MODE_LOAD_STORE_TYPE_CONVENIENCE:
-                        mTxtCategoryState.setText(getString(R.string.all_title_convenience));
-                        break;
-                    case Contract.MODE_LOAD_STORE_TYPE_SUPER_MARKET:
-                        mTxtCategoryState.setText(getString(R.string.all_title_super_market));
-                        break;
-                    case Contract.MODE_LOAD_STORE_TYPE_MALL:
-                        mTxtCategoryState.setText(getString(R.string.all_title_mall));
-                        break;
-                    case Contract.MODE_LOAD_STORE_TYPE_MARKET:
-                        mTxtCategoryState.setText(getString(R.string.all_title_market));
-                        break;
-                    case Contract.MODE_LOAD_STORE_TYPE_ATM:
-                        mTxtCategoryState.setText(getString(R.string.all_title_atm));
-                        break;
-                    case Contract.MODE_LOAD_STORE_TYPE_PHARMACY:
-                        mTxtCategoryState.setText(getString(R.string.all_title_pharmacy));
-                        break;
-                    case Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL:
-                        mTxtCategoryState.setText(getString(R.string.all_title_product));
-                        break;
-                    default:
-                        mTxtCategoryState.setText(getString(R.string.all_title_more));
-                        break;
-                }
-                loadAllNewStoresOrProducts();
-            }
+            updateUI(integer, Contract.ALL_NOT_AVAILABLE);
         });
 
         mHomeViewModel.categoryProduct.observe(this, integer -> {
-            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_PRODUCT) {
-                switch (integer) {
-                    case Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL:
-                        mTxtCategoryState.setText(getString(R.string.all_title_product));
-                        break;
-                }
-                loadAllNewStoresOrProducts();
-            }
+            updateUI(Contract.ALL_NOT_AVAILABLE, integer);
         });
-        mHomeViewModel.modeRangeValue.observe(this, aFloat -> {
-            if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
-                if (currentLocation != null) {
-                    double latitude = currentLocation.getLatitude();
-                    double longitude = currentLocation.getLongitude();
-                    LocationToAddress.getAddressFromLocation(latitude, longitude, getContext(), new GeocoderHandler());
-                }
 
-            } else {
-                mTxtState.setText("Tất cả");
-            }
+        mHomeViewModel.modeRangeValue.observe(this, aFloat -> {
+            updateUIRange();
+            loadAllNewStoresOrProducts();
         });
+
         //Listener
         View.OnClickListener mOnClickListenerRcv = v -> {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
@@ -277,16 +238,83 @@ public class HomeFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(() -> loadAllNewStoresOrProducts());
     }
 
+    private void updateUI(int category_store, int category_product) {
+        if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
+            if (category_store != Contract.ALL_NOT_AVAILABLE) {
+                SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY_STORE, category_store);
+                switch (category_store) {
+                    case Contract.MODE_LOAD_STORE_TYPE_STORE:
+                        mTxtCategoryState.setText(getString(R.string.all_title_store_store));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_CONVENIENCE:
+                        mTxtCategoryState.setText(getString(R.string.all_title_convenience));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_SUPER_MARKET:
+                        mTxtCategoryState.setText(getString(R.string.all_title_super_market));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_MALL:
+                        mTxtCategoryState.setText(getString(R.string.all_title_mall));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_MARKET:
+                        mTxtCategoryState.setText(getString(R.string.all_title_market));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_ATM:
+                        mTxtCategoryState.setText(getString(R.string.all_title_atm));
+                        break;
+                    case Contract.MODE_LOAD_STORE_TYPE_PHARMACY:
+                        mTxtCategoryState.setText(getString(R.string.all_title_pharmacy));
+                        break;
+                    default:
+                        mTxtCategoryState.setText(getString(R.string.all_title_more));
+                        break;
+                }
+                loadAllNewStoresOrProducts();
+            }
+        } else {
+            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_PRODUCT) {
+                if (category_product != Contract.ALL_NOT_AVAILABLE) {
+                    SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY_PRODUCT, category_product);
+                    switch (category_product) {
+                        case Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL:
+                            //mTxtCategoryState.setText(getString(R.string.all_title_product));
+                            mTxtCategoryState.setText(getString(R.string.all_title_product));
+                            break;
+                    }
+                    loadAllNewStoresOrProducts();
+                }
+            }
+        }
+    }
+
+    private void updateUIRange() {
+
+        if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+            mTxtSortState.setText("Gần nhất");
+            mTxtLocateState.setText(getString(R.string.home_lbl_option_around));
+            if (currentLocation != null) {
+                double latitude = currentLocation.getLatitude();
+                double longitude = currentLocation.getLongitude();
+                LocationToAddress.getAddressFromLocation(latitude, longitude, getContext(), new GeocoderHandler());
+            } else {
+                Spanned text = Html.fromHtml(
+                        "<font color=\"" + getString(R.string.home_label_around_location_color) + "\"> " + getString(R.string.home_label_around_nolocation) + " </font>"
+                                + StringUtils.toDistanceFormat(mHomeViewModel.modeRangeValue.getValue()));
+                mTxtState.setText(text);
+            }
+        } else {
+            mTxtState.setText("Tất cả " + (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE ? getString(R.string.home_lbl_store_state) : getString(R.string.home_lbl_product_state)));
+            mTxtLocateState.setText(mHomeViewModel.getDistrictByID(mHomeViewModel.districtId.getValue()).toLiteName());
+            mTxtSortState.setText("Tất cả");
+        }
+    }
+
     private View.OnClickListener mOnClickOption = v -> {
         Intent callActivity;
         switch (v.getId()) {
             case R.id.home_ic_option_category:
                 SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, mHomeViewModel.modeStoreOrProduct.getValue());
-                SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY,
-                        mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE ?
-                                mHomeViewModel.categoryStore.getValue() :
-                                mHomeViewModel.categoryProduct.getValue()
-                );
+                SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY_STORE, mHomeViewModel.categoryStore.getValue());
+                SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY_PRODUCT, mHomeViewModel.categoryProduct.getValue());
                 callActivity = new Intent(getActivity(), HomeSelectCategoryActivity.class);
                 startActivityForResult(callActivity, RC_SELECT_CATEGORY);
                 break;
@@ -307,42 +335,43 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View v) {
             int selectCategory;
+            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE &&
+                    v.getId() == mHomeViewModel.categoryStore.getValue())
+                return;
+
             switch (v.getId()) {
                 case R.id.home_ic_direct_store:
-                    mTxtCategoryState.setText(getString(R.string.all_title_store));
-                    selectCategory = Contract.MODE_LOAD_STORE_TYPE_STORE;
-                    break;
+                    listTest();
+                    return;
+                //selectCategory = Contract.MODE_LOAD_STORE_TYPE_STORE;
+                //break;
                 case R.id.home_ic_direct_convenience:
-                    mTxtCategoryState.setText(getString(R.string.all_title_convenience));
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_CONVENIENCE;
                     break;
                 case R.id.home_ic_direct_super_market:
-                    mTxtCategoryState.setText(getString(R.string.all_title_super_market));
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_SUPER_MARKET;
                     break;
                 case R.id.home_ic_direct_mall:
-                    mTxtCategoryState.setText(getString(R.string.all_title_mall));
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_MALL;
                     break;
                 case R.id.home_ic_direct_market:
-                    mTxtCategoryState.setText(getString(R.string.all_title_market));
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_MARKET;
                     break;
                 case R.id.home_ic_direct_atm:
-                    mTxtCategoryState.setText(getString(R.string.all_title_atm));
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_ATM;
                     break;
                 case R.id.home_ic_direct_pharmacy:
-                    mTxtCategoryState.setText(getString(R.string.all_title_pharmacy));
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_PHARMACY;
                     break;
                 case R.id.home_ic_direct_all:
-                    mTxtCategoryState.setText(getString(R.string.all_title_more));
                     selectCategory = Contract.MODE_HOME_LOAD_STORE_TYPE_ALL;
                     break;
                 default:
                     selectCategory = Contract.MODE_HOME_LOAD_STORE_TYPE_ALL;
                     break;
+            }
+            if (mHomeViewModel.modeStoreOrProduct.getValue() != Contract.MODE_HOME_LOAD_STORE) {
+                mHomeViewModel.modeStoreOrProduct.setValue(Contract.MODE_HOME_LOAD_STORE);
             }
             mHomeViewModel.categoryStore.setValue(selectCategory);
         }
@@ -378,6 +407,8 @@ public class HomeFragment extends Fragment {
         getLastLocation(new IResult<android.location.Location>() {
             @Override
             public void onResult(@NonNull android.location.Location location) {
+                mHomeViewModel.currentLocation.setValue(new Location(location.getLatitude(), location.getLongitude()));
+                updateUIRange();
                 int mode_load = mHomeViewModel.modeStoreOrProduct.getValue();
                 if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
                     loadAllNewStores();
@@ -391,7 +422,6 @@ public class HomeFragment extends Fragment {
                 //Error Location
                 mSwipeRefreshLayout.setRefreshing(false);
                 DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorLocationMessage));
-
             }
         });
     }
@@ -566,16 +596,23 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int result, Intent data) {
         if (requestCode == RC_SELECT_CATEGORY && result == RESULT_OK) {
+            //Xét mode hiện tại có là mode cũ
             if (mHomeViewModel.modeStoreOrProduct.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, Integer.class, Contract.MODE_HOME_LOAD_STORE))) {
+                //check có thay đổi mode store hay product k
                 if (mHomeViewModel.modeStoreOrProduct.getValue().equals(Contract.MODE_HOME_LOAD_STORE)) {
-                    if (!mHomeViewModel.categoryStore.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL))) {
+                    //Nếu là mode store
+                    if (!mHomeViewModel.categoryStore.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY_STORE, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL))) {
+                        //khác mode hiện tại
+                        mHomeViewModel.modeStoreOrProduct.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, Integer.class, Contract.MODE_HOME_LOAD_STORE));
                         mHomeViewModel.categoryStore.setValue(
-                                SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL));
+                                SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY_STORE, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL));
                     }
+
                 } else {
-                    if (!mHomeViewModel.categoryProduct.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL))) {
+                    if (!mHomeViewModel.categoryProduct.getValue().equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY_STORE, Integer.class, Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL))) {
+                        mHomeViewModel.modeStoreOrProduct.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT, Integer.class, Contract.MODE_HOME_LOAD_STORE));
                         mHomeViewModel.categoryProduct.setValue(
-                                SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL));
+                                SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_CATEGORY_STORE, Integer.class, Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL));
                     }
                 }
             } else {
@@ -585,37 +622,34 @@ public class HomeFragment extends Fragment {
             }
         }
         if (requestCode == RC_SELECT_OPTION && result == RESULT_OK) {
-
+            //check range ? = range hiện tại
             if (SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE, Integer.class).equals(mHomeViewModel.modeRange.getValue())) {
                 if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+                    //Kiểm tra range value có thay đổi
                     if (!mHomeViewModel.modeRangeValue.getValue()
                             .equals(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE_VALUE, Float.class))) {
-
                         mHomeViewModel.modeRangeValue.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE_VALUE, Float.class));
-                        Log.d("Semi", "Change range Value, range around");
+                    }
+                } else {
+                    //range all ? check city
+                    if (!SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class).equals(mHomeViewModel.cityId.getValue()) ||
+                            !SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class).equals(mHomeViewModel.districtId.getValue()) ||
+                            !SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class).equals(mHomeViewModel.wardId.getValue())
+                    ) {
+                        mHomeViewModel.cityId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class));
+                        mHomeViewModel.districtId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class));
+                        mHomeViewModel.wardId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class));
+                        updateUIRange();
                         loadAllNewStoresOrProducts();
-
                     }
                 }
             } else {
-                Log.d("Semi", "Change option range");
-                Log.d("Semi", "old value: " + mHomeViewModel.modeRange.getValue());
                 mHomeViewModel.modeRange.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE, Integer.class));
-                Log.d("Semi", "new value: " + mHomeViewModel.modeRange.getValue());
-                Log.d("Semi", "Reload all");
+                updateUIRange();
                 loadAllNewStoresOrProducts();
             }
-            if (!SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class).equals(mHomeViewModel.cityId.getValue()) ||
-                    !SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class).equals(mHomeViewModel.districtId.getValue()) ||
-                    !SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class).equals(mHomeViewModel.wardId.getValue())
-            ) {
-                mHomeViewModel.cityId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_CITY, Integer.class));
-                mHomeViewModel.districtId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class));
-                mHomeViewModel.wardId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class));
-                Log.d("Semi", "Change address, range all");
-                //TODO LOAD
-            }
-            mHomeViewModel.modeSort.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_SORT, Integer.class));
+            //TODO mode sort
+            //mHomeViewModel.modeSort.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_SORT, Integer.class));
         }
     }
 
@@ -624,15 +658,50 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    mTxtState.setText("Quanh " + StringUtils.toDistanceFormat(mHomeViewModel.modeRangeValue.getValue()));
+                    Spanned textt = Html.fromHtml(
+                            "<font color=\"" + getString(R.string.home_label_around_location_color) + "\"> " + getString(R.string.home_label_around_location) + " </font>"
+                                    + StringUtils.toDistanceFormat(mHomeViewModel.modeRangeValue.getValue()));
+                    mTxtState.setText(textt);
                     break;
                 case 1:
                     Bundle bundle = msg.getData();
                     String locationAddress = bundle.getString(Contract.LOCATION_TO_ADDRESS_KEY);
-                    mTxtState.setText(StringUtils.toDistanceFormat(mHomeViewModel.modeRangeValue.getValue()) + " quanh " + locationAddress);
+                    String around = "<font color=\"" + getString(R.string.home_label_around_location_color) + "\"> " + getString(R.string.home_label_around_location) + " </font>";
+                    Spanned text = Html.fromHtml(StringUtils.toDistanceFormat(mHomeViewModel.modeRangeValue.getValue())
+                            + around
+                            + locationAddress);
+
+                    mTxtState.setText(text);
                     break;
             }
 
         }
+    }
+
+    private void listTest() {
+        final StoreConnector storeConnector = StoreConnector.getInstance();
+        //TODO MẢNG ĐỊA CHỈ Ở ĐÂY
+        Object[] address = new Object[4];
+        address[0] = 0;
+        address[1] = -1;
+        address[2] = -1;
+        address[3] = -1;
+        String key = StringUtils.normalize("Tap hoa");
+        storeConnector.getStoresByKeywords(0, key, "", Contract.NUM_STORES_PER_REQUEST,
+                address,
+                new IResult<List<Store>>() {
+                    @Override
+                    public void onResult(List<Store> result) {
+                        if (result.size() == 0) {
+                            return;
+                        }
+                        Toast.makeText(getActivity(), "xong", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        Log.d("Semi", "exp " + exp.getMessage());
+                    }
+                });
     }
 }

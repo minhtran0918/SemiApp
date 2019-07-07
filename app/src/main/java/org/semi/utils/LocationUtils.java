@@ -50,26 +50,20 @@ public class LocationUtils {
 
         Task<LocationSettingsResponse> task = LocationServices.getSettingsClient(activity)
                 .checkLocationSettings(request);
-        task.addOnSuccessListener(activity, new OnSuccessListener<LocationSettingsResponse>() {
-            @Override
-            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                if (result != null) {
-                    //Đã bật
-                    result.onResult(locationSettingsResponse);
-                }
+        task.addOnSuccessListener(activity, locationSettingsResponse -> {
+            if (result != null) {
+                //Đã bật
+                result.onResult(locationSettingsResponse);
             }
-        }).addOnFailureListener(activity, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                final ResolvableApiException rexp = (ResolvableApiException) e;
-                try {
-                    rexp.startResolutionForResult(activity, RESOLUTION_CODE);
-                } catch (IntentSender.SendIntentException sexp) {
-                    if (result != null) {
-                        result.onFailure(sexp);
-                    }
-                    Log.w("my_error", sexp);
+        }).addOnFailureListener(activity, e -> {
+            final ResolvableApiException rexp = (ResolvableApiException) e;
+            try {
+                rexp.startResolutionForResult(activity, RESOLUTION_CODE);
+            } catch (IntentSender.SendIntentException sexp) {
+                if (result != null) {
+                    result.onFailure(sexp);
                 }
+                Log.w("my_error", sexp);
             }
         });
     }

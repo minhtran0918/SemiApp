@@ -270,20 +270,13 @@ public class StoreDetailActivity extends AppCompatActivity implements OnItemClic
             }
         }
         //set distance
-        LocationUtils.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    double distance = MathUtils.haversine(ObjectUtils.toMyLocation(location),
-                            mStore.getGeo());
-                    store_detail_distance.setText(StringUtils.toDistanceFormat(distance));
-                } else {
-                    store_detail_distance.setText("");
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        LocationUtils.getLastLocation().addOnSuccessListener(location -> {
+            if (location != null) {
+                double distance = MathUtils.haversine(ObjectUtils.toMyLocation(location),
+                        mStore.getGeo());
+                store_detail_distance.setText(StringUtils.toDistanceFormat(distance));
+            } else {
+                store_detail_distance.setText("");
             }
         });
         //set utilities

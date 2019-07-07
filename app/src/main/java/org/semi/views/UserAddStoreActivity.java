@@ -371,7 +371,7 @@ public class UserAddStoreActivity extends AppCompatActivity implements SelectCat
         int id = 1;
         switch (itemId) {
             case (R.id.btn_dialog_item_store):
-                title = getString(R.string.all_title_store);
+                title = getString(R.string.all_title_store_store);
                 id = 1;
                 break;
 

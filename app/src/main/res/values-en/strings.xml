@@ -96,7 +96,7 @@
     <string name="all_title_market">Market</string>
     <string name="all_title_more">More</string>
     <string name="all_title_pharmacy">Pharmacy</string>
-    <string name="all_title_store">Store</string>
+    <string name="all_title_store_store">Store</string>
     <string name="all_title_super_market">Super market</string>
     <string name="dialog_select_category_title_convenience">Convenience</string>
     <string name="dialog_select_category_title_mall">Mall</string>
@@ -107,4 +107,18 @@
     <string name="select_address_non_ward_message">If you know Ward, select \'Unknown\'</string>
     <string name="select_address_toolbar_label">Choose a store address</string>
     <string name="all_title_product">Product</string>
+    <string name="home_label_around_location">around</string>
+    <string name="home_label_around_nolocation">Around</string>
+    <string name="home_lbl_product_state">product</string>
+    <string name="home_lbl_store_state">store</string>
+    <string name="home_select_category_title_all">All</string>
+    <string name="home_select_category_title_atm">ATM</string>
+    <string name="home_select_category_title_convenience">Convenience</string>
+    <string name="home_select_category_title_mall">Mall</string>
+    <string name="home_select_category_title_market">Market</string>
+    <string name="home_select_category_title_pharmacy">Pharmacy</string>
+    <string name="home_select_category_title_store">Store</string>
+    <string name="home_select_category_title_super_market">Super market</string>
+    <string name="select_address_choose_location_label">Choose location of store</string>
+    <string name="title_activity_add_store_choose_location">Map</string>
 </resources>

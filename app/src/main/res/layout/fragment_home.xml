@@ -246,13 +246,13 @@
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:padding="6dp"
-                android:weightSum="3">
+                android:weightSum="10">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/home_ic_option_category"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:background="?attr/selectableItemBackground">
 
                     <TextView
@@ -260,7 +260,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="Danh mục :"
+                        android:text="Danh mục"
                         android:textAlignment="center"
                         android:textColor="@color/home_ic_direct_text_color"
                         android:textSize="15sp"
@@ -310,9 +310,9 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/home_ic_option_address"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="4"
                     android:background="?attr/selectableItemBackground">
 
                     <TextView
@@ -320,7 +320,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="Khu vực :"
+                        android:text="Khu vực"
                         android:textAlignment="center"
                         android:textColor="@color/home_ic_direct_text_color"
                         android:textSize="15sp"
@@ -370,9 +370,9 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/home_ic_option_filter"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:background="?attr/selectableItemBackground">
 
                     <TextView
@@ -380,7 +380,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="Lọc :"
+                        android:text="Lọc"
                         android:textAlignment="center"
                         android:textColor="@color/home_ic_direct_text_color"
                         android:textSize="15sp"
@@ -432,11 +432,12 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:background="@color/white"
+                android:singleLine="true"
                 android:padding="4dp"
                 android:paddingStart="8dp"
                 android:text="Trạng thái chọn ??"
                 android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

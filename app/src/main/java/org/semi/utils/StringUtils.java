@@ -35,11 +35,19 @@ public final class StringUtils {
     }
 
     public static String toDistanceFormat(double distance) {
-        double inMeter = distance * 1000;
+        double inMeter = distance * 1000f;
         if (inMeter < 1000) {
-            return String.format("%.1f m", inMeter);
+            if ((double) Math.round(inMeter * 10) / 10 % 1.0 == 0) {
+                return String.format("%.0f m", inMeter);
+            } else {
+                return String.format("%.1f m", inMeter);
+            }
         } else {
-            return String.format("%.1f km", distance);
+            if (distance % 1 == 0) {
+                return String.format("%d km", (int) distance);
+            } else {
+                return String.format("%.1f km", distance);
+            }
         }
     }
 

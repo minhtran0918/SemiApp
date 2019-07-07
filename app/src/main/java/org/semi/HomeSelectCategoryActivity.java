@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,8 @@ import android.widget.RadioGroup;
 import org.semi.databases.SharedPrefs;
 import org.semi.utils.Contract;
 
-import static org.semi.databases.SharedPrefs.KEY_OPTION_CATEGORY;
+import static org.semi.databases.SharedPrefs.KEY_OPTION_CATEGORY_PRODUCT;
+import static org.semi.databases.SharedPrefs.KEY_OPTION_CATEGORY_STORE;
 import static org.semi.databases.SharedPrefs.KEY_OPTION_LOAD_STORE_OR_PRODUCT;
 
 public class HomeSelectCategoryActivity extends AppCompatActivity {
@@ -61,7 +61,7 @@ public class HomeSelectCategoryActivity extends AppCompatActivity {
         //Load DATA
         mModeStoreOrProduct.setValue(SharedPrefs.getInstance().get(KEY_OPTION_LOAD_STORE_OR_PRODUCT, Integer.class, Contract.MODE_HOME_LOAD_STORE));
 
-        mModeCategoryStore.setValue(SharedPrefs.getInstance().get(KEY_OPTION_CATEGORY, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL));
+        mModeCategoryStore.setValue(SharedPrefs.getInstance().get(KEY_OPTION_CATEGORY_STORE, Integer.class, Contract.MODE_HOME_LOAD_STORE_TYPE_ALL));
 
         //TODO CHANGE CODE IF MORE CATEGORY PRODUCT: NOW - 1 TYPE PRODUT
 
@@ -141,9 +141,9 @@ public class HomeSelectCategoryActivity extends AppCompatActivity {
                 setResult(RESULT_OK, resultIntent);
                 SharedPrefs.getInstance().put(KEY_OPTION_LOAD_STORE_OR_PRODUCT, mModeStoreOrProduct.getValue());
                 if (mModeStoreOrProduct.getValue().equals(Contract.MODE_HOME_LOAD_STORE)) {
-                    SharedPrefs.getInstance().put(KEY_OPTION_CATEGORY, mModeCategoryStore.getValue());
+                    SharedPrefs.getInstance().put(KEY_OPTION_CATEGORY_STORE, mModeCategoryStore.getValue());
                 } else {
-                    SharedPrefs.getInstance().put(KEY_OPTION_CATEGORY, mModeCategoryProduct.getValue());
+                    SharedPrefs.getInstance().put(KEY_OPTION_CATEGORY_PRODUCT, mModeCategoryProduct.getValue());
                 }
                 finish();
                 return true;

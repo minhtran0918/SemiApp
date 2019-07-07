@@ -23,7 +23,8 @@ public class SharedPrefs {
     public static final String KEY_ALL_ADDRESS_WARD = "store_or_product";
 
     public static final String KEY_OPTION_LOAD_STORE_OR_PRODUCT = "option_store_or_product";
-    public static final String KEY_OPTION_CATEGORY = "option_category";
+    public static final String KEY_OPTION_CATEGORY_STORE = "option_category_store";
+    public static final String KEY_OPTION_CATEGORY_PRODUCT = "option_category_product";
     public static final String KEY_OPTION_RANGE = "option_range";
     public static final String KEY_OPTION_RANGE_VALUE = "option_range_value";
     public static final String KEY_OPTION_SORT = "option_sort";

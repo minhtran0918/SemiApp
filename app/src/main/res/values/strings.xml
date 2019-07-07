@@ -53,6 +53,9 @@
     <string name="infoDialogTitle">Thông báo</string>
 
     <!--Minh Dev-->
+    <string name="home_label_around_location_color" translatable="false">#18AC18</string>
+    <string name="home_label_around_location">quanh</string>
+    <string name="home_label_around_nolocation">Quanh</string>
 
     <!--<string name="app_name">DesignSemi</string>-->
     <string name="toolbar_store_label">Cửa hàng</string>
@@ -89,7 +92,12 @@
     <string name="dialog_utility_label">Tiện ích</string>
 
     <!-- new -->
-    <string name="all_title_store">Tạp hóa</string>
+    <string name="home_lbl_option_around">Quanh đây</string>
+    <string name="home_lbl_store_state">cửa hàng</string>
+    <string name="home_lbl_product_state">hàng hóa</string>
+
+    <string name="all_title_store">Cửa hàng</string>
+    <string name="all_title_store_store">Tạp hóa</string>
     <string name="all_title_convenience">Tiện lợi 24/7</string>
     <string name="all_title_super_market">Siêu thị</string>
     <string name="all_title_mall">Trung tâm thương mại</string>
@@ -134,16 +142,16 @@
 
     <string name="add_store_backpress_dialog_title">Xác nhận thoát</string>
     <string name="add_store_backpress_dialog_message">Thông tin nhập của bạn sẽ không được lưu lại</string>
-    <string name="add_store_backpress_dialog_positive_btn">OK</string>
+    <string name="add_store_backpress_dialog_positive_btn" translatable="false">OK</string>
     <string name="add_store_backpress_dialog_negative_btn">Xem lại</string>
 
     <string name="add_store_send_data_dialog_title">Xác nhận thêm địa điểm mới</string>
     <string name="add_store_send_data_dialog_message">Chân thành cảm ơn đóng góp của bạn.\nThông tin địa điểm của bạn sẽ góp phần xây dựng ứng dụng lớn mạnh.</string>
-    <string name="add_store_send_data_dialog_positive_btn">OK</string>
+    <string name="add_store_send_data_dialog_positive_btn" translatable="false">OK</string>
     <string name="add_store_send_data_dialog_negative_btn">Xem lại</string>
     <string name="add_store_select_image_toolbar_title">Chọn hình ảnh</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
 </resources>
