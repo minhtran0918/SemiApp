@@ -342,7 +342,9 @@ public class HomeFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.home_ic_direct_store:
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_STORE;
-                    break;
+                    getListStoresByKeywords();
+                    return;
+                    //break;
                 case R.id.home_ic_direct_convenience:
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_CONVENIENCE;
                     break;
@@ -400,6 +402,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadAllNewStoresOrProducts() {
+        /*if(mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL){
+            getListStoresByKeywords();
+            return;
+        }*/
         mSwipeRefreshLayout.setRefreshing(true);
         mShouldLoadMoreData = true;
         getLastLocation(new IResult<android.location.Location>() {
@@ -444,11 +450,11 @@ public class HomeFragment extends Fragment {
         //TODO MẢNG ĐỊA CHỈ Ở ĐÂY
         Object[] address = new Object[4];
         address[0] = 0;
-        address[1] = mHomeViewModel.cityId.getValue();
-        address[2] = mHomeViewModel.districtId.getValue();
-        address[3] = (mHomeViewModel.wardId.getValue() == 0 ? -1 : mHomeViewModel.wardId.getValue());
+        address[1] = -1;
+        address[2] = -1;
+        address[3] = -1;
         //String key = StringUtils.normalize("Tap hoa");
-        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), "", "", Contract.NUM_STORES_PER_REQUEST,
+        storeConnector.getStoresByKeywords(4, "", "", Contract.NUM_STORES_PER_REQUEST,
                 address,
                 new IResult<List<Store>>() {
                     @Override
