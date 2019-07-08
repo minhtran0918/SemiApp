@@ -341,10 +341,8 @@ public class HomeFragment extends Fragment {
 
             switch (v.getId()) {
                 case R.id.home_ic_direct_store:
-                    listTest();
-                    return;
-                //selectCategory = Contract.MODE_LOAD_STORE_TYPE_STORE;
-                //break;
+                    selectCategory = Contract.MODE_LOAD_STORE_TYPE_STORE;
+                    break;
                 case R.id.home_ic_direct_convenience:
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_CONVENIENCE;
                     break;
@@ -426,6 +424,56 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void loadAllNewsStoreOrProductByKey() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mShouldLoadMoreData = true;
+        if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL) {
+            int mode_load = mHomeViewModel.modeStoreOrProduct.getValue();
+            if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
+                getListStoresByKeywords();
+            } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
+                //loadAllNewProducts();
+            }
+        }
+    }
+
+    private void getListStoresByKeywords() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mShouldLoadMoreData = true;
+        final StoreConnector storeConnector = StoreConnector.getInstance();
+        //TODO MẢNG ĐỊA CHỈ Ở ĐÂY
+        Object[] address = new Object[4];
+        address[0] = 0;
+        address[1] = mHomeViewModel.cityId.getValue();
+        address[2] = mHomeViewModel.districtId.getValue();
+        address[3] = (mHomeViewModel.wardId.getValue() == 0 ? -1 : mHomeViewModel.wardId.getValue());
+        //String key = StringUtils.normalize("Tap hoa");
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), "", "", Contract.NUM_STORES_PER_REQUEST,
+                address,
+                new IResult<List<Store>>() {
+                    @Override
+                    public void onResult(List<Store> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0) {
+                            //Empty Error
+                            //Clear RecyclerView
+                            mHomeViewModel.listStore.setValue(null);
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        mHomeViewModel.listStore.setValue(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mHomeViewModel.listStore.setValue(null);
+                        Log.d("Semi", "exp " + exp.getMessage());
+                        //Network Error
+                        DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorNetworkMessage));
+                    }
+                });
+    }
 
     //load from offset 0,discard old data in RecyclerView and load new data to it.
     private void loadAllNewStores() {
@@ -462,6 +510,41 @@ public class HomeFragment extends Fragment {
                 });
     }
 
+    private void getMoreListStoresByKeywordsAt(int lastPos, int category) {
+        mSwipeRefreshLayout.setRefreshing(true);
+        final StoreConnector storeConnector = StoreConnector.getInstance();
+        Object[] address = new Object[4];
+        address[0] = 0;
+        address[1] = -1;
+        address[2] = -1;
+        address[3] = -1;
+        storeConnector.getStoresByKeywords(category, "", String.valueOf(lastPos), Contract.NUM_STORES_PER_REQUEST,
+                address,
+                new IResult<List<Store>>() {
+                    @Override
+                    public void onResult(List<Store> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0 && mHomeViewModel.listStore.getValue().size() == 0) {
+                            mShouldLoadMoreData = false;
+                            //Error Empty
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        if (result.isEmpty()) {
+                            mShouldLoadMoreData = false;
+                            return;
+                        }
+                        mHomeViewModel.updateListStore(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        Log.d("Semi", "exp " + exp.getMessage());
+                        mShouldLoadMoreData = true;
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+    }
 
     private void loadStoresAt(int position) {
         mSwipeRefreshLayout.setRefreshing(true);
@@ -640,13 +723,17 @@ public class HomeFragment extends Fragment {
                         mHomeViewModel.districtId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class));
                         mHomeViewModel.wardId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class));
                         updateUIRange();
-                        loadAllNewStoresOrProducts();
+                        getListStoresByKeywords();
                     }
                 }
             } else {
                 mHomeViewModel.modeRange.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE, Integer.class));
                 updateUIRange();
-                loadAllNewStoresOrProducts();
+                if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+                    loadAllNewStoresOrProducts();
+                }else{
+                    getListStoresByKeywords();
+                }
             }
             //TODO mode sort
             //mHomeViewModel.modeSort.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_SORT, Integer.class));
@@ -678,30 +765,5 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void listTest() {
-        final StoreConnector storeConnector = StoreConnector.getInstance();
-        //TODO MẢNG ĐỊA CHỈ Ở ĐÂY
-        Object[] address = new Object[4];
-        address[0] = 0;
-        address[1] = -1;
-        address[2] = -1;
-        address[3] = -1;
-        String key = StringUtils.normalize("Tap hoa");
-        storeConnector.getStoresByKeywords(0, key, "", Contract.NUM_STORES_PER_REQUEST,
-                address,
-                new IResult<List<Store>>() {
-                    @Override
-                    public void onResult(List<Store> result) {
-                        if (result.size() == 0) {
-                            return;
-                        }
-                        Toast.makeText(getActivity(), "xong", Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onFailure(@NonNull Exception exp) {
-                        Log.d("Semi", "exp " + exp.getMessage());
-                    }
-                });
-    }
 }
