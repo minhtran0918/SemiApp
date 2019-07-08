@@ -46,6 +46,7 @@ import org.semi.databases.SharedPrefs;
 import org.semi.firebase.IResult;
 import org.semi.firebase.ProductConnector;
 import org.semi.firebase.StoreConnector;
+import org.semi.fragment.ProductViewFragment;
 import org.semi.fragment.StoreViewFragment;
 import org.semi.object.Location;
 import org.semi.object.Product;
@@ -221,12 +222,21 @@ public class HomeFragment extends Fragment {
                             if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
                                 int size = mHomeRcvAdapter.getItemCount();
                                 if (size != 0) {
-                                    loadStoresAt(mHomeRcvAdapter.getItemCount());
+                                    if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+                                        loadStoresAt(mHomeRcvAdapter.getItemCount());
+                                    } else {
+                                        getMoreListStoresByKeywordsAt(mHomeRcvAdapter.getItemCount());
+                                    }
+
                                 }
                             } else {
                                 int size = mHomeRcvAdapter.getItemCount();
                                 if (size != 0) {
-                                    loadProductsAt(mHomeRcvAdapter.getItemCount());
+                                    if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+                                        loadProductsAt(mHomeRcvAdapter.getItemCount());
+                                    } else {
+                                        getMoreListProductByKeywordsAt(mHomeRcvAdapter.getItemCount());
+                                    }
                                 }
                             }
 
@@ -342,9 +352,7 @@ public class HomeFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.home_ic_direct_store:
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_STORE;
-                    getListStoresByKeywords();
-                    return;
-                    //break;
+                    break;
                 case R.id.home_ic_direct_convenience:
                     selectCategory = Contract.MODE_LOAD_STORE_TYPE_CONVENIENCE;
                     break;
@@ -402,10 +410,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadAllNewStoresOrProducts() {
-        /*if(mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL){
-            getListStoresByKeywords();
+        if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL) {
+            loadAllNewsStoreOrProductByKey();
             return;
-        }*/
+        }
         mSwipeRefreshLayout.setRefreshing(true);
         mShouldLoadMoreData = true;
         getLastLocation(new IResult<android.location.Location>() {
@@ -433,53 +441,15 @@ public class HomeFragment extends Fragment {
     private void loadAllNewsStoreOrProductByKey() {
         mSwipeRefreshLayout.setRefreshing(true);
         mShouldLoadMoreData = true;
-        if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL) {
-            int mode_load = mHomeViewModel.modeStoreOrProduct.getValue();
-            if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
-                getListStoresByKeywords();
-            } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
-                //loadAllNewProducts();
-            }
+        int mode_load = mHomeViewModel.modeStoreOrProduct.getValue();
+        if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
+            getListStoresByKeywords();
+        } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
+            getListProductByKeywords();
         }
+
     }
 
-    private void getListStoresByKeywords() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        mShouldLoadMoreData = true;
-        final StoreConnector storeConnector = StoreConnector.getInstance();
-        //TODO MẢNG ĐỊA CHỈ Ở ĐÂY
-        Object[] address = new Object[4];
-        address[0] = 0;
-        address[1] = -1;
-        address[2] = -1;
-        address[3] = -1;
-        //String key = StringUtils.normalize("Tap hoa");
-        storeConnector.getStoresByKeywords(4, "", "", Contract.NUM_STORES_PER_REQUEST,
-                address,
-                new IResult<List<Store>>() {
-                    @Override
-                    public void onResult(List<Store> result) {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        if (result.size() == 0) {
-                            //Empty Error
-                            //Clear RecyclerView
-                            mHomeViewModel.listStore.setValue(null);
-                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
-                            return;
-                        }
-                        mHomeViewModel.listStore.setValue(result);
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Exception exp) {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        mHomeViewModel.listStore.setValue(null);
-                        Log.d("Semi", "exp " + exp.getMessage());
-                        //Network Error
-                        DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorNetworkMessage));
-                    }
-                });
-    }
 
     //load from offset 0,discard old data in RecyclerView and load new data to it.
     private void loadAllNewStores() {
@@ -516,42 +486,6 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private void getMoreListStoresByKeywordsAt(int lastPos, int category) {
-        mSwipeRefreshLayout.setRefreshing(true);
-        final StoreConnector storeConnector = StoreConnector.getInstance();
-        Object[] address = new Object[4];
-        address[0] = 0;
-        address[1] = -1;
-        address[2] = -1;
-        address[3] = -1;
-        storeConnector.getStoresByKeywords(category, "", String.valueOf(lastPos), Contract.NUM_STORES_PER_REQUEST,
-                address,
-                new IResult<List<Store>>() {
-                    @Override
-                    public void onResult(List<Store> result) {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        if (result.size() == 0 && mHomeViewModel.listStore.getValue().size() == 0) {
-                            mShouldLoadMoreData = false;
-                            //Error Empty
-                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
-                            return;
-                        }
-                        if (result.isEmpty()) {
-                            mShouldLoadMoreData = false;
-                            return;
-                        }
-                        mHomeViewModel.updateListStore(result);
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Exception exp) {
-                        Log.d("Semi", "exp " + exp.getMessage());
-                        mShouldLoadMoreData = true;
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-    }
-
     private void loadStoresAt(int position) {
         mSwipeRefreshLayout.setRefreshing(true);
         if (currentLocation == null) {
@@ -580,6 +514,173 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onFailure(@NonNull Exception exp) {
+                        mShouldLoadMoreData = true;
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+    }
+
+    private void getListStoresByKeywords() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mShouldLoadMoreData = true;
+        final StoreConnector storeConnector = StoreConnector.getInstance();
+        //TODO MẢNG ĐỊA CHỈ Ở ĐÂY
+        Object[] address = new Object[4];
+        address[0] = 0; //Country vietnam
+        address[1] = mHomeViewModel.cityId.getValue();
+        address[2] = mHomeViewModel.districtId.getValue();
+        address[3] = mHomeViewModel.wardId.getValue();
+        Log.d("Semi", "Call all: mode " + mHomeViewModel.modeStoreOrProduct.getValue());
+        Log.d("Semi", "Call all: mode range " + mHomeViewModel.modeRange.getValue());
+        Log.d("Semi", "Call all: mode value " + mHomeViewModel.modeRange.getValue());
+        Log.d("Semi", "Call all: mode sort " + mHomeViewModel.modeSort.getValue());
+        Log.d("Semi", "Call all: category store " + mHomeViewModel.categoryStore.getValue());
+        Log.d("Semi", "Call all: category product " + mHomeViewModel.categoryProduct.getValue());
+        Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
+
+        //String key = StringUtils.normalize("Tap hoa");
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), "", "", Contract.NUM_STORES_PER_REQUEST,
+                address,
+                new IResult<List<Store>>() {
+                    @Override
+                    public void onResult(List<Store> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0) {
+                            //Empty Error
+                            //Clear RecyclerView
+                            mHomeViewModel.listStore.setValue(null);
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        mHomeViewModel.listStore.setValue(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mHomeViewModel.listStore.setValue(null);
+                        Log.d("Semi", "exp " + exp.getMessage());
+                        //Network Error
+                        DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorNetworkMessage));
+                    }
+                });
+    }
+
+    private void getMoreListStoresByKeywordsAt(int lastPos) {
+        mSwipeRefreshLayout.setRefreshing(true);
+        final StoreConnector storeConnector = StoreConnector.getInstance();
+        Object[] address = new Object[4];
+        address[0] = 0; //Country vietnam
+        address[1] = mHomeViewModel.cityId.getValue();
+        address[2] = mHomeViewModel.districtId.getValue();
+        address[3] = mHomeViewModel.wardId.getValue();
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), "", String.valueOf(lastPos), Contract.NUM_STORES_PER_REQUEST,
+                address,
+                new IResult<List<Store>>() {
+                    @Override
+                    public void onResult(List<Store> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0 && mHomeViewModel.listStore.getValue().size() == 0) {
+                            mShouldLoadMoreData = false;
+                            //Error Empty
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        if (result.isEmpty()) {
+                            mShouldLoadMoreData = false;
+                            return;
+                        }
+                        mHomeViewModel.updateListStore(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        Log.d("Semi", "exp " + exp.getMessage());
+                        mShouldLoadMoreData = true;
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+    }
+
+    private void getListProductByKeywords() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mShouldLoadMoreData = true;
+        final ProductConnector productConnector = ProductConnector.getInstance();
+
+        Object[] address = new Object[4];
+        address[0] = 0; //Country vietnam
+        address[1] = mHomeViewModel.cityId.getValue();
+        address[2] = mHomeViewModel.districtId.getValue();
+        address[3] = mHomeViewModel.wardId.getValue();
+        Log.d("Semi", "Call all: mode " + mHomeViewModel.modeStoreOrProduct.getValue());
+        Log.d("Semi", "Call all: mode range " + mHomeViewModel.modeRange.getValue());
+        Log.d("Semi", "Call all: mode value " + mHomeViewModel.modeRange.getValue());
+        Log.d("Semi", "Call all: mode sort " + mHomeViewModel.modeSort.getValue());
+        Log.d("Semi", "Call all: category store " + mHomeViewModel.categoryStore.getValue());
+        Log.d("Semi", "Call all: category product " + mHomeViewModel.categoryProduct.getValue());
+        Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
+
+        productConnector.getProductsByKeywords(mHomeViewModel.categoryProduct.getValue(), "", "", Contract.NUM_PRODUCTS_PER_REQUEST,
+                address,
+                new IResult<List<Product>>() {
+                    @Override
+                    public void onResult(List<Product> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0) {
+                            //Empty Error
+                            //Clear RecyclerView
+                            mHomeViewModel.listProduct.setValue(null);
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        mHomeViewModel.listProduct.setValue(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mHomeViewModel.listProduct.setValue(null);
+                        Log.d("Semi", "exp " + exp.getMessage());
+                        //Network Error
+                        DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorNetworkMessage));
+                    }
+                });
+    }
+
+    private void getMoreListProductByKeywordsAt(int lastPos) {
+        mSwipeRefreshLayout.setRefreshing(true);
+        final ProductConnector productConnector = ProductConnector.getInstance();
+        Object[] address = new Object[4];
+        address[0] = 0; //Country vietnam
+        address[1] = mHomeViewModel.cityId.getValue();
+        address[2] = mHomeViewModel.districtId.getValue();
+        address[3] = mHomeViewModel.wardId.getValue();
+        productConnector.getProductsByKeywords(
+                mHomeViewModel.categoryProduct.getValue(),
+                "",
+                String.valueOf(lastPos),
+                Contract.NUM_PRODUCTS_PER_REQUEST,
+                address,
+                new IResult<List<Product>>() {
+                    @Override
+                    public void onResult(List<Product> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0 && mHomeViewModel.listProduct.getValue().size() == 0) {
+                            mShouldLoadMoreData = false;
+                            //Error Empty
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        if (result.isEmpty()) {
+                            mShouldLoadMoreData = false;
+                            return;
+                        }
+                        mHomeViewModel.updateListProduct(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        Log.d("Semi", "exp " + exp.getMessage());
                         mShouldLoadMoreData = true;
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
@@ -737,7 +838,7 @@ public class HomeFragment extends Fragment {
                 updateUIRange();
                 if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
                     loadAllNewStoresOrProducts();
-                }else{
+                } else {
                     getListStoresByKeywords();
                 }
             }
