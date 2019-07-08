@@ -13,6 +13,7 @@
         android:id="@+id/toolbar_store_detail"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:background="@color/colorPrimary">
 
         <TextView

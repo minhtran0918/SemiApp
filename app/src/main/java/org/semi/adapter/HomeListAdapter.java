@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.semi.R;
+import org.semi.firebase.GlideApp;
+import org.semi.firebase.StorageConnector;
 import org.semi.object.Location;
 import org.semi.object.Store;
 import org.semi.utils.Contract;
@@ -45,6 +49,18 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeVi
         homeViewHolder.titleTextView.setText(mListStore.get(i).getTitle());
         homeViewHolder.addressTextView.setText(mListStore.get(i).getAddress().toString());
         homeViewHolder.ratingTextView.setText(String.format("%.1f", ratingValue));
+        if (!mListStore.get(i).getImageURL().equals("")) {
+            List<String> a = StringUtils.getListPath(mListStore.get(i).getImageURL());
+            String path_img = a.get(0);
+            GlideApp.with(homeViewHolder.itemView)
+                    .load(StorageConnector.getReference(path_img))
+                    .override(80, 80)
+                    .placeholder(R.drawable.all_ic_loading_black_24)
+                    .error(R.drawable.all_ic_store_128)
+                    .into(homeViewHolder.logoImageView);
+        } else {
+            homeViewHolder.logoImageView.setImageResource(R.drawable.all_ic_store_128);
+        }
         String distanceStr = "";
         //
         if (location != null) {
@@ -61,8 +77,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeVi
             }
         }
         //Set Image
-        ObjectUtils.setBitmapToImage(mListStore.get(i).getImageURL(), homeViewHolder.logoImageView, lastCallId);
+        //ObjectUtils.setBitmapToImage(mListStore.get(i).getImageURL(), homeViewHolder.logoImageView, lastCallId);
     }
+
     public void setDataSet(List<Store> stores, @Nullable Location location) {
         if (mListStore != null) {
             mListStore.clear();
@@ -70,7 +87,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeVi
         if (stores != null) {
             mListStore.addAll(stores);
             notifyDataSetChanged();
-        }else{
+        } else {
             mListStore.clear();
             notifyDataSetChanged();
         }
@@ -102,7 +119,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeVi
         private TextView addressTextView;
         private TextView ratingTextView;
         private TextView distanceTextView;
-        private AppCompatImageView logoImageView;
+        private ImageView logoImageView;
         private LongBuffer lastCallId;
 
         private HomeViewHolder(@NonNull View itemView) {

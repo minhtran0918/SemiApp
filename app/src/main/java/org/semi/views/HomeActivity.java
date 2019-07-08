@@ -1,16 +1,22 @@
 package org.semi.views;
 
 import android.app.ActivityOptions;
+
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 
 import org.semi.BookmarkFragment;
 import org.semi.DiscoverFragment;
+import org.semi.PlaceAPIActivity;
 import org.semi.R;
 import org.semi.ViewModel.HomeViewModel;
 import org.semi.fragment.MeFragment;
@@ -83,7 +90,10 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.nav_bot_item_discover:
                 selectFragment = DiscoverFragment.getInstance();
-                break;
+                Intent startActivity = new Intent(this, PlaceAPIActivity.class);
+                startActivity(startActivity);
+                return;
+            //break;
             case R.id.nav_bot_item_bookmark:
                 //selectFragment = MyMapFragment.getInstance();
                 selectFragment = new BookmarkFragment();
