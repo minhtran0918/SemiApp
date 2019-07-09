@@ -8,29 +8,49 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <fragment
                 android:id="@+id/places_autocomplete_fragment"
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/test_find_current_place"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="find current places"/>
-            <com.google.android.material.textfield.TextInputLayout
+                android:onClick="getCurrentPlace"
+                android:text="find current places" />
+
+            <TextView
+                android:id="@+id/test_address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-                <EditText
-                    android:id="@+id/edt_likehood"
-                    android:hint="Place likehood"
-                    android:layout_height="match_parent"
-                    android:layout_width="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:hint="address id" />
+
+            <TextView
+                android:id="@+id/test_likelihood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="likelihood" />
+
+            <Button
+                android:id="@+id/test_get_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="getPhotoListener"
+                android:text="Get Photo" />
+
+            <ImageView
+                android:id="@+id/test_photo"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center" />
         </LinearLayout>
 
     </ScrollView>
