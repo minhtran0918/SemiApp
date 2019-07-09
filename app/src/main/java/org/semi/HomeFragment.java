@@ -46,8 +46,6 @@ import org.semi.databases.SharedPrefs;
 import org.semi.firebase.IResult;
 import org.semi.firebase.ProductConnector;
 import org.semi.firebase.StoreConnector;
-import org.semi.fragment.ProductViewFragment;
-import org.semi.fragment.StoreViewFragment;
 import org.semi.object.Location;
 import org.semi.object.Product;
 import org.semi.object.Store;
@@ -85,7 +83,6 @@ public class HomeFragment extends Fragment {
     private boolean mShouldLoadMoreData;
     //private IInteractionWithList<IHaveIdAndName<String>> listener;
 
-    private boolean loading = true;
     private int pastVisiblesItems, visibleItemCount, totalItemCount;
     private int RC_SELECT_CATEGORY = 11;
     private int RC_SELECT_OPTION = 22;
@@ -178,10 +175,10 @@ public class HomeFragment extends Fragment {
         });
 
         mHomeViewModel.listStore.observe(this, stores ->
-                mHomeRcvAdapter.setDataSet(stores, mHomeViewModel.currentLocation.getValue()));
+                mHomeRcvAdapter.setDataSetStore(stores, mHomeViewModel.currentLocation.getValue()));
 
         mHomeViewModel.listProduct.observe(this, products ->
-                mHomeRcvAdapter.setDataSet(null, mHomeViewModel.currentLocation.getValue()));
+                mHomeRcvAdapter.setDataSetProduct(products, mHomeViewModel.currentLocation.getValue()));
 
         mHomeViewModel.categoryStore.observe(this, integer -> {
             updateUI(integer, Contract.ALL_NOT_AVAILABLE);

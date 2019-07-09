@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import org.semi.BookmarkFragment;
 import org.semi.DiscoverFragment;
-import org.semi.PlaceAPIActivity;
 import org.semi.R;
 import org.semi.ViewModel.HomeViewModel;
 import org.semi.fragment.MeFragment;
@@ -90,10 +89,7 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.nav_bot_item_discover:
                 selectFragment = DiscoverFragment.getInstance();
-                Intent startActivity = new Intent(this, PlaceAPIActivity.class);
-                startActivity(startActivity);
-                return;
-            //break;
+                break;
             case R.id.nav_bot_item_bookmark:
                 //selectFragment = MyMapFragment.getInstance();
                 selectFragment = new BookmarkFragment();

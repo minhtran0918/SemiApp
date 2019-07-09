@@ -29,7 +29,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory,android:allowBackup">
-        <activity android:name=".PlaceAPIActivity"></activity>
         <activity android:name=".HomeSelectOptionActivity" />
         <activity android:name=".HomeSelectCategoryActivity" />
         <activity android:name=".None_PlaceActivity">
