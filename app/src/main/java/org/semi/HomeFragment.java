@@ -141,7 +141,6 @@ public class HomeFragment extends Fragment {
         directAll.setOnClickListener(mOnClickListenerDirect);
 
         mTxtCategoryState = mRootView.findViewById(R.id.txt_home_category_state);
-        mTxtCategoryState.setText(getString(R.string.all_title_more));
         mTxtState = mRootView.findViewById(R.id.txt_home_state_select);
         mTxtLocateState = mRootView.findViewById(R.id.txt_home_option_locate);
         mTxtSortState = mRootView.findViewById(R.id.txt_home_option_sort);
@@ -272,23 +271,21 @@ public class HomeFragment extends Fragment {
                         mTxtCategoryState.setText(getString(R.string.all_title_pharmacy));
                         break;
                     default:
-                        mTxtCategoryState.setText(getString(R.string.all_title_more));
+                        mTxtCategoryState.setText(getString(R.string.home_select_category_title_all));
                         break;
                 }
                 loadAllNewStoresOrProducts();
             }
         } else {
-            if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_PRODUCT) {
-                if (category_product != Contract.ALL_NOT_AVAILABLE) {
-                    SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY_PRODUCT, category_product);
-                    switch (category_product) {
-                        case Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL:
-                            //mTxtCategoryState.setText(getString(R.string.all_title_product));
-                            mTxtCategoryState.setText(getString(R.string.all_title_product));
-                            break;
-                    }
-                    loadAllNewStoresOrProducts();
+            if (category_product != Contract.ALL_NOT_AVAILABLE) {
+                SharedPrefs.getInstance().put(SharedPrefs.KEY_OPTION_CATEGORY_PRODUCT, category_product);
+                switch (category_product) {
+                    case Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL:
+                        //mTxtCategoryState.setText(getString(R.string.all_title_product));
+                        mTxtCategoryState.setText(getString(R.string.all_title_product));
+                        break;
                 }
+                loadAllNewStoresOrProducts();
             }
         }
     }

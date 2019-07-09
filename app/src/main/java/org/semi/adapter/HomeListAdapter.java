@@ -87,7 +87,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeVi
             homeViewHolder.titleTextView.setText(mListProduct.get(i).getTitle());
             homeViewHolder.addressTextView.setText(mListProduct.get(i).getStore().getAddress().toString());
             homeViewHolder.ratingTextView.setText(String.valueOf(mListProduct.get(i).getCost()));
-            homeViewHolder.ratingTextView.setTextColor(Contract.RATING_COLORS[0]);
+            homeViewHolder.ratingTextView.setTextColor(Contract.RATING_COLORS[1]);
             if (!mListProduct.get(i).getImageURL().equals("")) {
                 List<String> a = StringUtils.getListPath(mListProduct.get(i).getImageURL());
                 String path_img = a.get(0);
