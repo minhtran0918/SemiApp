@@ -201,6 +201,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "load sTore", Toast.LENGTH_SHORT).show();
                 showStoreDetail(mHomeViewModel.listStore.getValue().get(position));
             } else {
+                Toast.makeText(getActivity(), "load product", Toast.LENGTH_SHORT).show();
                 showProductDetail(mHomeViewModel.listProduct.getValue().get(position));
             }
         };
@@ -518,7 +519,6 @@ public class HomeFragment extends Fragment {
         mSwipeRefreshLayout.setRefreshing(true);
         mShouldLoadMoreData = true;
         final StoreConnector storeConnector = StoreConnector.getInstance();
-        //TODO MẢNG ĐỊA CHỈ Ở ĐÂY
         Object[] address = new Object[4];
         address[0] = 0; //Country vietnam
         address[1] = mHomeViewModel.cityId.getValue();
@@ -613,8 +613,8 @@ public class HomeFragment extends Fragment {
         Log.d("Semi", "Call all: category store " + mHomeViewModel.categoryStore.getValue());
         Log.d("Semi", "Call all: category product " + mHomeViewModel.categoryProduct.getValue());
         Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
-
-        productConnector.getProductsByKeywords(mHomeViewModel.categoryProduct.getValue(), "", "", Contract.NUM_PRODUCTS_PER_REQUEST,
+        //mHomeViewModel.categoryProduct.getValue()
+        productConnector.getProductsByKeywords(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL, "b", "", Contract.NUM_PRODUCTS_PER_REQUEST,
                 address,
                 new IResult<List<Product>>() {
                     @Override
@@ -830,11 +830,7 @@ public class HomeFragment extends Fragment {
             } else {
                 mHomeViewModel.modeRange.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_RANGE, Integer.class));
                 updateUIRange();
-                if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
-                    loadAllNewStoresOrProducts();
-                } else {
-                    getListStoresByKeywords();
-                }
+                loadAllNewStoresOrProducts();
             }
             //TODO mode sort
             //mHomeViewModel.modeSort.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_OPTION_SORT, Integer.class));

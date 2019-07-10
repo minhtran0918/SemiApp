@@ -36,7 +36,13 @@ public class HomeSelectCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_select_category);
-        new AsyncLayoutInflater(this).inflate(R.layout.activity_home_select_option, null, (view, resid, parent) -> initView());
+        //new AsyncLayoutInflater(this).inflate(R.layout.activity_home_select_option, null, (view, resid, parent) -> initView());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initView();
     }
 
     private void initView() {
