@@ -26,6 +26,7 @@ import android.widget.Toast;
 import org.semi.BookmarkFragment;
 import org.semi.DiscoverFragment;
 import org.semi.R;
+import org.semi.SearchNewActivity;
 import org.semi.ViewModel.HomeViewModel;
 import org.semi.fragment.MeFragment;
 import org.semi.HomeFragment;
@@ -95,8 +96,12 @@ public class HomeActivity extends AppCompatActivity {
                 selectFragment = new BookmarkFragment();
                 break;
             case R.id.nav_bot_item_me:
-                selectFragment = MeFragment.getInstance();
-                break;
+                //selectFragment = MeFragment.getInstance();
+                //break;
+                Intent intent = new Intent(this, SearchNewActivity.class);
+                startActivity(intent);
+                return;
+
         }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);

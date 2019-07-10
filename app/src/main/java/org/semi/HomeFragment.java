@@ -614,7 +614,7 @@ public class HomeFragment extends Fragment {
         Log.d("Semi", "Call all: category product " + mHomeViewModel.categoryProduct.getValue());
         Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
         //mHomeViewModel.categoryProduct.getValue()
-        productConnector.getProductsByKeywords(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL, "b", "", Contract.NUM_PRODUCTS_PER_REQUEST,
+        productConnector.getProductsByKeywords(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL, "", "", Contract.NUM_PRODUCTS_PER_REQUEST,
                 address,
                 new IResult<List<Product>>() {
                     @Override
@@ -824,7 +824,7 @@ public class HomeFragment extends Fragment {
                         mHomeViewModel.districtId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_DISTRICT, Integer.class));
                         mHomeViewModel.wardId.setValue(SharedPrefs.getInstance().get(SharedPrefs.KEY_ALL_ADDRESS_WARD, Integer.class));
                         updateUIRange();
-                        getListStoresByKeywords();
+                        loadAllNewStoresOrProducts();
                     }
                 }
             } else {
