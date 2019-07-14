@@ -96,11 +96,11 @@ public class HomeActivity extends AppCompatActivity {
                 selectFragment = new BookmarkFragment();
                 break;
             case R.id.nav_bot_item_me:
-                //selectFragment = MeFragment.getInstance();
-                //break;
-                Intent intent = new Intent(this, SearchNewActivity.class);
+                selectFragment = MeFragment.getInstance();
+                break;
+                /*Intent intent = new Intent(this, SearchNewActivity.class);
                 startActivity(intent);
-                return;
+                return;*/
 
         }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
