@@ -254,13 +254,19 @@ public class StoreDetailActivity extends AppCompatActivity implements OnItemClic
         store_detail_total_product.setText(String.valueOf(mStore.getNumProducts()));
         store_detail_total_comment.setText(String.valueOf(mStore.getNumComments()));
         //set color for opened or closed
-        if (isOpened(mStore.getStartEnd())) {
-            store_detail_state.setText(getResources().getString(R.string.store_detail_state_open));
+        if(!mStore.getStartEnd().equals("")){
+            if (isOpened(mStore.getStartEnd())) {
+                store_detail_state.setText(getResources().getString(R.string.store_detail_state_open));
+                store_detail_state.setTextColor(getResources().getColor(R.color.material_green_500));
+            } else {
+                store_detail_state.setText(getResources().getString(R.string.store_detail_state_close));
+                store_detail_state.setTextColor(getResources().getColor(R.color.material_red_a200));
+            }
+        }else{
+            store_detail_state.setText("Chưa có dữ liệu");
             store_detail_state.setTextColor(getResources().getColor(R.color.material_green_500));
-        } else {
-            store_detail_state.setText(getResources().getString(R.string.store_detail_state_close));
-            store_detail_state.setTextColor(getResources().getColor(R.color.material_red_a200));
         }
+
         //set color for rating value
         float rating = mStore.getRating();
         int loopLimit = Contract.RATING_LEVELS.length - 1;

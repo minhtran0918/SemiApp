@@ -653,7 +653,7 @@ public class UserAddStoreActivity extends AppCompatActivity implements SelectCat
                 StringBuilder sb = new StringBuilder();
 
                 for (String storage_location : convertPathFileToStorage(imageArrayList, newStoreRef.getId(), user_id)) {
-                    sb.append(storage_location).append("??");
+                    sb.append(storage_location).append("?");
                 }
                 sb.setLength(sb.length() - 2);
                 store.setImageURL(sb.toString());

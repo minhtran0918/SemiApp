@@ -93,8 +93,8 @@ public final class StringUtils {
     public static List<String> getListPath(String path) {
         List<String> result = new ArrayList<>();
         if (!path.equals("")) {
-            if (path.contains("??")) {
-                String[] lists = path.split("\\?\\?");
+            if (path.contains("?")) {
+                String[] lists = path.split("\\?");
                 for (String item : lists) {
                     result.add(item);
                 }
