@@ -3,8 +3,10 @@ package org.semi;
 import android.Manifest;
 import android.annotation.SuppressLint;
 
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,9 +28,14 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -73,6 +80,7 @@ public class HomeFragment extends Fragment {
     private static HomeFragment sHomeFragment;
     private HomeViewModel mHomeViewModel;
     private View mRootView;
+    private CardView mLayoutDirect;
     private TextView mTxtState, mTxtCategoryState, mTxtLocateState, mTxtSortState;
 
     private NestedScrollView mNestedScrollView;
@@ -82,6 +90,7 @@ public class HomeFragment extends Fragment {
     //private StoreAdapter mRcvAdapter;
     private HomeListAdapter mHomeRcvAdapter;
     private boolean mShouldLoadMoreData;
+
     //private IInteractionWithList<IHaveIdAndName<String>> listener;
 
     private int pastVisiblesItems, visibleItemCount, totalItemCount;
@@ -93,6 +102,12 @@ public class HomeFragment extends Fragment {
             sHomeFragment = new HomeFragment();
         }
         return sHomeFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -111,9 +126,28 @@ public class HomeFragment extends Fragment {
         loadAllNewStoresOrProducts();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.home_action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(mSearchViewTextListener);
+        searchView.setQueryHint("Tìm ");
+        /*searchView.setFocusable(true);
+        searchView.requestFocusFromTouch();
+        searchView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+            }
+        });*/
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     private void initView() {
         //Toolbar
         //Button Direction
+        mLayoutDirect = mRootView.findViewById(R.id.layout_home_direct);
         ConstraintLayout option_category, option_address, option_filter;
         option_category = mRootView.findViewById(R.id.home_ic_option_category);
         option_address = mRootView.findViewById(R.id.home_ic_option_address);
@@ -314,6 +348,26 @@ public class HomeFragment extends Fragment {
             mTxtSortState.setText("Tất cả");
         }
     }
+
+    private SearchView.OnQueryTextListener mSearchViewTextListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String s) {
+            Toast.makeText(getActivity(), "Query submit: " + s, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String s) {
+            if (s == null || s.trim().isEmpty()) {
+                Toast.makeText(getActivity(), "Query nothing", Toast.LENGTH_SHORT).show();
+                mLayoutDirect.setVisibility(View.VISIBLE);
+                return false;
+            }
+            mLayoutDirect.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), "Query change " + s, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    };
 
     private View.OnClickListener mOnClickOption = v -> {
         Intent callActivity;

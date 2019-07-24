@@ -56,12 +56,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        /*//Set Toolbar for ActionBar
-        mToolbarHome = findViewById(R.id.toolbar_home);
+        //Set Toolbar for ActionBar
+        mToolbarHome = findViewById(R.id.home_toolbar_search);
         setSupportActionBar(mToolbarHome);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.toolbar_ic_semi_logo);
-        actionBar.setDisplayShowTitleEnabled(false);*/
+        actionBar.setDisplayShowTitleEnabled(false);
 
         //Bottom Navigation
         mNavigationHome = findViewById(R.id.nav_home);
