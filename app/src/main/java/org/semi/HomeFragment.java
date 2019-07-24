@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
@@ -111,6 +112,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView() {
+        //Toolbar
         //Button Direction
         ConstraintLayout option_category, option_address, option_filter;
         option_category = mRootView.findViewById(R.id.home_ic_option_category);

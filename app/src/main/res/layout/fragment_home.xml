@@ -8,13 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/home_toolbar_search"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:title="Semi"
+            app:layout_scrollFlags="scroll|snap"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             app:cardCornerRadius="@dimen/home_ic_direct_card_corner_radius"
-            app:layout_scrollFlags="scroll|snap">
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -431,9 +440,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:background="@color/white"
-                android:singleLine="true"
                 android:padding="4dp"
                 android:paddingStart="8dp"
+                android:singleLine="true"
                 android:text="Trạng thái chọn ??"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

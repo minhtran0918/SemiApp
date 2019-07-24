@@ -62,11 +62,11 @@ public class SearchNewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_new);
-        initView();
-        initViewModel();
+        //initView();
+        //initViewModel();
     }
 
-
+/*
     private void initView() {
         ConstraintLayout option_category, option_filter;
         option_category = findViewById(R.id.search_ic_option_category);
@@ -113,11 +113,11 @@ public class SearchNewActivity extends AppCompatActivity {
         mSearchViewModel.categoryProduct.observe(this, integer -> {
             updateUI(Contract.ALL_NOT_AVAILABLE, integer);
         });
-        /*
+        *//*
         mSearchViewModel.modeRangeValue.observe(this, aFloat -> {
             updateUIRange();
             loadAllNewStoresOrProducts();
-        });*/
+        });*//*
         //Listener
         View.OnClickListener mOnClickListenerRcv = v -> {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
@@ -218,7 +218,7 @@ public class SearchNewActivity extends AppCompatActivity {
 
     private void updateUIRange() {
 
-        /*if (mSearchViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
+        *//*if (mSearchViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_AROUND) {
             mTxtSortState.setText("Gần nhất");
             mTxtLocateState.setText(getString(R.string.home_lbl_option_around));
             if (currentLocation != null) {
@@ -235,7 +235,7 @@ public class SearchNewActivity extends AppCompatActivity {
             mTxtState.setText("Tất cả " + (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE ? getString(R.string.home_lbl_store_state) : getString(R.string.home_lbl_product_state)));
             mTxtLocateState.setText(mHomeViewModel.getDistrictByID(mHomeViewModel.districtId.getValue()).toLiteName());
             mTxtSortState.setText("Tất cả");
-        }*/
+        }*//*
     }
     private View.OnClickListener mOnClickOption = v ->{
         Intent callActivity;
@@ -276,6 +276,6 @@ public class SearchNewActivity extends AppCompatActivity {
 
     private void onPermissionGranted() {
         LocationUtils.checkAndRequestLocationSettings(getActivity(), null);
-    }
+    }*/
 
 }

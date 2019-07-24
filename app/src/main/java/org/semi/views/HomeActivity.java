@@ -56,12 +56,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        //Set Toolbar for ActionBar
+        /*//Set Toolbar for ActionBar
         mToolbarHome = findViewById(R.id.toolbar_home);
         setSupportActionBar(mToolbarHome);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.toolbar_ic_semi_logo);
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);*/
 
         //Bottom Navigation
         mNavigationHome = findViewById(R.id.nav_home);
@@ -110,14 +110,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //TODO Config menu search -> MenuSearchActivity
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int modeHome = mHomeViewModel.modeMenuNavigationHome.getValue();
         switch (modeHome) {
@@ -136,9 +136,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
+    }*/
 
-    private void launchSearchActivity() {
+   /* private void launchSearchActivity() {
         //final int mode = searchModeSpinner.getSelectedItemPosition();
         int mode = mHomeViewModel.modeStoreOrProduct.getValue();
         final Intent intent = new Intent(this, SearchActivity.class);
@@ -162,6 +162,6 @@ public class HomeActivity extends AppCompatActivity {
                 this, mToolbarHome, "Toolbar"
         );
         startActivity(intent, options.toBundle());
-    }
+    }*/
 }
 
