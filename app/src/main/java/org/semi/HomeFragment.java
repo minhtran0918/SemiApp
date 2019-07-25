@@ -375,6 +375,7 @@ public class HomeFragment extends Fragment {
             if (s == null || s.trim().isEmpty()) {
                 Toast.makeText(getActivity(), "Query nothing", Toast.LENGTH_SHORT).show();
                 mQueryKeyword = "";
+                loadAllNewProducts();
                 mLayoutDirect.setVisibility(View.VISIBLE);
                 return false;
             }
