@@ -129,4 +129,5 @@
     <string name="add_store_send_data_dialog_negative_btn">Review</string>
     <string name="add_store_send_data_dialog_title">Confirm adding new locations</string>
     <string name="all_title_store">Store</string>
+    <string name="home_lbl_option_around">Around</string>
 </resources>
