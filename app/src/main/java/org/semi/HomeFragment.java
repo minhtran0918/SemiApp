@@ -488,7 +488,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onError(DexterError error) {
                         Toast.makeText(getActivity(), "Lỗi khi yêu cầu quyền ", Toast.LENGTH_SHORT).show();
-                        loadAllNewStoresOrProducts();
+                        //loadAllNewStoresOrProducts();
                     }
                 });
     }

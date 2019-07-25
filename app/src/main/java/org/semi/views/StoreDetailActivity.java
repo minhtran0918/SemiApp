@@ -218,7 +218,7 @@ public class StoreDetailActivity extends AppCompatActivity implements OnItemClic
 
     public void putDataToView() {
         toolbar_store_detail_name.setText(mStore.getTitle());
-        store_detail_name.setText(mStore.getName());
+        store_detail_name.setText(mStore.getTitle());
         store_detail_address.setText(mStore.getAddress().toString());
         //Set category
         switch (mStore.getType().getId()) {
