@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         mToolbarHome = findViewById(R.id.home_toolbar_search);
         setSupportActionBar(mToolbarHome);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(R.drawable.toolbar_ic_semi_logo);
+        actionBar.setLogo(R.drawable.toolbar_ic_semi_logo);
         actionBar.setDisplayShowTitleEnabled(false);
 
         //Bottom Navigation
@@ -141,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
    /* private void launchSearchActivity() {
         //final int mode = searchModeSpinner.getSelectedItemPosition();
         int mode = mHomeViewModel.modeStoreOrProduct.getValue();
-        final Intent intent = new Intent(this, SearchActivity.class);
+        final Intent intent = new Intent(this, SearchNewActivity.class);
 
         if (mode == Contract.STORE_MODE) {
             intent.putExtra(Contract.BUNDLE_MODE_KEY, Contract.STORE_MODE);

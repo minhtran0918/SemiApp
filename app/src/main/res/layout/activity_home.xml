@@ -12,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="Semi"/>
+        app:title=""/>
 
     <FrameLayout
         android:id="@+id/home_fragment_container"

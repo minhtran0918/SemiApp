@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -96,6 +97,8 @@ public class HomeFragment extends Fragment {
     private int pastVisiblesItems, visibleItemCount, totalItemCount;
     private int RC_SELECT_CATEGORY = 11;
     private int RC_SELECT_OPTION = 22;
+
+    private String mQueryKeyword = "";
 
     public static HomeFragment newInstance() {
         if (sHomeFragment == null) {
@@ -352,19 +355,30 @@ public class HomeFragment extends Fragment {
     private SearchView.OnQueryTextListener mSearchViewTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String s) {
-            Toast.makeText(getActivity(), "Query submit: " + s, Toast.LENGTH_SHORT).show();
-            return true;
+            Toast.makeText(getActivity(), "Submit", Toast.LENGTH_SHORT).show();
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mRootView.getWindowToken(), 0);
+            if (s != "") {
+                if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL) {
+                    mQueryKeyword = s;
+                    loadAllNewStoresOrProducts();
+                }
+                return true;
+            }
+            return false;
+            /*InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);*/
         }
 
         @Override
         public boolean onQueryTextChange(String s) {
             if (s == null || s.trim().isEmpty()) {
                 Toast.makeText(getActivity(), "Query nothing", Toast.LENGTH_SHORT).show();
+                mQueryKeyword = "";
                 mLayoutDirect.setVisibility(View.VISIBLE);
                 return false;
             }
             mLayoutDirect.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "Query change " + s, Toast.LENGTH_SHORT).show();
             return true;
         }
     };
@@ -589,7 +603,7 @@ public class HomeFragment extends Fragment {
         Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
 
         //String key = StringUtils.normalize("Tap hoa");
-        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), "", "", Contract.NUM_STORES_PER_REQUEST,
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), mQueryKeyword, "", Contract.NUM_STORES_PER_REQUEST,
                 address,
                 new IResult<List<Store>>() {
                     @Override
@@ -624,7 +638,7 @@ public class HomeFragment extends Fragment {
         address[1] = mHomeViewModel.cityId.getValue();
         address[2] = mHomeViewModel.districtId.getValue();
         address[3] = mHomeViewModel.wardId.getValue();
-        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), "", String.valueOf(lastPos), Contract.NUM_STORES_PER_REQUEST,
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), mQueryKeyword, String.valueOf(lastPos), Contract.NUM_STORES_PER_REQUEST,
                 address,
                 new IResult<List<Store>>() {
                     @Override
@@ -670,7 +684,7 @@ public class HomeFragment extends Fragment {
         Log.d("Semi", "Call all: category product " + mHomeViewModel.categoryProduct.getValue());
         Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
         //mHomeViewModel.categoryProduct.getValue()
-        productConnector.getProductsByKeywords(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL, "", "", Contract.NUM_PRODUCTS_PER_REQUEST,
+        productConnector.getProductsByKeywords(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL, mQueryKeyword, "", Contract.NUM_PRODUCTS_PER_REQUEST,
                 address,
                 new IResult<List<Product>>() {
                     @Override
@@ -707,7 +721,7 @@ public class HomeFragment extends Fragment {
         address[3] = mHomeViewModel.wardId.getValue();
         productConnector.getProductsByKeywords(
                 mHomeViewModel.categoryProduct.getValue(),
-                "",
+                mQueryKeyword,
                 String.valueOf(lastPos),
                 Contract.NUM_PRODUCTS_PER_REQUEST,
                 address,
