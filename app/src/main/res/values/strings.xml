@@ -67,13 +67,13 @@
     <string name="store_detail_more_product_label">Xem thêm sản phẩm</string>
     <string name="store_detail_hide_product_label">Ẩn tất cả sản phẩm</string>
     <string name="store_detail_more_comments_label">Xem thêm bình luận</string>
-    <string name="store_detail_product_dialog_price_label">\\u0020-\\u0020Giá:\\u0020</string>
+    <string name="store_detail_product_dialog_price_label">" - Giá: "</string>
     <string name="store_detail_product_dialog_close_label">Đóng</string>
 
     <string name="store_detail_state_open">Mở cửa</string>
     <string name="store_detail_state_close">Đóng cửa</string>
-    <string name="store_detail_state_contact_title">\\u0020\\u0020LIÊN HỆ</string>
-    <string name="store_detail_distance_mess">\\u0020-\\u0020\\u0020(Từ vị trí hiện tại)</string>
+    <string name="store_detail_state_contact_title">"  LIÊN HỆ"</string>
+    <string name="store_detail_distance_mess">- (Từ vị trí hiện tại)</string>
     <string name="store_detail_error_list_mess">Xin lỗi, không có sản phẩm nào.</string>
     <string name="store_detail_error_comment_mess">Xin lỗi, không có bình luận nào.</string>
     <string name="store_detail_product_share_mess">Chia sẻ</string>

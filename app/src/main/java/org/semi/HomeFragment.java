@@ -386,7 +386,7 @@ public class HomeFragment extends Fragment {
             if (s == null || s.trim().isEmpty()) {
                 //Toast.makeText(getActivity(), "Query nothing", Toast.LENGTH_SHORT).show();
                 mQueryKeyword = "";
-                loadAllNewProducts();
+                loadAllNewStoresOrProducts();
                 mLayoutDirect.setVisibility(View.VISIBLE);
                 return false;
             }
@@ -482,13 +482,6 @@ public class HomeFragment extends Fragment {
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
                         Toast.makeText(getActivity(), "Vui lòng cấp quyền để xử dụng tính năng này", Toast.LENGTH_SHORT).show();
                         token.continuePermissionRequest();
-                    }
-                })
-                .withErrorListener(new PermissionRequestErrorListener() {
-                    @Override
-                    public void onError(DexterError error) {
-                        Toast.makeText(getActivity(), "Lỗi khi yêu cầu quyền ", Toast.LENGTH_SHORT).show();
-                        //loadAllNewStoresOrProducts();
                     }
                 });
     }
@@ -694,7 +687,7 @@ public class HomeFragment extends Fragment {
         Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
 
         //String key = StringUtils.normalize("Tap hoa");
-        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), mQueryKeyword, "", Contract.NUM_STORES_PER_REQUEST,
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), mQueryKeyword, "", 40,
                 address,
                 new IResult<List<Store>>() {
                     @Override
@@ -729,7 +722,7 @@ public class HomeFragment extends Fragment {
         address[1] = mHomeViewModel.cityId.getValue();
         address[2] = mHomeViewModel.districtId.getValue();
         address[3] = mHomeViewModel.wardId.getValue();
-        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), mQueryKeyword, String.valueOf(lastPos), Contract.NUM_STORES_PER_REQUEST,
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), mQueryKeyword, mHomeViewModel.listStore.getValue().get(mHomeRcvAdapter.getItemCount() - 1).getId(), Contract.NUM_STORES_PER_REQUEST,
                 address,
                 new IResult<List<Store>>() {
                     @Override
@@ -775,7 +768,7 @@ public class HomeFragment extends Fragment {
         Log.d("Semi", "Call all: category product " + mHomeViewModel.categoryProduct.getValue());
         Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
         //mHomeViewModel.categoryProduct.getValue()
-        productConnector.getProductsByKeywords(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL, mQueryKeyword, "", Contract.NUM_PRODUCTS_PER_REQUEST,
+        productConnector.getProductsByKeywords(Contract.MODE_HOME_LOAD_PRODUCT_TYPE_ALL, mQueryKeyword, "", 30,
                 address,
                 new IResult<List<Product>>() {
                     @Override
@@ -813,7 +806,7 @@ public class HomeFragment extends Fragment {
         productConnector.getProductsByKeywords(
                 mHomeViewModel.categoryProduct.getValue(),
                 mQueryKeyword,
-                String.valueOf(lastPos),
+                mHomeViewModel.listProduct.getValue().get(mHomeRcvAdapter.getItemCount() - 1).getId(),
                 Contract.NUM_PRODUCTS_PER_REQUEST,
                 address,
                 new IResult<List<Product>>() {

@@ -489,19 +489,22 @@
                 android:text="@string/store_detail_total_comment_label"
                 android:textColor="@color/black"
                 android:textSize="@dimen/store_detail_infor_name_text_size"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txt_error_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="0"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/store_detail_list_comment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -512,7 +515,8 @@
                 android:background="@color/material_gray_300"
                 app:layout_constraintBottom_toTopOf="@+id/store_detail_utilities"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -523,7 +527,8 @@
                 android:textAllCaps="false"
                 android:textColor="@color/material_blue_300"
                 android:textSize="16sp"
-                android:onClick="loadMoreComments"/>
+                android:onClick="loadMoreComments"
+                android:visibility="gone"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
