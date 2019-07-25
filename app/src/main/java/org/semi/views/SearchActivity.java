@@ -67,7 +67,7 @@ public class SearchActivity extends AppCompatActivity implements IUseFragment,
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(logoResource);
+        //actionBar.setIcon(logoResource);
     }
 
     private void setupViewPager() {

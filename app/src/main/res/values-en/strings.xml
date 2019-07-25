@@ -31,7 +31,7 @@
     <string name="countryLabel">Quốc gia</string>
     <string name="cityLabel">Thành phố</string>
     <string name="districtLabel">Quận/huyện</string>
-    <string name="townLabel">Xã/phường</string>
+    <string name="townLabel">Grocery</string>
     <string name="signInLabel">Sign In</string>
     <string name="closeDialogButtonLabel">Close</string>
     <string name="helloLabel">Hello\u0020</string>
@@ -96,7 +96,7 @@
     <string name="all_title_market">Market</string>
     <string name="all_title_more">More</string>
     <string name="all_title_pharmacy">Pharmacy</string>
-    <string name="all_title_store_store">Store</string>
+    <string name="all_title_store_store">Grocery</string>
     <string name="all_title_super_market">Super market</string>
     <string name="dialog_select_category_title_convenience">Convenience</string>
     <string name="dialog_select_category_title_mall">Mall</string>
@@ -121,4 +121,12 @@
     <string name="home_select_category_title_super_market">Super market</string>
     <string name="select_address_choose_location_label">Choose location of store</string>
     <string name="title_activity_add_store_choose_location">Map</string>
+    <string name="add_store_backpress_dialog_negative_btn">Review</string>
+    <string name="add_store_backpress_dialog_message">Your input will not be saved</string>
+    <string name="add_store_backpress_dialog_title">Confirm exit</string>
+    <string name="add_store_select_image_toolbar_title">Select the image</string>
+    <string name="add_store_send_data_dialog_message">Sincere thanks for your contribution. Your location information will contribute to building a great application.</string>
+    <string name="add_store_send_data_dialog_negative_btn">Review</string>
+    <string name="add_store_send_data_dialog_title">Confirm adding new locations</string>
+    <string name="all_title_store">Store</string>
 </resources>

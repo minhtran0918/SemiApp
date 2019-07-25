@@ -45,7 +45,9 @@ import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.semi.ViewModel.HomeViewModel;
@@ -126,7 +128,7 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initViewModel();
         checkAndRequestPermission();
-        loadAllNewStoresOrProducts();
+        //loadAllNewStoresOrProducts();
     }
 
     @Override
@@ -235,12 +237,12 @@ public class HomeFragment extends Fragment {
         View.OnClickListener mOnClickListenerRcv = v -> {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
             int position = viewHolder.getAdapterPosition();
-            Toast.makeText(getActivity(), "position: " + position, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "position: " + position, Toast.LENGTH_SHORT).show();
             if (mHomeViewModel.modeStoreOrProduct.getValue() == Contract.MODE_HOME_LOAD_STORE) {
-                Toast.makeText(getActivity(), "load sTore", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "load sTore", Toast.LENGTH_SHORT).show();
                 showStoreDetail(mHomeViewModel.listStore.getValue().get(position));
             } else {
-                Toast.makeText(getActivity(), "load product", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "load product", Toast.LENGTH_SHORT).show();
                 showProductDetail(mHomeViewModel.listProduct.getValue().get(position));
             }
         };
@@ -355,13 +357,22 @@ public class HomeFragment extends Fragment {
     private SearchView.OnQueryTextListener mSearchViewTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String s) {
-            Toast.makeText(getActivity(), "Submit", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Submit", Toast.LENGTH_SHORT).show();
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mRootView.getWindowToken(), 0);
             if (s != "") {
+                mQueryKeyword = s;
                 if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL) {
-                    mQueryKeyword = s;
                     loadAllNewStoresOrProducts();
+                } else {
+                    /*if (mHomeViewModel == Contract.STORE_MODE) {
+                        mStoreConnector.getNearbyStoresByKeywords(mSearchBox.getLocationCenter(), mListMarkers.size(),
+                                NUM_STORES_PER_REQUEST, mProductOrStoretype, mStrQuery, mSearchBox.getDimen(), result);
+                    } else if (mMode == Contract.PRODUCT_MODE) {
+                        mStoreConnector.getNearbyStoresByProducts(mSearchBox.getLocationCenter(), mListMarkers.size(),
+                                NUM_STORES_PER_REQUEST, mProductOrStoretype, mStrQuery, mSearchBox.getDimen(), result);
+                    }*/
+                    Toast.makeText(getActivity(), "Chỉ tìm kiếm được trên 1 khu vực nhất định", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
@@ -373,7 +384,7 @@ public class HomeFragment extends Fragment {
         @Override
         public boolean onQueryTextChange(String s) {
             if (s == null || s.trim().isEmpty()) {
-                Toast.makeText(getActivity(), "Query nothing", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Query nothing", Toast.LENGTH_SHORT).show();
                 mQueryKeyword = "";
                 loadAllNewProducts();
                 mLayoutDirect.setVisibility(View.VISIBLE);
@@ -452,6 +463,10 @@ public class HomeFragment extends Fragment {
     };
 
     private void checkAndRequestPermission() {
+        /*if(LocationUtils.checkAndRequestPermission(getActivity())) {
+            onPermissionGranted();
+            loadAllNewStoresOrProducts();
+        }*/
         Dexter.withActivity(getActivity())
                 .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .withListener(new MultiplePermissionsListener() {
@@ -465,8 +480,15 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        Toast.makeText(getContext(), "Vui lòng cấp quyền để xử dụng tính năng này - HomeFragment", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Vui lòng cấp quyền để xử dụng tính năng này", Toast.LENGTH_SHORT).show();
                         token.continuePermissionRequest();
+                    }
+                })
+                .withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError error) {
+                        Toast.makeText(getActivity(), "Lỗi khi yêu cầu quyền ", Toast.LENGTH_SHORT).show();
+                        loadAllNewStoresOrProducts();
                     }
                 });
     }
@@ -477,7 +499,7 @@ public class HomeFragment extends Fragment {
 
     private void loadAllNewStoresOrProducts() {
         if (mHomeViewModel.modeRange.getValue() == Contract.MODE_LOAD_RANGE_ALL) {
-            loadAllNewsStoreOrProductByKey();
+            loadAllNewsStoreOrProductByKey(false);
             return;
         }
         mSwipeRefreshLayout.setRefreshing(true);
@@ -499,21 +521,89 @@ public class HomeFragment extends Fragment {
             public void onFailure(@NonNull Exception exp) {
                 //Error Location
                 mSwipeRefreshLayout.setRefreshing(false);
-                DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorLocationMessage));
+                if (mHomeViewModel.currentLocation.getValue() == null) {
+                    DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorLocationMessage));
+                } else {
+                    int mode_load = mHomeViewModel.modeStoreOrProduct.getValue();
+                    if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
+                        loadAllNewStores();
+                    } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
+                        loadAllNewProducts();
+                    }
+                }
+
             }
         });
     }
 
-    private void loadAllNewsStoreOrProductByKey() {
+    private void loadAllNewsStoreOrProductByKey(boolean isGetNear) {
         mSwipeRefreshLayout.setRefreshing(true);
         mShouldLoadMoreData = true;
         int mode_load = mHomeViewModel.modeStoreOrProduct.getValue();
-        if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
-            getListStoresByKeywords();
-        } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
-            getListProductByKeywords();
+        if (isGetNear) {
+            /*if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
+                getListNearStoresByKeywords();
+            } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
+                getListNearProductByKeywords();
+            }*/
+        } else {
+            if (mode_load == Contract.MODE_HOME_LOAD_STORE) { //it's store
+                getListStoresByKeywords();
+            } else if (mode_load == Contract.MODE_HOME_LOAD_PRODUCT) { //it's Product
+                getListProductByKeywords();
+            }
         }
 
+    }
+
+    /*private void getListNearStoresByKeywords() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mShouldLoadMoreData = true;
+        final StoreConnector storeConnector = StoreConnector.getInstance();
+        Object[] address = new Object[4];
+        address[0] = 0; //Country vietnam
+        address[1] = mHomeViewModel.cityId.getValue();
+        address[2] = mHomeViewModel.districtId.getValue();
+        address[3] = mHomeViewModel.wardId.getValue();
+        Log.d("Semi", "Call all: mode " + mHomeViewModel.modeStoreOrProduct.getValue());
+        Log.d("Semi", "Call all: mode range " + mHomeViewModel.modeRange.getValue());
+        Log.d("Semi", "Call all: mode value " + mHomeViewModel.modeRange.getValue());
+        Log.d("Semi", "Call all: mode sort " + mHomeViewModel.modeSort.getValue());
+        Log.d("Semi", "Call all: category store " + mHomeViewModel.categoryStore.getValue());
+        Log.d("Semi", "Call all: category product " + mHomeViewModel.categoryProduct.getValue());
+        Log.d("Semi", "Call all address: city " + mHomeViewModel.cityId.getValue() + " district: " + mHomeViewModel.districtId.getValue() + " ward: " + mHomeViewModel.wardId.getValue());
+
+        storeConnector.getNearbyStoresByKeywords(mHomeViewModel.currentLocation.getValue(),mHomeViewModel.listStore.getValue().size(),
+                Contract.NUM_STORES_PER_REQUEST, mHomeViewModel.categoryStore.getValue(), mQueryKeyword, mSearchBox.getDimen(), result);
+        //String key = StringUtils.normalize("Tap hoa");
+        storeConnector.getStoresByKeywords(mHomeViewModel.categoryStore.getValue(), mQueryKeyword, "", Contract.NUM_STORES_PER_REQUEST,
+                address,
+                new IResult<List<Store>>() {
+                    @Override
+                    public void onResult(List<Store> result) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (result.size() == 0) {
+                            //Empty Error
+                            //Clear RecyclerView
+                            mHomeViewModel.listStore.setValue(null);
+                            DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorEmptyResultMessage));
+                            return;
+                        }
+                        mHomeViewModel.listStore.setValue(result);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exp) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mHomeViewModel.listStore.setValue(null);
+                        Log.d("Semi", "exp " + exp.getMessage());
+                        //Network Error
+                        DialogUtils.showSnackBar(null, mRootView, getString(R.string.errorNetworkMessage));
+                    }
+                });
+    }*/
+
+    private void getListNearProductByKeywords() {
     }
 
 

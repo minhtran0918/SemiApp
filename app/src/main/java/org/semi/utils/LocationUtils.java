@@ -43,7 +43,6 @@ public class LocationUtils {
                 .setInterval(Contract.LOCATION_INTERVAL)
                 .setFastestInterval(Contract.LOCATION_FASTEST_INTERVAL);
 
-
         final LocationSettingsRequest request = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest).build();
 
